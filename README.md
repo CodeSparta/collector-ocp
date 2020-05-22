@@ -33,4 +33,4 @@ p1
 
 # Demo:
   - Building the bundle
-![bundle](./bundle.svg)
+![bundle](./web/bundle.svg)
