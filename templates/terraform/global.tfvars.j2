@@ -1,0 +1,33 @@
+#Terraform spin-up
+TF_VAR_infrastructure_id: "{{ name_cluster_vpc }}"
+TF_VAR_aws_region: "{{ cloud_region }}"
+TF_VAR_clustername: "{{ cluster_name }}"
+TF_VAR_domain: "{{ name_domain }}"
+AWS_DEFAULT_REGION: "{{ cloud_region }}"
+
+# point the ignition files to the proper location
+TF_VAR_registry_ssh_public_key_file_path: "{{ artifact_directory }}/.ssh/id_rsa_{{ cluster_domain }}.pub"
+TF_VAR_bastion_ssh_public_key_file_path: "{{ artifact_directory }}/.ssh/id_rsa_{{ cluster_domain }}.pub"
+TF_VAR_master_ign_path: "{{ artifact_directory }}/data/master.ign"
+TF_VAR_bootstrap_ign_path: "{{ artifact_directory }}/data/bootstrap.ign"
+
+#Terraform spin-up
+TF_VAR_infrastructure_id: "{{ name_cluster_vpc }}"
+TF_VAR_aws_region: "{{ ec2_region }}"
+TF_VAR_clustername: "{{ cluster_name }}"
+TF_VAR_domain: "{{ domain_name }}"
+AWS_DEFAULT_REGION: "{{ ec2_region }}"
+
+# point the ignition files to the proper location
+TF_VAR_registry_ssh_public_key_file_path: "{{ dir_artifacts }}/.ssh/id_rsa_{{ cluster_domain }}.pub"
+TF_VAR_bastion_ssh_public_key_file_path: "{{ dir_artifacts }}/.ssh/id_rsa_{{ cluster_domain }}.pub"
+TF_VAR_master_ign_path: "{{ dir_artifacts }}/data/master.ign"
+TF_VAR_bootstrap_ign_path: "{{ dir_artifacts }}/data/bootstrap.ign"
+# legacy ansible
+- set_fact:
+    AWS_ACCESS_KEY_ID: "{{aws_access_key_id_govcloud.stdout }}"
+    TF_VAR_aws_access_key_id: "{{aws_access_key_id_govcloud.stdout }}"
+    AWS_SECRET_ACCESS_KEY: "{{ aws_secret_key.stdout }}"
+    TF_VAR_aws_secret_access_key: "{{ aws_secret_key.stdout }}"
+  no_log: true
+

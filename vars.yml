@@ -1,0 +1,23 @@
+#!/usr/local/bin/ansible-playbook --inventory=inventory
+- name: 'RedHat | PlatformOne | bundle | vars' 
+  hosts: localhost
+  connection: local
+  vars_files:
+    - p1.yml
+    - vars/seed.yml
+  vars:
+    module: "vars"
+    git_branch: master
+    ansible_name: 'RedHat | PlatformOne'
+    ansible_name_module: "{{ ansible_name }} | {{ module }}"
+    dir_git_deploy: '{{ dir_one }}/ansible/deploy'
+    ansible_varsj2: '{{ dir_git_deploy }}/templates/ansible/variables.j2'
+    redhat_quay_pull_file: '{{ dir_artifacts }}/.docker/master.json }}'
+  tasks:
+    - name: '{{ ansible_name_module }} | bundle | stage variables file' 
+      template:
+        src: '{{ item.src }}'
+        dest: '{{ item.dest }}'
+      with_items:
+        - { src: '{{ ansible_varsj2 }}', dest: '{{ dir_deploy }}/variables' }
+        - { src: '{{ dir_artifacts }}/environment', dest: '/etc/profile.d/one.env' }

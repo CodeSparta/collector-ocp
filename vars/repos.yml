@@ -1,0 +1,7 @@
+---
+# Git Sources
+git_branch: "master"
+url_git_deploy: 'https://gitlab.consulting.redhat.com/platformone/openshift/ocp4x/ansible/deploy.git'
+url_git_mirror: 'https://gitlab.consulting.redhat.com/platformone/openshift/ocp4x/ansible/mirror.git'
+
+

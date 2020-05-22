@@ -1,0 +1,9 @@
+---
+cloud_provider: 'aws'
+version_openshift: "4.3.8"
+name_cluster_vpc: "rockgod"
+name_domain: "of.rock"
+cluster_name: "school"
+cluster_domain: "school.of.rock"
+dir_artifacts: "/root/PlatformOne/school.of.rock"
+cloud_region: "us-gov-west-1"

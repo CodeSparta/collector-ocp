@@ -1,0 +1,31 @@
+---
+####### Create Unified PlatformOne.tar.gz Tarball with all offline deploy requirements
+- name: '{{ ansible_name_module }} | role | file | Purge pre-existing bundles'
+  file:
+    path: "{{ local_home }}/PlatformOne.tar.gz"
+    state: absent
+
+- name: '{{ ansible_name_module }} | role | command tar | build tarball bundle of all artifacts'
+  command:
+    "tar -cvzf {{ local_home }}/PlatformOne.tar.gz -C {{ local_home }} PlatformOne"
+  args:
+    creates: "{{ local_home }}/PlatformOne.tar.gz"
+
+- name: '{{ ansible_name_module }} | role | copy | Move to stateful path /root/PlatformOne/PlatformOne.tar.gz'
+  copy:
+    src: "{{ local_home }}/PlatformOne.tar.gz"
+    dest: "{{ dir_one }}/PlatformOne.tar.gz"
+- name: '{{ ansible_name_module }} | role | copy | Remove temporary staging bundle'
+  file:
+    path: "{{ local_home }}/PlatformOne.tar.gz"
+    state: absent
+
+# TODO:
+#   Instead of `copy` to move file to /root/PlatformOne/
+#     do:
+#     - sha256 PlatformOne.tar.gz
+#     - stage bash script to, check tar sha, unpack tarball, & launch ContainerOne
+#     - Tar: |
+#         /root/PlatformOne.tar.gz
+#         /root/PlatformOne.tar.gz.sha256
+#         /root/start.sh

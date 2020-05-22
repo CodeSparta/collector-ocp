@@ -1,0 +1,21 @@
+#!/usr/local/bin/ansible-playbook --inventory=inventory
+- name: '{{ ansible_name }} | bundle | prep' 
+  hosts: localhost
+  connection: local
+  vars:
+    module: "prep"
+    ansible_name_module: "{{ ansible_name }} | bundle | {{ module }}"
+    dir_artifacts_manifest: "{{ dir_artifacts }}/data/manifests"
+    dir_artifacts_openshift: "{{ dir_artifacts }}/data/manifests"
+  vars_files:
+    - 'p1.yml'
+    - 'variables'
+    - 'vars/repos.yml'
+    - 'vars/{{ target_environment }}.yml'
+  tasks:
+    - name: '{{ ansible_name_module }} | file | stage environment variables globally' 
+      copy:
+        src: '{{ dir_artifacts }}/environment'
+        dest: '/etc/profile.d/environment'
+  roles:
+    - prep

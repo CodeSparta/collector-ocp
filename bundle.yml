@@ -1,0 +1,15 @@
+#!/usr/local/bin/ansible-playbook --inventory=inventory
+- name: '{{ ansible_name }} | bundle | manifests' 
+  hosts: localhost
+  connection: local
+  vars:
+    module: "package"
+    ansible_name_module: "{{ ansible_name }} | {{ module }}"
+  vars_files:
+    - 'p1.yml'
+    - vars/seed.yml
+    - variables
+    - vars/repos.yml
+    - vars/{{ target_environment }}.yml
+  roles:
+    - bundle

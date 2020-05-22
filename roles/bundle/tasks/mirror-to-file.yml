@@ -1,0 +1,46 @@
+---
+####### Download OpenShift Docker Images from Quay.io to File: /root/PlatformOne/Mirror/v2
+- name: '{{ ansible_name_module }} | role | block | Download OpenShift images for registry'
+  block:
+    - name: '{{ ansible_name_module }} | role | block | block:download | Check for file existence'
+      find:
+        file_type: directory
+        paths: "{{ dir_one }}/mirror"
+      register: files
+    - name: '{{ ansible_name_module }} | role | block:download | Purge pre-existing directories'
+      file:
+        path: "{{ dir_one }}/mirror"
+        state: absent
+      when: files.examined > 0 
+    - name: ocp4-deploy | task03-deploy | Create task03-deploy mirror directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: 0755
+      loop:
+        - "{{ dir_one }}/mirror"
+        - "{{ local_home }}/.docker"
+
+      # Mirror Images to directory
+    - name: ocp4-deploy | task03-deploy | Sync content from quay.io
+      shell: |
+        oc adm release mirror \
+        --from=quay.io/openshift-release-dev/ocp-release:{{ version_openshift }}-x86_64 \
+        --to-dir={{ dir_one }}/mirror
+  # Rescue block if there are any failures in the above block
+  rescue:
+    - name: ocp4-deploy | task03-deploy | Remove any existing directories (if they exist)
+      file:
+        path: "{{ dir_one }}/mirror"
+        state: absent
+
+    - name: ocp4-deploy | task03-deploy | Create registry mirror directory
+      file:
+        path: "{{ dir_one }}/mirror"
+
+    - name: ocp4-deploy | task03-deploy | Sync content from quay.io
+      shell: |
+        oc adm release mirror \
+        --from=quay.io/openshift-release-dev/ocp-release:{{ version_openshift }}-x86_64 \
+        --to-dir={{ dir_one }}/mirror
+      register: mirror

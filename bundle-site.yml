@@ -1,0 +1,8 @@
+#!/usr/local/bin/ansible-playbook
+- import_playbook: vars.yml       # Stage initial ansible variable files
+- import_playbook: template.yml   # Template install-config.yaml and auxilary manifest files
+- import_playbook: prep.yml       # Download git repos and any other prerequisites
+- import_playbook: manifests.yml  # Initialize & edit base manifests using openshift-install create manifests cmd
+- import_playbook: ignition.yml   # Build ignition files from manifests
+- import_playbook: bundle.yml     # Download images & bundle along with all artifacts required for airgap pivot
+# import_playbook: upload.yml     # Push bundle to s3 bucket
