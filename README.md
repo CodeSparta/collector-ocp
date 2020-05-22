@@ -1,5 +1,4 @@
-# PlatformOne | AWS Fences Airgap Cluster Deploy Manual - Red Hat OpenShift 4
-
+# PlatformOne | AWS Red Hat OpenShift 4 | Deployment Prep Tools
 ## 1. Create base PlatformOne & images asset directories
 ```
 mkdir -p ${HOME}/PlatformOne/images
@@ -25,12 +24,10 @@ podman run -d -h fences --name fences --privileged --volume ${HOME}/PlatformOne:
 podman exec -it fences connect
 ```
 ## 6.\* Setup environment
-
 Run the `p1` initial artifact setup walkthrough:
 ```
 p1
 ```
-
 # Demo:
   - Building the bundle
 ![bundle](./web/bundle.svg)
