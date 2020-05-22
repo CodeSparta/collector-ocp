@@ -33,4 +33,4 @@ p1
 
 # Demo:
   - Building the bundle
-![deploy](./deploy.svg)
+![bundle](./bundle.svg)
