@@ -19,7 +19,7 @@ podman save -o ${HOME}/PlatformOne/images/docker-one-image.tar           docker.
 ```
 ## 4. Launch ContainerOne Point of Origin Container
 ```
-podman run -d -h fences --name fences --privileged --volume ${HOME}/PlatformOne:/root/PlatformOne:z quay.io/containercraft/one:fences
+podman run -d -h fences --name fences --privileged --volume ${HOME}/PlatformOne:/root/PlatformOne:z docker.io/containercraft/one:fences
 ```
 ## 5. Exec into ContainerOne
 ```
