@@ -5,14 +5,14 @@ mkdir -p ${HOME}/PlatformOne/images
 ```
 ## 2.\* Pull required deployment images    
 ```
-podman pull docker.io/library/pause:3.2
+podman pull k8s.gcr.io/pause:3.1
 podman pull docker.io/library/registry:2 
 podman pull docker.io/library/nginx:latest 
 podman pull docker.io/containercraft/one:fences
 ```
 ## 3.\* Export images for airgapped services
 ```
-podman save -o ${HOME}/PlatformOne/images/docker-pause-image.tar         docker.io/library/pause:3.2
+podman save -o ${HOME}/PlatformOne/images/docker-pause-image.tar         k8s.gcr.io/pause:3.1
 podman save -o ${HOME}/PlatformOne/images/docker-registry2-image.tar     docker.io/library/registry:2 
 podman save -o ${HOME}/PlatformOne/images/docker-nginxlatest-image.tar   docker.io/library/nginx:latest
 podman save -o ${HOME}/PlatformOne/images/docker-one-image.tar           docker.io/containercraft/one:fences
