@@ -5,12 +5,12 @@
     path: '{{ dir_ansible }}/clone.date'  
   register: git_clone_check
 
-- name: '{{ ansible_name_module }} | git | clone:{{ git_branch }} | Clone Git Dependencies' 
+- name: '{{ ansible_name_module }} | git:clone.{{ git_branch }} | Clone Git Dependencies' 
   git:
     clone: yes
+    version: "{{ git_branch }}"
     repo: "{{ item.repo }}"
     dest: "{{ item.dest }}"
-    version: "{{ git_branch }}"
     key_file: "{{ item.key_file }}"
   with_items:
     - "{{ gitrepos }}"
@@ -26,8 +26,7 @@
 #   - "{{ dir_terraform }}/aws-masters/"
 # when: terraform_build == "True"
 
-- name: '{{ ansible_name_module }} | role | Place Git Clone Lock {{ dir_ansible }}/clone.date' 
+- name: '{{ ansible_name_module }} | Place Git Clone Lock {{ dir_ansible }}/clone.date' 
   copy: 
-    contents: "{{ lookup('pipe', 'date +%Y%m%d-%H%M') }}"
+    content: "{{ lookup('pipe', 'date +%Y%m%d-%H%M') }}"
     dest: '{{ dir_ansible }}/clone.date'
-
