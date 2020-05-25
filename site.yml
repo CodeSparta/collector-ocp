@@ -1,6 +1,6 @@
 #!/usr/local/bin/ansible-playbook
 - name: 'RedHat | PlatformOne | bundle' 
-  hosts: localhost
+  hosts: containerone
 
 - import_playbook: dependencies.yml # Download git repos and any other prerequisite dependencies
 - import_playbook: templates.yml    # Template install-config.yaml and auxilary manifest files
