@@ -1,6 +1,7 @@
 ---
 # (Repo1) Git Source & Destination
 # (RedHatOfficial) Git Source & Destination
+keyfile: '/root/.ssh/id_rsa'
 
 # (Consulting) Git Source & Destination
 url_git_bundle: 'ssh://git@gitlab.consulting.redhat.com:2222/platformone/openshift/ocp4x/ansible/bundle.git'
@@ -12,9 +13,12 @@ gitrepos:
   - repo: "{{ url_git_bundle }}"
     dest: "{{ dir_git_bundle }}"
     branch: "{{ git_branch }}"
+    key_file: "{{ keyfile }}"
   - repo: "{{ url_git_deploy }}"
     dest: "{{ dir_git_deploy }}"
     branch: "{{ git_branch }}"
+    key_file: "{{ keyfile }}"
   - repo: "{{ url_git_mirror }}"
     dest: "{{ dir_git_mirror }}"
     branch: "{{ git_branch }}"
+    key_file: "{{ keyfile }}"
