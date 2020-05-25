@@ -11,7 +11,7 @@
     repo: "{{ item.repo }}"
     dest: "{{ item.dest }}"
     version: "{{ git_branch }}"
-    key_file: "{{ sshkeys_priv_file }}"
+    key_file: "{{ item.key_file }}"
   with_items:
     - "{{ gitrepos }}"
   when:
