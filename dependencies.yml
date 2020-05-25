@@ -2,10 +2,10 @@
 - name: 'RedHat | PlatformOne | bundle | prep.yml' 
   hosts: containerone
   vars_files:
-    - ../p1.yml
-    - vars/{{ target_environment }}.yml
-    - vars/global.yml
-    - vars/git.yml
+    - '../p1.yml'
+    - 'vars/{{ target_environment }}.yml'
+    - 'vars/global.yml'
+    - 'vars/git.yml'
   vars:
     module: "prep"
     ansible_name_module: "{{ ansible_name }} | {{ module }}"
