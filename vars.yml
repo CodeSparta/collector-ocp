@@ -11,7 +11,7 @@
     ansible_name: 'RedHat | PlatformOne'
     ansible_name_module: "{{ ansible_name }} | {{ module }}"
     dir_git_deploy: '{{ dir_one }}/ansible/deploy'
-    ansible_varsj2: '{{ dir_git_deploy }}/templates/ansible/variables.j2'
+    dir_deploy_templates: '{{ dir_git_deploy }}/templates'
     redhat_quay_pull_file: '{{ dir_artifacts }}/.docker/master.json }}'
   tasks:
     - name: '{{ ansible_name_module }} | bundle | stage variables file' 
@@ -19,5 +19,7 @@
         src: '{{ item.src }}'
         dest: '{{ item.dest }}'
       with_items:
-        - { src: '{{ ansible_varsj2 }}', dest: '{{ dir_deploy }}/variables' }
+        - { src: '{{ dir_deploy_templates }}/ansible/variables.j2', dest: '{{ dir_deploy }}/variables' }
+        - { src: '{{ dir_deploy_templates }}/registry2/registry.yml', dest: '{{ local_home }}/registry.yml' }
+        - { src: '{{ dir_deploy_templates }}/bin/registry.sh', dest: '{{ local_home }}/registry.sh' }
         - { src: '{{ dir_artifacts }}/environment', dest: '/etc/profile.d/one.env' }

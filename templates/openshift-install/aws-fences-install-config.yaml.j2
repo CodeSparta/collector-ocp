@@ -4,10 +4,10 @@ additionalTrustBundle: |
 baseDomain: {{ name_domain }}
 imageContentSources:
 - mirrors:
-  - {{ cluster_domain }}/ocp-{{ version_openshift }}
+  - {{ cluster_domain }}:5000/ocp-{{ version_openshift }}
   source: quay.io/openshift-release-dev/ocp-release
 - mirrors:
-  - {{ cluster_domain }}/ocp-{{ version_openshift }}
+  - {{ cluster_domain }}:5000/ocp-{{ version_openshift }}
   source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
 compute:
 - name: worker

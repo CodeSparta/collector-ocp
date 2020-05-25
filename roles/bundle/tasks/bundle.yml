@@ -11,21 +11,29 @@
   args:
     creates: "{{ local_home }}/PlatformOne.tar.gz"
 
-- name: '{{ ansible_name_module }} | role | copy | Move to stateful path /root/PlatformOne/PlatformOne.tar.gz'
-  copy:
-    src: "{{ local_home }}/PlatformOne.tar.gz"
-    dest: "{{ dir_one }}/PlatformOne.tar.gz"
-- name: '{{ ansible_name_module }} | role | copy | Remove temporary staging bundle'
-  file:
+- name: '{{ ansible_name_module }} | role | stat | Get PlatformOne.tar.gz SHA256'
+  stat:
     path: "{{ local_home }}/PlatformOne.tar.gz"
-    state: absent
+    checksum_algorithm: sha256
+    get_checksum: yes
+  register: p1tar_sha256
 
-# TODO:
-#   Instead of `copy` to move file to /root/PlatformOne/
-#     do:
-#     - sha256 PlatformOne.tar.gz
-#     - stage bash script to, check tar sha, unpack tarball, & launch ContainerOne
-#     - Tar: |
-#         /root/PlatformOne.tar.gz
-#         /root/PlatformOne.tar.gz.sha256
-#         /root/start.sh
+- name: '{{ ansible_name_module }} | role | copy | Stage PlatformOne.tar.gz.sha256'
+  copy:
+    dest: "{{ local_home }}/PlatformOne.tar.gz.sha256"
+    content: '{{ p1tar_sha256.stdout }} PlatformOne.tar.gz'
+
+- name: '{{ ansible_name_module }} | role | copy | Bundle PlatformOne.tar.gz with auxilary files'
+  archive:
+    path:
+    - '{{ local_home }}/PlatformOne.tar.gz.sha256'
+    - '{{ local_home }}/PlatformOne.tar.gz'
+    - '{{ local_home }}/registry.yml'
+    - '{{ local_home }}/registry.sh'
+    dest: '{{ dir_one }}/{{ target_environment }}-bundle.tar'
+    format: tar
+
+# name: '{{ ansible_name_module }} | role | copy | Remove temporary staging bundle'
+# file:
+#   path: "{{ local_home }}/PlatformOne.tar.gz"
+#   state: absent
