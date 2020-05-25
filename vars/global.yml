@@ -40,3 +40,6 @@ sshkeys_priv_file: "{{ dir_artifacts }}/.ssh/id_rsa_{{ cluster_domain }}"
 sshkeys_pub_string: "{{ lookup('file', '{{ sshkeys_pub_file }}') }}"
 sshkeys_priv_string: "{{ lookup('file', '{{ sshkeys_priv_file }}') }}"
 
+# Docker Pull Secrets
+redhat_quay_pull_file: '{{ dir_artifacts }}/.docker/master.json }}'
+offline_mirror_pull_file: '{{ dir_artifacts }}/.docker/mirror.json }}'

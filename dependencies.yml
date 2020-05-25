@@ -1,0 +1,16 @@
+#!/usr/local/bin/ansible-playbook --inventory=inventory
+- name: 'RedHat | PlatformOne | bundle | prep.yml' 
+  hosts: localhost
+  connection: local
+  vars_files:
+    - '../p1.yml'
+    - 'vars/{{ target_environment }}.yml'
+    - 'vars/global.yml'
+    - 'vars/git.yml'
+  vars:
+    module: "prep"
+    ansible_name_module: "{{ ansible_name }} | {{ module }}"
+    dir_artifacts_manifest: "{{ dir_artifacts }}/data/manifests"
+    dir_artifacts_openshift: "{{ dir_artifacts }}/data/openshift"
+  roles:
+    - dependencies

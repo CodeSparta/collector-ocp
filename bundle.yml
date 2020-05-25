@@ -1,15 +1,21 @@
 #!/usr/local/bin/ansible-playbook --inventory=inventory
-- name: '{{ ansible_name }} | bundle | manifests' 
+- name: 'RedHat | PlatformOne | bundle | artifacts' 
   hosts: localhost
-  connection: local
-  vars:
-    module: "package"
-    ansible_name_module: "{{ ansible_name }} | {{ module }}"
   vars_files:
-    - 'p1.yml'
-    - vars/seed.yml
-    - variables
-    - vars/repos.yml
-    - vars/{{ target_environment }}.yml
+    - '../p1.yml'
+    - 'vars/{{ target_environment }}.yml'
+    - 'vars/global.yml'
+  vars:
+    module: "bundle"
+    ansible_name_module: "{{ ansible_name }} | {{ module }}"
+    redhat_quay_pull_file: '{{ dir_artifacts }}/.docker/master.json }}'
+  tasks:
+    - name: '{{ ansible_name_module }} | stage registry startup assets' 
+      template:
+        src: '{{ item.src }}'
+        dest: '{{ item.dest }}'
+      with_items:
+        - { src: '{{ dir_git_bundle }}/templates/bin/registry.sh', dest: '{{ local_home }}/registry.sh' }
+        - { src: '{{ dir_git_bundle }}/templates/registry2/registry.yml', dest: '{{ local_home }}/registry.yml' }
   roles:
     - bundle

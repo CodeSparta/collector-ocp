@@ -1,0 +1,33 @@
+---
+####### Clone Git Dependencies
+- name: '{{ ansible_name_module }} | stat | Check for Git Clone'
+  stat:
+    path: '{{ dir_ansible }}/clone.date'  
+  register: git_clone_check
+
+- name: '{{ ansible_name_module }} | git | clone:{{ git_branch }} | Clone Git Dependencies' 
+  git:
+    clone: yes
+    repo: "{{ item.repo }}"
+    dest: "{{ item.dest }}"
+    version: "{{ git_branch }}"
+    key_file: "{{ sshkeys_priv_file }}"
+  with_items:
+    - "{{ gitrepos }}"
+  when:
+    - git_clone_check.stat.exists == False
+
+# name: '{{ ansible_name_module }} | Initilize terraform modules'
+# shell: "cd {{ item }} && terraform init"
+# with_items:
+#   - "{{ dir_terraform }}/aws-base/"
+#   - "{{ dir_terraform }}/aws-registry/"
+#   - "{{ dir_terraform }}/aws-bootstrap/"
+#   - "{{ dir_terraform }}/aws-masters/"
+# when: terraform_build == "True"
+
+- name: '{{ ansible_name_module }} | role | Place Git Clone Lock {{ dir_ansible }}/clone.date' 
+  copy: 
+    contents: "{{ lookup('pipe', 'date +%Y%m%d-%H%M') }}"
+    dest: '{{ dir_ansible }}/clone.date'
+

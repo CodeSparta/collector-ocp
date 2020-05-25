@@ -1,36 +1,36 @@
 ---
 ####### Create Unified PlatformOne.tar.gz Tarball with all offline deploy requirements
-- name: '{{ ansible_name_module }} | role | file | Purge pre-existing bundles'
+- name: '{{ ansible_name_module }} | file | Purge pre-existing bundles'
   file:
     path: "{{ local_home }}/PlatformOne.tar.gz"
     state: absent
 
-- name: '{{ ansible_name_module }} | role | command tar | build tarball bundle of all artifacts'
+- name: '{{ ansible_name_module }} | command:tar | build tarball bundle of all artifacts'
   command:
     "tar -cvzf {{ local_home }}/PlatformOne.tar.gz -C {{ local_home }} PlatformOne"
   args:
     creates: "{{ local_home }}/PlatformOne.tar.gz"
 
-- name: '{{ ansible_name_module }} | role | stat | Get PlatformOne.tar.gz SHA256'
+- name: '{{ ansible_name_module }} | stat:sha256 | SHA PlatformOne.tar.gz'
   stat:
     path: "{{ local_home }}/PlatformOne.tar.gz"
     checksum_algorithm: sha256
     get_checksum: yes
   register: p1tar_sha256
 
-- name: '{{ ansible_name_module }} | role | copy | Stage PlatformOne.tar.gz.sha256'
+- name: '{{ ansible_name_module }} | copy | Write PlatformOne.tar.gz.sha256'
   copy:
     dest: "{{ local_home }}/PlatformOne.tar.gz.sha256"
     content: '{{ p1tar_sha256.stdout }} PlatformOne.tar.gz'
 
-- name: '{{ ansible_name_module }} | role | copy | Bundle PlatformOne.tar.gz with auxilary files'
+- name: '{{ ansible_name_module }} | role | archive | Bundle PlatformOne.tar.gz with auxilary files'
   archive:
     path:
     - '{{ local_home }}/PlatformOne.tar.gz.sha256'
     - '{{ local_home }}/PlatformOne.tar.gz'
     - '{{ local_home }}/registry.yml'
     - '{{ local_home }}/registry.sh'
-    dest: '{{ dir_one }}/{{ target_environment }}-bundle.tar'
+    dest: '{{ dir_one }}/{{ target_environment }}-{{ name_cluster_vpc }}-p1-bundle.tar'
     format: tar
 
 # name: '{{ ansible_name_module }} | role | copy | Remove temporary staging bundle'

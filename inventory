@@ -1,8 +1,12 @@
+[localhost]
+localhost ansible_connection=local
+
+[containerone]
+fences ansible_connection=local ansible_user=root
+
 [registry]
-registry
+registry ansible_connection=local ansible_user=root
 
 [bastion]
-bastion
+10.88.0.1 ansible_connection=ssh ansible_user=core
 
-[workstation]
-localhost ansible_connection=local

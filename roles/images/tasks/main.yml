@@ -1,0 +1,6 @@
+---
+# tasks file for task03-deploy
+- name: '{{ ansible_name_module }} | stage docker pull secret' 
+  include_tasks: pull-secret.yml
+- name: '{{ ansible_name_module }} | download openshift container images from quay.io' 
+  include_tasks: mirror-to-file.yml

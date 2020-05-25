@@ -1,0 +1,10 @@
+#!/usr/local/bin/ansible-playbook
+- name: 'RedHat | PlatformOne | bundle' 
+  hosts: localhost
+
+- import_playbook: dependencies.yml # Download git repos and any other prerequisite dependencies
+- import_playbook: templates.yml    # Template install-config.yaml and auxilary manifest files
+- import_playbook: manifests.yml    # Create & customize OpenShift manifest files
+- import_playbook: ignition.yml     # Build RH CoreOS ignition files from manifests
+- import_playbook: images.yml       # Download openshift images to directory
+- import_playbook: bundle.yml       # Bundle all artifacts required for airgap environments

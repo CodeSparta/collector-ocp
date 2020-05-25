@@ -1,9 +1,0 @@
----
-local_path: "{{ lookup('env', 'PWD') }}"
-local_home: "{{ lookup('env', 'HOME') }}"
-local_user: "{{ lookup('env', 'USER') }}"
-dir_one: "{{ lookup('env', 'HOME') }}/PlatformOne"
-dir_ansible: "{{ lookup('env', 'HOME') }}/PlatformOne/ansible"
-dir_deploy: "{{ lookup('env', 'HOME') }}/PlatformOne/ansible/deploy"
-sshkeys_priv_file: "{{ dir_artifacts }}/.ssh/id_rsa_{{ cluster_domain }}"
-sshkeys_pub_file: "{{ dir_artifacts }}/.ssh/id_rsa_{{ cluster_domain }}.pub"

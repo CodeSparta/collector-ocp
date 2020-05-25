@@ -1,13 +1,13 @@
 #!/usr/local/bin/ansible-playbook --inventory=inventory
-- name: '{{ ansible_name }} | bundle | manifests' 
+- name: 'RedHat | PlatformOne | bundle | artifacts' 
   hosts: localhost
   connection: local
   vars_files:
     - '../p1.yml'
-    - 'vars/global.yml'
     - 'vars/{{ target_environment }}.yml'
+    - 'vars/global.yml'
   vars:
-    module: "manifests"
+    module: "bundle"
     ansible_name_module: "{{ ansible_name }} | {{ module }}"
   roles:
-    - manifests
+    - images
