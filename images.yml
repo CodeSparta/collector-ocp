@@ -1,7 +1,6 @@
 #!/usr/local/bin/ansible-playbook --inventory=inventory
 - name: 'RedHat | PlatformOne | bundle | artifacts' 
   hosts: localhost
-  connection: local
   vars_files:
     - '../p1.yml'
     - 'vars/{{ target_environment }}.yml'

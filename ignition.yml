@@ -1,13 +1,12 @@
 #!/usr/local/bin/ansible-playbook --inventory=inventory
-- name: '{{ ansible_name }} | bundle | ignition' 
+- name: 'RedHat | PlatformOne | bundle | ignition' 
   hosts: localhost
-  connection: local
+  vars_files:
+    - '../p1.yml'
+    - 'vars/{{ target_environment }}.yml'
+    - 'vars/global.yml'
   vars:
     module: "ignition"
-    ansible_name_module: "{{ ansible_name }} | {{ module }}"
-  vars_files:
-    - p1.yml
-    - variables
-    - vars/{{ target_environment }}.yml
+    ansible_name_module: "{{ ansible_name }} | bundle | {{ module }}"
   roles:
     - ignition
