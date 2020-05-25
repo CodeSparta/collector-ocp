@@ -1,7 +1,7 @@
 [containerone]
 localhost ansible_connection=local ansible_user=root
 
-[registry]
+[pod]
 registry ansible_connection=local ansible_user=root
 
 [bastion]
