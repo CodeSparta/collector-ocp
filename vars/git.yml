@@ -3,13 +3,8 @@
 # (RedHatOfficial) Git Source & Destination
 
 # (Consulting) Git Source & Destination
-dir_git_bundle: '{{ dir_ansible }}/bundle'
 url_git_bundle: 'https://gitlab.consulting.redhat.com/platformone/openshift/ocp4x/ansible/bundle.git'
-
-dir_git_deploy: '{{ dir_ansible }}/deploy'
 url_git_deploy: 'https://gitlab.consulting.redhat.com/platformone/openshift/ocp4x/ansible/deploy.git'
-
-dir_git_deploy: '{{ dir_ansible }}/mirror'
 url_git_mirror: 'https://gitlab.consulting.redhat.com/platformone/openshift/ocp4x/ansible/mirror.git'
 
 # Git Clone Repo Vars
