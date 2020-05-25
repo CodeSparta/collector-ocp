@@ -7,7 +7,7 @@
     - 'vars/global.yml'
     - 'vars/git.yml'
   vars:
-    module: "prep"
+    module: "dependencies"
     ansible_name_module: "{{ ansible_name }} | {{ module }}"
     dir_artifacts_manifest: "{{ dir_artifacts }}/data/manifests"
     dir_artifacts_openshift: "{{ dir_artifacts }}/data/openshift"
