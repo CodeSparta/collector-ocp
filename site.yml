@@ -1,4 +1,4 @@
-#!/usr/local/bin/ansible-playbook
+#!/usr/local/bin/ansible-playbook --inventory=inventory
 - name: 'RedHat | PlatformOne | bundle' 
   hosts: containerone
 
