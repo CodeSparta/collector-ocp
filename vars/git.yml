@@ -4,16 +4,16 @@
 keyfile: '/root/.ssh/id_rsa'
 
 # (Consulting) Git Source & Destination
-url_git_bundle: 'ssh://git@gitlab.consulting.redhat.com:2222/platformone/openshift/ocp4x/ansible/bundle.git'
-url_git_deploy: 'ssh://git@gitlab.consulting.redhat.com:2222/platformone/openshift/ocp4x/ansible/deploy.git'
+url_git_bundle: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle.git'
+url_git_deploy: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/deploy.git'
 
 # Git Clone Repo Vars
 gitrepos:
   - repo: "{{ url_git_bundle }}"
     dest: "{{ dir_git_bundle }}"
     branch: "{{ git_branch }}"
-    key_file: "{{ keyfile }}"
+#   key_file: "{{ keyfile }}"
   - repo: "{{ url_git_deploy }}"
     dest: "{{ dir_git_deploy }}"
     branch: "{{ git_branch }}"
-    key_file: "{{ keyfile }}"
+#   key_file: "{{ keyfile }}"
