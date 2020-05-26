@@ -6,7 +6,7 @@
     - 'vars/{{ target_environment }}.yml'
     - 'vars/global.yml'
   vars:
-    module: "bundle"
+    module: "images"
     ansible_name_module: "{{ ansible_name }} | {{ module }}"
   roles:
     - images
