@@ -6,6 +6,10 @@ metadata:
     app: registry
   name: registry
 spec:
+  hostAliases:
+  - ip: "127.0.0.1"
+    hostnames:
+    - "registry.{{ cluster_domain }}"
   containers:
   - env:
     - name: PATH
