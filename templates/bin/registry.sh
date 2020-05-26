@@ -1,10 +1,11 @@
 #!/bin/bash -e
 
 if [[ ! -d ./PlatformOne ]]; then
-  sha256sum --check PlatformOne.tar.gz.sha256
+ #sha256sum --check PlatformOne.tar.gz.sha256
   tar xvf PlatformOne.tar.gz
   runUser="$USER"
-  sudo chown -R ${runUser}:${runUser} PlatformOne
+  sudo chown -R ${runUser}:${runUser} ${HOME}/PlatformOne
+  sudo chmod -R 755 ${HOME}/PlatformOne/${p1NameVpc}/data
 fi
 
 p1DirImages=${HOME}/PlatformOne/images
@@ -70,4 +71,4 @@ test_core () {
 
 run_core
 test_core
-echo && echo "done"
+podman exec -it fences connect

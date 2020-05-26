@@ -1,9 +1,9 @@
 ---
-cloud_provider: 'aws'
-cloud_region: "us-gov-west-1"
-git_branch="aws-fences-automation"
 version_openshift: "4.3.8"
-name_domain: "of.rock"
-cluster_name: "school"
-name_cluster_vpc: "rockgod"
-cluster_domain: "school.of.rock"
+target_environment: 'fences'
+git_branch: "aws-fences-automation"
+cluster_network_mode: "disconnected"
+cluster_domain: "i.am.groot"
+name_cluster_vpc: "groot"
+name_domain: "am.groot"
+cluster_name: "i"

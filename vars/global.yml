@@ -16,7 +16,6 @@ dir_one: "{{ lookup('env', 'HOME') }}/PlatformOne"
 dir_ansible: "{{ lookup('env', 'HOME') }}/PlatformOne/ansible"
 dir_git_bundle: "{{ lookup('env', 'HOME') }}/PlatformOne/ansible/bundle"
 dir_git_deploy: "{{ lookup('env', 'HOME') }}/PlatformOne/ansible/deploy"
-dir_git_mirror: "{{ lookup('env', 'HOME') }}/PlatformOne/ansible/mirror"
 dir_artifacts: "{{ lookup('env', 'HOME') }}/PlatformOne/{{ cluster_domain }}"
 
 # Terraform Variables
