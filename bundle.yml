@@ -15,7 +15,7 @@
         src: '{{ item.src }}'
         dest: '{{ item.dest }}'
       with_items:
-        - { src: '{{ dir_git_bundle }}/templates/bin/registry.sh', dest: '{{ local_home }}/registry.sh' }
-        - { src: '{{ dir_git_bundle }}/templates/registry2/registry.yml', dest: '{{ local_home }}/registry.yml' }
+        - { src: '{{ dir_git_bundle }}/templates/bin/registry.sh', dest: '/tmp/registry.sh' }
+        - { src: '{{ dir_git_bundle }}/templates/registry2/registry.yml', dest: '/tmp/registry.yml' }
   roles:
     - bundle

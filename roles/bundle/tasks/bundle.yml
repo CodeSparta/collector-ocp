@@ -18,7 +18,7 @@
     ####### Build Unified Bundle
     - name: '{{ ansible_name_module }} | command:tar | build tarball bundle of all artifacts'
       command:
-        "tar -cvzf {{ local_home }}/PlatformOne.tar.gz -C {{ local_home }} PlatformOne"
+        "tar -cvzf /tmp/PlatformOne.tar.gz -C {{ local_home }} PlatformOne"
       args:
         creates: "{{ local_home }}/PlatformOne.tar.gz"
         warn: false
@@ -26,7 +26,7 @@
     ####### SHA256sum PlatformOne.tar.gz
     - name: '{{ ansible_name_module }} | stat:sha256 | SHA PlatformOne.tar.gz'
       stat:
-        path: "{{ local_home }}/PlatformOne.tar.gz"
+        path: "/tmp/PlatformOne.tar.gz"
         checksum_algorithm: sha256
         get_checksum: yes
       register: p1tar_sha256
@@ -34,7 +34,7 @@
     ####### Write SHA file
     - name: '{{ ansible_name_module }} | copy | Write PlatformOne.tar.gz.sha256'
       copy:
-        dest: "{{ local_home }}/PlatformOne.tar.gz.sha256"
+        dest: "/tmp/PlatformOne.tar.gz.sha256"
         content: "{{ p1tar_sha256 }} PlatformOne.tar.gz"
 
   ####### Block Conditionals
@@ -43,7 +43,7 @@
 ####### Bundle PlatformOne.tar.gz with unpack + launch utilities
 - name: '{{ ansible_name_module }} | role | archive | Bundle PlatformOne.tar.gz with auxilary files'
   archive:
-    path:
+    exclude_path:
     - '/tmp/PlatformOne.tar.gz.sha256'
     - '/tmp/PlatformOne.tar.gz'
     - '/tmp/registry.yml'
