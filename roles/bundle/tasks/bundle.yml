@@ -41,12 +41,21 @@
   when: p1tar_sha_check.stat.exists == False
 
 ####### Bundle PlatformOne.tar.gz with unpack + launch utilities
-- name: '{{ ansible_name_module }} | role | archive | Bundle PlatformOne.tar.gz with auxilary files'
-  archive:
-    exclude_path:
-    - '/tmp/PlatformOne.tar.gz.sha256'
-    - '/tmp/PlatformOne.tar.gz'
-    - '/tmp/registry.yml'
-    - '/tmp/registry.sh'
-    dest: '{{ local_home }}/PlatformOne/{{ cloud_provider }}-{{ target_environment }}-{{ name_cluster_vpc }}-p1bundle.tar'
-    format: tar
+# name: '{{ ansible_name_module }} | role | archive | Bundle PlatformOne.tar.gz with auxilary files'
+# archive:
+#   path:
+#   - '/tmp/PlatformOne.tar.gz.sha256'
+#   - '/tmp/PlatformOne.tar.gz'
+#   - '/tmp/registry.yml'
+#   - '/tmp/registry.sh'
+#   dest: '{{ local_home }}/PlatformOne/{{ cloud_provider }}-{{ target_environment }}-{{ name_cluster_vpc }}-p1bundle.tar'
+#   format: tar
+
+####### Build Unified Bundle
+- name: '{{ ansible_name_module }} | command:tar.cvf | Build unified bundle with auxilary unpack+launch utilities'
+  command:
+    "tar -cvf {{ local_home }}/PlatformOne/{{ cloud_provider }}-{{ target_environment }}-{{ name_cluster_vpc }}-p1bundle.tar -C /tmp PlatformOne.tar.gz.sha256 PlatformOne.tar.gz registry.yml registry.sh"
+  args:
+    creates: "{{ local_home }}/PlatformOne/{{ cloud_provider }}-{{ target_environment }}-{{ name_cluster_vpc }}-p1bundle.tar"
+    warn: false
+
