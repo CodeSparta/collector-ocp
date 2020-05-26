@@ -1,6 +1,6 @@
 #!/usr/local/bin/ansible-playbook --inventory=inventory
 - name: '{{ ansible_name }} | bundle | manifests' 
-  hosts: localhost
+  hosts: containerone
   vars_files:
     - '../p1.yml'
     - 'vars/{{ target_environment }}.yml'
