@@ -1,39 +1,52 @@
 ---
 ####### Create Unified PlatformOne.tar.gz Tarball with all offline deploy requirements
-- name: '{{ ansible_name_module }} | file | Purge pre-existing bundles'
-  file:
-    path: "{{ local_home }}/PlatformOne.tar.gz"
-    state: absent
-
-- name: '{{ ansible_name_module }} | command:tar | build tarball bundle of all artifacts'
-  command:
-    "tar -cvzf {{ local_home }}/PlatformOne.tar.gz -C {{ local_home }} PlatformOne"
-  args:
-    creates: "{{ local_home }}/PlatformOne.tar.gz"
-
-- name: '{{ ansible_name_module }} | stat:sha256 | SHA PlatformOne.tar.gz'
+- name: '{{ ansible_name_module }} | stat | Check for pre-existing PlatformOne.tar.gz.sha256'
   stat:
-    path: "{{ local_home }}/PlatformOne.tar.gz"
-    checksum_algorithm: sha256
-    get_checksum: yes
-  register: p1tar_sha256
+    path: '/tmp/PlatformOne.tar.gz.sha256'  
+  register: p1tar_sha_check
 
-- name: '{{ ansible_name_module }} | copy | Write PlatformOne.tar.gz.sha256'
-  copy:
-    dest: "{{ local_home }}/PlatformOne.tar.gz.sha256"
-    content: '{{ p1tar_sha256.stdout }} PlatformOne.tar.gz'
+###### Download OpenShift Docker Images from Quay.io to File: /root/PlatformOne/Mirror/v2
+- name: '{{ ansible_name_module }} | block | Download OpenShift images'
+  block:
 
+    ####### Purge preexisting bundles
+    - name: '{{ ansible_name_module }} | file | Purge pre-existing bundles'
+      file:
+        path: "{{ local_home }}/PlatformOne.tar.gz"
+        state: absent
+
+    ####### Build Unified Bundle
+    - name: '{{ ansible_name_module }} | command:tar | build tarball bundle of all artifacts'
+      command:
+        "tar -cvzf {{ local_home }}/PlatformOne.tar.gz -C {{ local_home }} PlatformOne"
+      args:
+        creates: "{{ local_home }}/PlatformOne.tar.gz"
+        warn: false
+
+    ####### SHA256sum PlatformOne.tar.gz
+    - name: '{{ ansible_name_module }} | stat:sha256 | SHA PlatformOne.tar.gz'
+      stat:
+        path: "{{ local_home }}/PlatformOne.tar.gz"
+        checksum_algorithm: sha256
+        get_checksum: yes
+      register: p1tar_sha256
+
+    ####### Write SHA file
+    - name: '{{ ansible_name_module }} | copy | Write PlatformOne.tar.gz.sha256'
+      copy:
+        dest: "{{ local_home }}/PlatformOne.tar.gz.sha256"
+        content: "{{ p1tar_sha256 }} PlatformOne.tar.gz"
+
+  ####### Block Conditionals
+  when: p1tar_sha_check.stat.exists == False
+
+####### Bundle PlatformOne.tar.gz with unpack + launch utilities
 - name: '{{ ansible_name_module }} | role | archive | Bundle PlatformOne.tar.gz with auxilary files'
   archive:
     path:
-    - '{{ local_home }}/PlatformOne.tar.gz.sha256'
-    - '{{ local_home }}/PlatformOne.tar.gz'
-    - '{{ local_home }}/registry.yml'
-    - '{{ local_home }}/registry.sh'
-    dest: '{{ dir_one }}/{{ target_environment }}-{{ name_cluster_vpc }}-p1-bundle.tar'
+    - '/tmp/PlatformOne.tar.gz.sha256'
+    - '/tmp/PlatformOne.tar.gz'
+    - '/tmp/registry.yml'
+    - '/tmp/registry.sh'
+    dest: '{{ local_home }}/PlatformOne/{{ cloud_provider }}-{{ target_environment }}-{{ name_cluster_vpc }}-p1bundle.tar'
     format: tar
-
-# name: '{{ ansible_name_module }} | role | copy | Remove temporary staging bundle'
-# file:
-#   path: "{{ local_home }}/PlatformOne.tar.gz"
-#   state: absent
