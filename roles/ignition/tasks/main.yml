@@ -4,7 +4,7 @@
     src: "{{ dir_artifacts }}/data/"
     dest: "{{ dir_artifacts }}/bak/data"
 
-- name: '{{ ansible_name_module }} | role | shell:openshift-install | Generate ignition config files'
+- name: '{{ ansible_name_module }} | role | include_tasks | ignition.yml'
   include_tasks: ignition.yml
 
 - name: '{{ ansible_name_module }} | role | copy | Move auth directory out of future nginx web root path'
