@@ -60,9 +60,9 @@ spec:
     - name: REGISTRY_AUTH_HTPASSWD_PATH
       value: /root/auth/htpasswd
     - name: REGISTRY_HTTP_TLS_KEY
-      value: /root/ssl/{{ name_cluster_vpc }}.{{ cluster_domain }}.key
+      value: /root/ssl/{{ cluster_domain }}.key
     - name: REGISTRY_HTTP_TLS_CERTIFICATE
-      value: /root/ssl/{{ name_cluster_vpc }}.{{ cluster_domain }}.crt
+      value: /root/ssl/{{ cluster_domain }}.crt
     image: docker.io/library/registry:2
     name: registry2
     resources: {}
@@ -116,19 +116,19 @@ spec:
       type: Directory
     name: var-home-core-PlatformOne
   - hostPath:
-      path: /var/home/core/PlatformOne/{{ name_cluster_vpc }}.{{ cluster_domain }}/registry
+      path: /var/home/core/PlatformOne/{{ cluster_domain }}/registry
       type: Directory
     name: var-home-core-PlatformOne-{{ name_cluster_vpc }}.{{ cluster_domain }}-registry
   - hostPath:
-      path: /var/home/core/PlatformOne/{{ name_cluster_vpc }}.{{ cluster_domain }}/ssl
+      path: /var/home/core/PlatformOne/{{ cluster_domain }}/ssl
       type: Directory
     name: var-home-core-PlatformOne-{{ name_cluster_vpc }}.{{ cluster_domain }}-ssl
   - hostPath:
-      path: /var/home/core/PlatformOne/{{ name_cluster_vpc }}.{{ cluster_domain }}/auth/htpasswd
+      path: /var/home/core/PlatformOne/{{ cluster_domain }}/auth/htpasswd
       type: File
     name: var-home-core-PlatformOne-{{ name_cluster_vpc }}.{{ cluster_domain }}-auth-htpasswd
   - hostPath:
-      path: /var/home/core/PlatformOne/{{ name_cluster_vpc }}.{{ cluster_domain }}/data
+      path: /var/home/core/PlatformOne/{{ cluster_domain }}/data
       type: Directory
     name: var-home-core-PlatformOne-{{ name_cluster_vpc }}.{{ cluster_domain }}-data
 status: {}
