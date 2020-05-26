@@ -68,7 +68,7 @@
   when: cluster_network_mode == 'disconnected'
 
 ####### Remove Default ingress config & non-applicable cloud credential configs
-- name: '{{ ansible_name_module }} | file:state:absent | Remove {defaultIngressConfig,n/a-CloudCredConfigs'
+- name: '{{ ansible_name_module }} | file:state:absent | Remove {defaultIngressConfig, NA/CloudCredConfigs}'
   file:
     path: '{{ item }}'
     state: absent
