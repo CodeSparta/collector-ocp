@@ -1,18 +1,18 @@
 ---
-- name: '{{ ansible_name_module }} | role | copy | Backup ignition config directory'
+- name: '{{ ansible_name_module }} | copy | Backup ignition config directory'
   copy:
     src: "{{ dir_artifacts }}/data/"
     dest: "{{ dir_artifacts }}/bak/data"
 
-- name: '{{ ansible_name_module }} | role | include_tasks | ignition.yml'
+- name: '{{ ansible_name_module }} | include_tasks | ignition.yml'
   include_tasks: ignition.yml
 
-- name: '{{ ansible_name_module }} | role | copy | Move auth directory out of future nginx web root path'
+- name: '{{ ansible_name_module }} | copy | Move auth directory out of future nginx web root path'
   copy:
     src: "{{ dir_artifacts }}/data/auth"
     dest: "{{ dir_artifacts }}/bak/"
 
-- name: '{{ ansible_name_module }} | role | copy | Copy kubeconfig'
+- name: '{{ ansible_name_module }} | copy | Copy kubeconfig'
   copy:
     src: "{{ dir_artifacts }}/bak/auth/kubeconfig"
     dest: '{{ local_home }}/.kube/config'

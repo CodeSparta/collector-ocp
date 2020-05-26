@@ -7,6 +7,6 @@
     - 'vars/global.yml'
   vars:
     module: "ignition"
-    ansible_name_module: "{{ ansible_name }} | bundle | {{ module }}"
+    ansible_name_module: "{{ ansible_name }} | {{ module }}"
   roles:
     - ignition
