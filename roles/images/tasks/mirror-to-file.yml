@@ -1,7 +1,7 @@
 ---
 - name: '{{ ansible_name_module }} | stat | check for mirror v2.sha256'
   stat:
-    path: '{{ dir_one }}/mirror/v2.sha256'  
+    path: '{{ dir_one }}/mirror/v2.list.sha256'  
   register: mirror_sha_check
 
 ###### Download OpenShift Docker Images from Quay.io to File: /root/PlatformOne/Mirror/v2
@@ -55,14 +55,5 @@
 
 ###### END OF BLOCK #######
 
-- name: '{{ ansible_name_module }} | stat | sha256 mirror/v2 directory'
-  stat:
-    path: "{{ dir_one }}/v2"
-    checksum_algorithm: sha256
-    get_checksum: yes
-  register: mirror_sha256
-
-- name: '{{ ansible_name_module }} | copy:content | place mirror/v2 sha256 file'
-  copy:
-    dest: "{{ local_home }}/PlatformOne/mirror/v2.sha256"
-    content: '{{ mirror_sha256.stdout }} v2.sha256'
+- name: '{{ ansible_name_module }} | stat | sha256 mirror/v2 directory list'
+  shell: 'find -type f ! -iname "sha256checksums" -exec sha256sum "{}" + > {{ local_home }}/PlatformOne/mirror/v2.list.sha256'
