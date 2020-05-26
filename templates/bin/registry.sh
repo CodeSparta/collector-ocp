@@ -5,7 +5,8 @@ if [[ ! -d ./PlatformOne ]]; then
   tar xvf PlatformOne.tar.gz
   runUser="$USER"
   sudo chown -R ${runUser}:${runUser} ${HOME}/PlatformOne
-  sudo chmod -R 755 ${HOME}/PlatformOne/${p1NameVpc}/data
+  sudo chmod -R 755 ${HOME}/PlatformOne/${p1ClusterDomain}/data
+  mkdir  ${HOME}/PlatformOne/${p1ClusterDomain}/registry
 fi
 
 p1DirImages=${HOME}/PlatformOne/images
