@@ -39,21 +39,21 @@
 
 ####### Rename region across all manifests | Workaround version requires debugging and simplification
 - block:
-    - name: '{{ ansible_name_module }} | replace | Replace region for cluster-infrastructure-02-config.yml | TODO:FIX'
+    - name: '{{ ansible_name_module }} | replace | Replace region for cluster-infrastructure-02-config.yml'
       replace:
         path: "{{ dir_artifacts }}/data/manifests/cluster-infrastructure-02-config.yml"
         regexp: "us-east-1"
         replace: "{{ cloud_region }}"
   ignore_errors: True
   always:
-    - name: '{{ ansible_name_module }} | replace | Check to see if the content still exists | TODO:FIX'
+    - name: '{{ ansible_name_module }} | replace | Check to see if the content still exists'
       lineinfile:
         path: "{{ dir_artifacts }}/data/manifests/cluster-infrastructure-02-config.yml"
         line: us-east-1
         state: present
       check_mode: true
       register: presence
-    - name: '{{ ansible_name_module }} | replace | Replace region for cluster-infrastructure-02-config.yml | TODO:FIX'
+    - name: '{{ ansible_name_module }} | replace | Replace region for cluster-infrastructure-02-config.yml'
       replace:
         path: "{{ dir_artifacts }}/data/manifests/cluster-infrastructure-02-config.yml"
         regexp: "us-east-1"
