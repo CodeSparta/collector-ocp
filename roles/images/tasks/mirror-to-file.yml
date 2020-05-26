@@ -64,5 +64,5 @@
 
 - name: '{{ ansible_name_module }} | copy:content | place mirror/v2 sha256 file'
   copy:
-    dest: "{{ dir_one }}/mirror/v2.sha256"
+    dest: "{{ local_home }}/PlatformOne/mirror/v2.sha256"
     content: '{{ mirror_sha256.stdout }} v2.sha256'
