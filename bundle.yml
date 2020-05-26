@@ -9,13 +9,5 @@
     module: "bundle"
     ansible_name_module: "{{ ansible_name }} | {{ module }}"
     redhat_quay_pull_file: '{{ dir_artifacts }}/.docker/master.json }}'
-  tasks:
-    - name: '{{ ansible_name_module }} | stage registry startup assets' 
-      template:
-        src: '{{ item.src }}'
-        dest: '{{ item.dest }}'
-      with_items:
-        - { src: '{{ dir_git_bundle }}/templates/bin/registry.sh', dest: '/tmp/registry.sh' }
-        - { src: '{{ dir_git_bundle }}/templates/registry2/registry.yml', dest: '/tmp/registry.yml' }
   roles:
     - bundle
