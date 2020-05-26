@@ -31,5 +31,5 @@ Run the `p1` initial artifact setup walkthrough:
 p1
 ```
 # Demo:
-  - Building the bundle
+  - Building the bundle    
 ![bundle](./web/bundle.svg)
