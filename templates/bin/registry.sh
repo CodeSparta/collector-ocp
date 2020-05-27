@@ -13,7 +13,7 @@ source ${envFile}
 
 sudo chown -R ${runUser}:${runUser} ${HOME}/PlatformOne
 sudo chmod -R 755 ${HOME}/PlatformOne/${p1ClusterDomain}/data
-mkdir  ${HOME}/PlatformOne/${p1ClusterDomain}/registry
+mkdir  ${HOME}/PlatformOne/${p1ClusterDomain}/registry 2>/dev/null
 
 run_clean () {
   for pod in $( podman pod ps | awk '/registry/{print $1}' 2>/dev/null); do
