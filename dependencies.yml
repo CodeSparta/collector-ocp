@@ -13,3 +13,14 @@
     dir_artifacts_openshift: "{{ dir_artifacts }}/data/openshift"
   roles:
     - dependencies
+  tasks:
+
+    ####### Terraform Init
+    - name: '{{ ansible_name_module }} | shell | terraform init'
+      command: terraform init
+      args:
+        chdir: "{{ item.dir }}"
+        creates: "{{ item.creates }}"
+      loop:
+        - { dir: '{{ dir_git_masters }}', creates: '{{ dir_git_masters }}/.terraform' }
+        - { dir: '{{ dir_git_bootstrap }}', creates: '{{ dir_git_bootstrap }}/.terraform' }
