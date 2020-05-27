@@ -1,0 +1,36 @@
+variable "aws_region" {
+  default     = "us-gov-west-1"
+  description = "Select a valid aws region"
+}
+
+variable "credential_file" {default = ""}
+
+variable "aws_profile" {default = ""}
+
+variable "infrastructure_id" { default = "quantamkube"}
+
+variable "clustername" {default = "cluster"}
+
+variable "domain" {default = "quantamkube.com"}
+
+variable "iam_instance_profile" {default = "quantamkube-master-profile"}
+
+variable "aws_availability_zones" {
+  type = "list"
+  default = ["us-gov-west-1a", "us-gov-west-1b", "us-gov-west-1c"]
+}
+
+variable "aws_subnets" {
+  type = list(string)
+  default = ["subnet-08a976a9c5bfc4e33", "subnet-0599d5bf10f61defd", "subnet-02acb2152d809449a"]
+}
+
+variable "aws_azs" {
+  type        = list(string)
+description = "The availability zone letter appendix you want to deploy to in the selected region "
+default     = ["a", "b", "c"]
+}
+
+variable "control_plane" { default = { count = "3", user = "core", type = "m5.xlarge", disk = "30", ami = "ami-489ea829"} }
+
+variable "default_tags" { default = {} }

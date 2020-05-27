@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+source ${envFile}
+
 if [[ ! -d ./PlatformOne ]]; then
  #sha256sum --check PlatformOne.tar.gz.sha256
   tar xvf PlatformOne.tar.gz
@@ -11,7 +13,6 @@ fi
 
 p1DirImages=${HOME}/PlatformOne/images
 envFile=$(ls ${HOME}/PlatformOne/*/environment)
-source ${envFile}
 
 run_clean () {
   for pod in $( podman pod ps | awk '/registry/{print $1}' 2>/dev/null); do
