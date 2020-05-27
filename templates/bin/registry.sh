@@ -1,18 +1,19 @@
 #!/bin/bash -e
 
-source ${envFile}
 
 if [[ ! -d ./PlatformOne ]]; then
  #sha256sum --check PlatformOne.tar.gz.sha256
   tar xvf PlatformOne.tar.gz
   runUser="$USER"
-  sudo chown -R ${runUser}:${runUser} ${HOME}/PlatformOne
-  sudo chmod -R 755 ${HOME}/PlatformOne/${p1ClusterDomain}/data
-  mkdir  ${HOME}/PlatformOne/${p1ClusterDomain}/registry
 fi
 
 p1DirImages=${HOME}/PlatformOne/images
 envFile=$(ls ${HOME}/PlatformOne/*/environment)
+source ${envFile}
+
+sudo chown -R ${runUser}:${runUser} ${HOME}/PlatformOne
+sudo chmod -R 755 ${HOME}/PlatformOne/${p1ClusterDomain}/data
+mkdir  ${HOME}/PlatformOne/${p1ClusterDomain}/registry
 
 run_clean () {
   for pod in $( podman pod ps | awk '/registry/{print $1}' 2>/dev/null); do
