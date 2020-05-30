@@ -11,22 +11,34 @@
     version: "{{ git_branch }}"
     repo: "{{ item.repo }}"
     dest: "{{ item.dest }}"
-    key_file: "{{ item.key_file }}"
+#   key_file: "{{ item.key_file }}"
   with_items:
     - "{{ gitrepos }}"
   when:
     - git_clone_check.stat.exists == False
 
-# name: '{{ ansible_name_module }} | Initilize terraform modules'
-# shell: "cd {{ item }} && terraform init"
-# with_items:
-#   - "{{ dir_terraform }}/aws-base/"
-#   - "{{ dir_terraform }}/aws-registry/"
-#   - "{{ dir_terraform }}/aws-bootstrap/"
-#   - "{{ dir_terraform }}/aws-masters/"
-# when: terraform_build == "True"
-
 - name: '{{ ansible_name_module }} | Place Git Clone Lock {{ dir_ansible }}/clone.date' 
   copy: 
     content: "{{ lookup('pipe', 'date +%Y%m%d-%H%M') }}"
     dest: '{{ dir_ansible }}/clone.date'
+
+- name: '{{ ansible_name_module }} | shell:terraform.init | Initilize terraform modules'
+  shell: 
+    cmd: terraform init
+    chdir: "{{ item }}"
+  with_items:
+    - "{{ dir_git_vpc }}"
+    - "{{ dir_git_masters }}"
+    - "{{ dir_git_cloudctl }}"
+    - "{{ dir_git_bootstrap }}"
+
+- name: '{{ ansible_name_module }} | git:clone.{{ git_branch }} | Clone Git Dependencies' 
+  shell:
+    chdir: "{{ item.dest }}"
+    cmd: git pull
+  with_items:
+    - "{{ gitrepos }}"
+  when:
+    - git_clone_check.stat.exists == True
+  ignore_errors: true
+

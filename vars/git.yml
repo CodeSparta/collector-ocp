@@ -3,10 +3,17 @@
 # (RedHatOfficial) Git Source & Destination
 keyfile: '/root/.ssh/id_rsa'
 
-# (Consulting) Git Source & Destination
+# Ansible Git Repos
 url_git_bundle: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle.git'
+url_git_build: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/build.git'
+url_git_cloudctl: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/cloudctl.git'
 url_git_deploy: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/deploy.git'
+url_git_configure: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/configure.git'
+
+# Terraform Git Repos
+url_git_vpc: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/terraform/vpc.git'
 url_git_masters: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/terraform/masters.git'
+url_git_cloudctl: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/terraform/cloudctl.git'
 url_git_bootstrap: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/terraform/bootstrap.git'
 
 # Git Clone Items
@@ -14,16 +21,16 @@ gitrepos:
   - repo: "{{ url_git_bundle }}"
     dest: "{{ dir_git_bundle }}"
     branch: "{{ git_branch }}"
-    key_file: "{{ keyfile }}"
+#   key_file: "{{ keyfile }}"
   - repo: "{{ url_git_deploy }}"
     dest: "{{ dir_git_deploy }}"
     branch: "{{ git_branch }}"
-    key_file: "{{ keyfile }}"
+#   key_file: "{{ keyfile }}"
   - repo: "{{ url_git_bootstrap }}"
     dest: "{{ dir_git_bootstrap }}"
     branch: "{{ git_branch }}"
-    key_file: "{{ keyfile }}"
+#   key_file: "{{ keyfile }}"
   - repo: "{{ url_git_masters }}"
     dest: "{{ dir_git_masters }}"
     branch: "{{ git_branch }}"
-    key_file: "{{ keyfile }}"
+#   key_file: "{{ keyfile }}"

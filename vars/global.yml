@@ -20,8 +20,14 @@ dir_one: "{{ lookup('env', 'HOME') }}/PlatformOne"
 dir_ansible: "{{ lookup('env', 'HOME') }}/PlatformOne/ansible"
 dir_artifacts: "{{ lookup('env', 'HOME') }}/PlatformOne/{{ cluster_domain }}"
 dir_git_bundle: "{{ lookup('env', 'HOME') }}/PlatformOne/ansible/bundle"
+dir_git_build: "{{ lookup('env', 'HOME') }}/PlatformOne/ansible/build"
+dir_git_cloudctl: "{{ lookup('env', 'HOME') }}/PlatformOne/ansible/cloudctl"
 dir_git_deploy: "{{ lookup('env', 'HOME') }}/PlatformOne/ansible/deploy"
+dir_git_configure: "{{ lookup('env', 'HOME') }}/PlatformOne/ansible/configure"
+
+dir_git_vpc: "{{ lookup('env', 'HOME') }}/PlatformOne/terraform/vpc"
 dir_git_masters: "{{ lookup('env', 'HOME') }}/PlatformOne/terraform/masters"
+dir_git_cloudctl: "{{ lookup('env', 'HOME') }}/PlatformOne/terraform/cloudctl"
 dir_git_bootstrap: "{{ lookup('env', 'HOME') }}/PlatformOne/terraform/bootstrap"
 
 # SSH Keys
