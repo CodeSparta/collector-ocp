@@ -13,7 +13,8 @@
     dest: "{{ item.dest }}"
 #   key_file: "{{ item.key_file }}"
   with_items:
-    - "{{ gitrepos }}"
+    - "{{ ansiblerepos }}"
+    - "{{ terraformrepos }}"
   when:
     - git_clone_check.stat.exists == False
 
@@ -27,17 +28,15 @@
     cmd: terraform init
     chdir: "{{ item }}"
   with_items:
-    - "{{ dir_git_vpc }}"
-    - "{{ dir_git_masters }}"
-    - "{{ dir_git_cloudctl }}"
-    - "{{ dir_git_bootstrap }}"
+    - "{{ terraformrepos }}"
 
 - name: '{{ ansible_name_module }} | git:clone.{{ git_branch }} | Clone Git Dependencies' 
   shell:
     chdir: "{{ item.dest }}"
     cmd: git pull
   with_items:
-    - "{{ gitrepos }}"
+    - "{{ ansiblerepos }}"
+    - "{{ terraformrepos }}"
   when:
     - git_clone_check.stat.exists == True
   ignore_errors: true
