@@ -14,12 +14,17 @@
     cloud_key_secret_special: "{{ lookup('ini', 'aws_secret_access_key section=default file={{ dir_artifacts }}/.aws/govcloud.credentials') }}"
     redhat_quay_pull_file: '{{ dir_artifacts }}/.docker/master.json }}'
   tasks:
-    - name: '{{ ansible_name_module }} | openshift-install.yaml' 
+    - name: '{{ ansible_name_module }} | template | Stage OpenShift Manifests' 
       template:
         src: '{{ item.src }}'
         dest: '{{ item.dest }}'
       loop: 
-        - { mode: '755', src: "{{ tmpl_installconfig_j2 }}", dest: "{{ dir_artifacts }}/data/install-config.yaml" }
+        - { mode: '755', src: "{{ tmpl_installconfig_j2 }}", dest: "{{ dir_artifacts }}/bak/install-config.yaml" }
         - { mode: '755', src: "{{ dir_bundle_templates }}/openshift-install/99_openshift-image-registry_installer-cloud-credentials-secret.yaml.j2", dest: "{{ dir_artifacts }}/bak/openshift/99_openshift-image-registry_installer-cloud-credentials-secret.yaml"}
         - { mode: '755', src: "{{ dir_bundle_templates }}/openshift-install/99_openshift-ingress-operator_cloud-credentials-secret.yaml.j2", dest: "{{ dir_artifacts }}/bak/openshift/99_openshift-ingress-operator_cloud-credentials-secret.yaml"}
         - { mode: '755', src: "{{ dir_bundle_templates }}/openshift-install/99_openshift-machine-api_aws-cloud-credentials-secret.yaml.j2", dest: "{{ dir_artifacts }}/bak/openshift/99_openshift-machine-api_aws-cloud-credentials-secret.yaml"}
+
+    - name: '{{ ansible_name_module }} | openshift-install.yaml' 
+      template:
+      loop: 
+        - { mode: '755', src: "{{ tmpl_installconfig_j2 }}", dest: "{{ dir_artifacts }}/data/install-config.yaml" }
