@@ -3,7 +3,7 @@
 cloud_provider: "aws"
 cloud_region: "us-gov-west-1"
 cloud_instance_fips: "True"
-cloud_instance_ami: "ami-489ea829"
+cloud_instance_ami: "ami-8e8ab6ef"
 openshift_install_publish: 'Internal'
 terraform_build: "False"
 
