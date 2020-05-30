@@ -24,7 +24,3 @@
         - { mode: '755', src: "{{ dir_bundle_templates }}/openshift-install/99_openshift-ingress-operator_cloud-credentials-secret.yaml.j2", dest: "{{ dir_artifacts }}/bak/openshift/99_openshift-ingress-operator_cloud-credentials-secret.yaml"}
         - { mode: '755', src: "{{ dir_bundle_templates }}/openshift-install/99_openshift-machine-api_aws-cloud-credentials-secret.yaml.j2", dest: "{{ dir_artifacts }}/bak/openshift/99_openshift-machine-api_aws-cloud-credentials-secret.yaml"}
 
-    - name: '{{ ansible_name_module }} | openshift-install.yaml' 
-      template:
-      loop: 
-        - { mode: '755', src: "{{ tmpl_installconfig_j2 }}", dest: "{{ dir_artifacts }}/data/install-config.yaml" }
