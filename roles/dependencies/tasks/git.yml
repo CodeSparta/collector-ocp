@@ -37,7 +37,5 @@
   with_items:
     - "{{ ansiblerepos }}"
     - "{{ terraformrepos }}"
-  when:
-    - git_clone_check.stat.exists == True
   ignore_errors: true
 
