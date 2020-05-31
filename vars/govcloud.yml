@@ -15,5 +15,6 @@ cloud_zone_c: "{{ cloud_region }}c"
 # Terraform State
 terraform_build: "enabled"
 terraform_state_provider: 'local'
+public_ssh_access_enabled: 'true'
 
 
