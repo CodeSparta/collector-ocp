@@ -1,5 +1,5 @@
 terraform {
   backend "local" {
-    path = "{{ local_home }}/.ccio/tf/state/{{ module }}.tfstate"
+    path = "{{ dir_terraform }}/{{ item.module }}.tfstate"
   }
 }
