@@ -1,9 +1,16 @@
 ---
+####### Switch to AWS Commercial Credentials
+- name: '{{ ansible_name_module }} | copy | Switch to AWS Commercial Credentials'
+  copy:
+    src: "{{ dir_artifacts }}/.aws/commercial.credentials"
+    dest: "{{ local_home }}/.aws/credentials"
+
 ####### Detect manifest random id name
 - name: '{{ ansible_name_module }} | shell:awk | Get cluster random name'
   shell: "awk -F'[-]' '/infrastructureName/{print $2}' {{ dir_artifacts }}/data/manifests/cluster-infrastructure-02-config.yml"
   register: idrand
   ignore_errors: True
+  no_log: True
 
 ####### replace manifest random id name
 - name: '{{ ansible_name_module }} | replace | s/randId/vpcName/g'
@@ -11,6 +18,7 @@
     path: "{{ dir_artifacts_manifest }}/cluster-infrastructure-02-config.yml"
     regexp: "infrastructureName: {{ cluster_name }}-{{ idrand.stdout }}"
     replace: "infrastructureName: {{ name_cluster_vpc }}"
+  no_log: True
   ignore_errors: True
 
 ####### Itemize all manifest files
@@ -27,6 +35,7 @@
     path: "{{ item.path }}"
     regexp: "{{ cluster_name }}-{{ idrand.stdout }}"
     replace: "{{ name_cluster_vpc }}"
+  no_log: True
   loop: "{{ manifests.files }}"
 
 ####### Rename region across all manifests
@@ -35,6 +44,7 @@
     path: "{{ item.path }}"
     regexp: "us-east-1"
     replace: "{{ cloud_region }}"
+  no_log: True
   loop: "{{ manifests.files }}"
 
 ####### Rename region across all manifests | Workaround version requires debugging and simplification
@@ -44,6 +54,7 @@
         path: "{{ dir_artifacts }}/data/manifests/cluster-infrastructure-02-config.yml"
         regexp: "us-east-1"
         replace: "{{ cloud_region }}"
+      no_log: True
   ignore_errors: True
   always:
     - name: '{{ ansible_name_module }} | replace | Check to see if the content still exists'
@@ -58,6 +69,7 @@
         path: "{{ dir_artifacts }}/data/manifests/cluster-infrastructure-02-config.yml"
         regexp: "us-east-1"
         replace: "{{ cloud_region }}"
+      no_log: True
       when:  presence.changed == False
 
 ####### Add Machine API Operator Credentials
@@ -76,3 +88,10 @@
     - "{{ dir_artifacts }}/data/openshift/99_cloud-creds-secret.yaml"
     - "{{ dir_artifacts }}/data/openshift/99_role-cloud-creds-secret-reader.yaml"
   when: cluster_network_mode == 'disconnected'
+
+####### Switch to AWS GovCloud Credentials
+- name: '{{ ansible_name_module }} | copy | Switch to AWS Commercial Credentials'
+  copy:
+    src: "{{ dir_artifacts }}/.aws/govcloud.credentials"
+    dest: "{{ local_home }}/.aws/credentials"
+

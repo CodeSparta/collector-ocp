@@ -15,6 +15,7 @@
     cloud_key_secret_special: "{{ lookup('ini', 'aws_secret_access_key section=default file={{ dir_artifacts }}/.aws/govcloud.credentials') }}"
     redhat_quay_pull_file: '{{ dir_artifacts }}/.docker/master.json }}'
   tasks:
+
     - name: '{{ ansible_name_module }} | template | Stage OpenShift Manifests' 
       template:
         src: '{{ item.src }}'
