@@ -2,7 +2,6 @@
 # Target Cloud Environment Variables
 cloud_region: "us-gov-west-1"
 cloud_provider: "aws"
-terraform_build: "True"
 cloud_instance_fips: "True"
 cloud_instance_ami: "ami-8e8ab6ef"
 cluster_network_mode: "disconnected"
@@ -14,7 +13,7 @@ cloud_zone_b: "{{ cloud_region }}b"
 cloud_zone_c: "{{ cloud_region }}c"
 
 # Terraform State
-terraform: "enabled"
+terraform_build: "enabled"
 terraform_state_provider: 'local'
 
 
