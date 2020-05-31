@@ -1,78 +1,17 @@
+aws_access_key = {}
+aws_secret_key = {}
 aws_profile = "default"
-aws_region = "{{ cloud_region }}"
+sshkeys_pub_file = "{{ sshkeys_pub_file }}"
 name_domain = "{{ name_domain }}"
-name_cluster = "{{ name_cluster }}"
+cluster_name = "{{ cluster_name }}"
+cluster_domain = "{{ cluster_domain }}"
 name_cluster_vpc = "{{ name_cluster_vpc }}"
 iam_instance_profile = "{{ name_cluster_vpc }}-master-profile"
+bootstrap_ign_path = "{{ dir_artifacts }}/user-data/bootstrap.json"
+default_tags = {  }
 
-variable "aws_availability_zones" {
-  default = [
-    "us-gov-west-1a",
-    "us-gov-west-1b",
-    "us-gov-west-1c",
-  ]
-  type = "list"
-}
-
-variable "aws_subnets" {
-  type = list(string)
-  default = ["subnet-08a976a9c5bfc4e33", "subnet-0599d5bf10f61defd", "subnet-02acb2152d809449a"]
-}
-
-variable "aws_azs" {
-  type        = list(string)
-description = "The availability zone letter appendix you want to deploy to in the selected region "
-default     = ["a", "b", "c"]
-}
-
-variable "control_plane" { default = { count = "3", user = "core", type = "m5.xlarge", disk = "30", ami = "ami-489ea829"} }
-
-variable "default_tags" { default = {} }
-variable "aws_region" { default = "us-gov-west-1" }
-variable "aws_azs" { default = ["a", "b", "c"] }
-variable "default_tags" { default = {} }
-variable "infrastructure_id" { }
-variable "clustername" { }
-variable "domain" { }
-variable "bootstrap_ssh_public_key" { default = "./openshift_pull_secret.json" }
-variable "bootstrap_config" { default = { user = "core", type = "m5.xlarge", disk = "30", ami = "ami-489ea829"} }
-variable "bootstrap_ign_path" {
-  type = string
-  default = "data/bootstrap.ign"
-  description = "Path to the ignition file for the boostrap node"
-}
-variable "aws_access_key" {}
-variable "aws_secret_key" {}
-
-#Terraform spin-up
-TF_VAR_infrastructure_id: "{{ name_cluster_vpc }}"
-TF_VAR_aws_region: "{{ cloud_region }}"
-TF_VAR_clustername: "{{ cluster_name }}"
-TF_VAR_domain: "{{ name_domain }}"
-AWS_DEFAULT_REGION: "{{ cloud_region }}"
-
-# point the ignition files to the proper location
-TF_VAR_registry_ssh_public_key_file_path: "{{ dir_artifacts }}/.ssh/id_rsa_{{ cluster_domain }}.pub"
-TF_VAR_bastion_ssh_public_key_file_path: "{{ dir_artifacts }}/.ssh/id_rsa_{{ cluster_domain }}.pub"
-TF_VAR_master_ign_path: "{{ dir_artifacts }}/data/master.ign"
-TF_VAR_bootstrap_ign_path: "{{ dir_artifacts }}/data/bootstrap.ign"
-
-#Terraform spin-up
-TF_VAR_infrastructure_id: "{{ name_cluster_vpc }}"
-TF_VAR_aws_region: "{{ cloud_region }}"
-TF_VAR_clustername: "{{ cluster_name }}"
-TF_VAR_domain: "{{ name_domain }}"
-AWS_DEFAULT_REGION: "{{ cloud_region }}"
-
-# point the ignition files to the proper location
-TF_VAR_registry_ssh_public_key_file_path: "{{ dir_artifacts }}/.ssh/id_rsa_{{ cluster_domain }}.pub"
-TF_VAR_bastion_ssh_public_key_file_path: "{{ dir_artifacts }}/.ssh/id_rsa_{{ cluster_domain }}.pub"
-TF_VAR_master_ign_path: "{{ dir_artifacts }}/data/master.ign"
-TF_VAR_bootstrap_ign_path: "{{ dir_artifacts }}/data/bootstrap.ign"
-# legacy ansible
-    TF_VAR_aws_access_key_id: "aws_access_key_id_govcloud.stdout"
-    AWS_SECRET_ACCESS_KEY: "aws_secret_key.stdout"
-    TF_VAR_aws_secret_access_key: "aws_secret_key.stdout"
-  no_log: true
-
+aws_region = "{{ cloud_region }}"
+aws_zone_a = "{{ cloud_region }}a"
+aws_zone_b = "{{ cloud_region }}b"
+aws_zone_c = "{{ cloud_region }}c"
 
