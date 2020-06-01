@@ -9,5 +9,5 @@
 - import_playbook: ignition.yml                  # Build RH CoreOS ignition files from manifests
 - import_playbook: images.yml                    # Download openshift images to directory
 - import_playbook: bundle.yml                    # Bundle all artifacts required for airgap environments
-# import_playbook: dev/upload.yml                # Push bundle to s3
+- import_playbook: upload.yml                # Push bundle to s3
 # when: 'cloudctl or terraform  == "enabled"'    # - Execute if all terraform modules or if cloudctl module enabled
