@@ -30,5 +30,17 @@
     - data_install_config_yaml.stat.exists == False
     - bak_install_config_yaml.stat.exists == True
 
+####### Switch to AWS Commercial Credentials
+- name: '{{ ansible_name_module }} | copy | Switch to AWS Commercial Credentials'
+  copy:
+    src: "{{ dir_artifacts }}/.aws/commercial.credentials"
+    dest: "{{ local_home }}/.aws/credentials"
+
 - name: '{{ ansible_name_module }} | role | manifests | shell | openshift-install create manifests' 
   shell: "openshift-install create manifests --dir={{ dir_artifacts }}/data"
+
+####### Switch to AWS GovCloud Credentials
+- name: '{{ ansible_name_module }} | copy | Switch to AWS Commercial Credentials'
+  copy:
+    src: "{{ dir_artifacts }}/.aws/govcloud.credentials"
+    dest: "{{ local_home }}/.aws/credentials"

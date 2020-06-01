@@ -1,10 +1,4 @@
 ---
-####### Switch to AWS Commercial Credentials
-- name: '{{ ansible_name_module }} | copy | Switch to AWS Commercial Credentials'
-  copy:
-    src: "{{ dir_artifacts }}/.aws/commercial.credentials"
-    dest: "{{ local_home }}/.aws/credentials"
-
 ####### Detect manifest random id name
 - name: '{{ ansible_name_module }} | shell:awk | Get cluster random name'
   shell: "awk -F'[-]' '/infrastructureName/{print $2}' {{ dir_artifacts }}/data/manifests/cluster-infrastructure-02-config.yml"
@@ -88,10 +82,4 @@
     - "{{ dir_artifacts }}/data/openshift/99_cloud-creds-secret.yaml"
     - "{{ dir_artifacts }}/data/openshift/99_role-cloud-creds-secret-reader.yaml"
   when: cluster_network_mode == 'disconnected'
-
-####### Switch to AWS GovCloud Credentials
-- name: '{{ ansible_name_module }} | copy | Switch to AWS Commercial Credentials'
-  copy:
-    src: "{{ dir_artifacts }}/.aws/govcloud.credentials"
-    dest: "{{ local_home }}/.aws/credentials"
 
