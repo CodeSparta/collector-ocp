@@ -1,0 +1,7 @@
+
+## Enable connected deploy to govcloud
+rm /root/govcloud/manifests/cluster-ingress-default-ingresscontroller.yaml 
+- cd into manifests and Grep publish 
+Delete the line publish: Internal from any files.
+Also pullSecret in the config-install.yaml must include the upstream quay records if you want to pull operators from the hub.
+
