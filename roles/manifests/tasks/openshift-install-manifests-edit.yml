@@ -41,6 +41,21 @@
   no_log: True
   loop: "{{ manifests.files }}"
 
+####### Remove Ingress Controller
+- name: '{{ ansible_name_module }} | Remove | Remove Ingress Controller'
+  file:
+    path: "{{ dir_artifacts }}/data/manifests/cluster-ingress-default-ingresscontroller.yaml"
+    state: absent
+  when: external_ingress == 'true'
+
+####### Remove Publish Internal
+- name: '{{ ansible_name_module }} | Remove | Remove Publish: Internal'
+  lineinfile:
+    path: "{{ dir_artifacts }}/data/manifests/cluster-config.yaml"
+    state: absent
+    regexp: '^publish: Internal'
+  when: external_ingress == 'true'
+  
 ####### Rename region across all manifests | Workaround version requires debugging and simplification
 - block:
     - name: '{{ ansible_name_module }} | replace | Replace region for cluster-infrastructure-02-config.yml'
