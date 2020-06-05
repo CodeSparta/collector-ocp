@@ -14,15 +14,6 @@
     cloud_key_secret_special: "{{ lookup('ini', 'aws_secret_access_key section=default file={{ dir_artifacts }}/.aws/govcloud.credentials') }}"
   tasks:
 
-    - name: '{{ ansible_name_module }} | aws_s3 | Purge Pre-existing AWS S3 Bucket: {{ name_cluster_vpc }}-{{ cluster_domain }}'
-      aws_s3:
-        bucket: '{{ name_cluster_vpc }}-{{ cluster_domain }}'
-        region: '{{ cloud_region }}'
-        mode: delete
-        aws_access_key: '{{ cloud_key_id_special }}'
-        aws_secret_key: '{{ cloud_key_secret_special }}'
-      ignore_errors: True
-
     - name: '{{ ansible_name_module }} | aws_s3 | Create AWS S3 Bucket: {{ name_cluster_vpc }}-{{ cluster_domain }}'
       aws_s3:
         bucket: '{{ name_cluster_vpc }}-{{ cluster_domain }}'
