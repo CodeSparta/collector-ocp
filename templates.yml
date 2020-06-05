@@ -26,7 +26,7 @@
         - { module: 'templates', src: "{{ dir_bundle_templates }}/openshift-install/99_openshift-ingress-operator_cloud-credentials-secret.yaml.j2", dest: "{{ dir_artifacts }}/bak/openshift/99_openshift-ingress-operator_cloud-credentials-secret.yaml"}
         - { module: 'templates', src: "{{ dir_bundle_templates }}/openshift-install/99_openshift-machine-api_aws-cloud-credentials-secret.yaml.j2", dest: "{{ dir_artifacts }}/bak/openshift/99_openshift-machine-api_aws-cloud-credentials-secret.yaml"}
         - { module: 'p1', src: "{{ dir_bundle_templates }}/terraform/global.tfvars.j2", dest: "{{ dir_terraform }}/p1.tfvars"}
-        - { module: 'vpc', src: "{{ dir_bundle_templates }}/terraform/{{ state_provider }}.tfstate.j2", dest: "{{ dir_git_tfvpc }}/{{ state_provider }}.tfstate"}
+        - { module: 'core', src: "{{ dir_bundle_templates }}/terraform/{{ state_provider }}.tfstate.j2", dest: "{{ dir_git_tfcore }}/{{ state_provider }}.tfstate"}
         - { module: 'cloudctl', src: "{{ dir_bundle_templates }}/terraform/{{ state_provider }}.tfstate.j2", dest: "{{ dir_git_tfcloudctl }}/{{ state_provider }}.tfstate"}
         - { module: 'bootstrap', src: "{{ dir_bundle_templates }}/terraform/{{ state_provider }}.tfstate.j2", dest: "{{ dir_git_tfbootstrap }}/{{ state_provider }}.tfstate"}
         - { module: 'masters', src: "{{ dir_bundle_templates }}/terraform/{{ state_provider }}.tfstate.j2", dest: "{{ dir_git_tfmasters }}/{{ state_provider }}.tfstate"}

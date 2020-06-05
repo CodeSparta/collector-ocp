@@ -25,7 +25,7 @@ dir_git_cloudctl: "{{ lookup('env', 'HOME') }}/PlatformOne/ansible/cloudctl"
 dir_git_deploy: "{{ lookup('env', 'HOME') }}/PlatformOne/ansible/deploy"
 dir_git_configure: "{{ lookup('env', 'HOME') }}/PlatformOne/ansible/configure"
 
-dir_git_tfvpc: "{{ lookup('env', 'HOME') }}/PlatformOne/terraform/vpc"
+dir_git_tfcore: "{{ lookup('env', 'HOME') }}/PlatformOne/terraform/core"
 dir_git_tfmasters: "{{ lookup('env', 'HOME') }}/PlatformOne/terraform/masters"
 dir_git_tfcloudctl: "{{ lookup('env', 'HOME') }}/PlatformOne/terraform/cloudctl"
 dir_git_tfbootstrap: "{{ lookup('env', 'HOME') }}/PlatformOne/terraform/bootstrap"

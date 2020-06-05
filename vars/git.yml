@@ -11,7 +11,7 @@ url_git_deploy: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/dep
 url_git_configure: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/configure.git'
 
 # Terraform Git Repos
-url_git_tfvpc: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/terraform/vpc.git'
+url_git_tfcore: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/terraform/core.git'
 url_git_tfmasters: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/terraform/masters.git'
 url_git_tfcloudctl: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/terraform/cloudctl.git'
 url_git_tfbootstrap: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/terraform/bootstrap.git'
@@ -40,8 +40,8 @@ ansiblerepos:
 #   key_file: "{{ keyfile }}"
 
 terraformrepos:
-  - repo: "{{ url_git_tfvpc }}"
-    dest: "{{ dir_git_tfvpc }}"
+  - repo: "{{ url_git_tfcore }}"
+    dest: "{{ dir_git_tfcore }}"
     branch: "{{ git_branch }}"
 #   key_file: "{{ keyfile }}"
   - repo: "{{ url_git_tfmasters }}"
