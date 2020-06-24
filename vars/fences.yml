@@ -6,9 +6,40 @@ cloud_instance_fips: "True"
 cloud_instance_ami: "ami-0de874c945361f2d3"
 openshift_install_publish: 'Internal'
 terraform_build: "False"
+cluster_network_mode: "disconnected"
+openshift_install_publish: 'Internal'
+external_ingress: "false"
 
 # Cloud Zones Enabled
 cloud_zone_a: "{{ cloud_region }}a"
 cloud_zone_b: "{{ cloud_region }}b"
 cloud_zone_c: "{{ cloud_region }}c"
+
+# Terraform State
+terraform_state_provider: 'local'
+public_ssh_access_enabled: 'true'
+
+# CloudCTL Pod Docker Image Pull List
+images_cloudctl:
+
+  - uri: "k8s.gcr.io/pause:latest"
+    name: docker-pause-image
+    path: "{{ dir_one }}/images"
+
+  - uri: "docker.io/library/busybox:latest"
+    name: docker-busybox-image
+    path: "{{ dir_one }}/images"
+
+  - uri: "docker.io/library/nginx:latest"
+    name: docker-nginxlatest-image
+    path: "{{ dir_one }}/images"
+
+  - uri: "docker.io/library/registry:2.7.1"
+    name: docker-registry2-image
+    path: "{{ dir_one }}/images"
+
+  - uri: "quay.io/containercraft/one:govcloud"
+    name: docker-one-image
+    path: "{{ dir_one }}/images"
+
 
