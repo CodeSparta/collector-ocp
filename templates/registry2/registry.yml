@@ -24,7 +24,7 @@ spec:
       value: {{ version_openshift }}
     - name: BUILDAH_ISOLATION
       value: chroot
-    image: docker.io/containercraft/one:fences
+    image: docker.io/containercraft/one:govcloud
     name: {{ target_environment }}
     ports:
     - containerPort: 80
@@ -67,7 +67,7 @@ spec:
       value: /root/ssl/{{ cluster_domain }}.key
     - name: REGISTRY_HTTP_TLS_CERTIFICATE
       value: /root/ssl/{{ cluster_domain }}.crt
-    image: docker.io/library/registry:2
+    image: docker.io/library/registry:2.7.0
     name: registry2
     resources: {}
     securityContext:
