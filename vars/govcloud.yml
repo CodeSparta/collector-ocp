@@ -37,7 +37,7 @@ images_cloudctl:
     path: "{{ dir_one }}/images"
 
   - uri: "docker.io/library"
-    name: registry2
+    name: registry
     tag: 2.7.0
     path: "{{ dir_one }}/images"
 

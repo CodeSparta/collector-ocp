@@ -16,7 +16,7 @@
       - docker://{{ item.uri }}/{{ item.name }}:{{ item.tag }}
       - docker-archive://{{ item.path }}/docker-image-{{ item.name }}-{{ item.tag }}.tar
       - --additional-tag
-      - '{{ item.tag }}'
+      - '{{ item_name }}:{{ item.tag }}'
     creates: "{{ item.path }}/{{ item.name }}.tar"
   with_items:
     - "{{ images_cloudctl }}"
