@@ -21,24 +21,28 @@ public_ssh_access_enabled: 'true'
 # CloudCTL Pod Docker Image Pull List
 images_cloudctl:
 
-  - uri: "k8s.gcr.io/pause:latest"
-    name: docker-pause-image
+  - uri: "k8s.gcr.io"
+    name: pause
+    tag: latest
     path: "{{ dir_one }}/images"
 
-  - uri: "docker.io/library/busybox:latest"
-    name: docker-busybox-image
+  - uri: "docker.io/library/"
+    name: busybox
+    tag: latest
     path: "{{ dir_one }}/images"
 
-  - uri: "docker.io/library/nginx:latest"
-    name: docker-nginxlatest-image
+  - uri: "docker.io/library/"
+    name: nginx
+    tag: latest
     path: "{{ dir_one }}/images"
 
-  - uri: "docker.io/library/registry:2.7.1"
-    name: docker-registry2-image
+  - uri: "docker.io/library/"
+    name: registry2
+    tag: 2.7.0
     path: "{{ dir_one }}/images"
 
-  - uri: "quay.io/containercraft/one:govcloud"
-    name: docker-one-image
+  - uri: "quay.io/containercraft/"
+    tag: govcloud
+    name: one
     path: "{{ dir_one }}/images"
-
 

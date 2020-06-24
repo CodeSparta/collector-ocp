@@ -13,8 +13,10 @@
     argv:
       - skopeo
       - copy
-      - docker://{{ item.uri }}
-      - docker-archive://{{ item.path }}/{{ item.name }}.tar
+      - docker://{{ item.uri }}/{{ item.name }}:{{ item.tag }}
+      - docker-archive://{{ item.path }}/docker-image-{{ item.name }}-{{ item.tag }}.tar
+      - --additional-tag
+      - {{ item.tag }}
     creates: "{{ item.path }}/{{ item.name }}.tar"
   with_items:
     - "{{ images_cloudctl }}"
