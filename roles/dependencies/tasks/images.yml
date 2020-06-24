@@ -1,0 +1,29 @@
+---
+####### Download CloudCTL Pod Images
+- name: '{{ ansible_name_module }} | stat | Check for Skopeo Image Pull Lockfile'
+  stat:
+    path: '{{ dir_images }}/pull.date'  
+  register: dir_images_check
+
+- name: '{{ ansible_name_module }} | template | Place registry config' 
+  file: 
+    path: "{{ dir_artifacts }}/images"
+    state: absent
+  file: 
+    path: "{{ dir_artifacts }}/images"
+    state: directory
+  when:
+    - dir_images_check.stat.exists == False
+
+- name: '{{ ansible_name_module }} | git:clone | Clone Git Dependencies' 
+  command:
+    argv:
+      - skopeo
+      - copy
+      - docker://{{ item.uri }}
+      - docker-archive://{{ item.path }}/{{ item.name }}.tar
+    creates: "{{ item.path }}/{{ item.name }}.tar"
+  with_items:
+    - "{{ images_cloudctl }}"
+  when:
+    - dir_images_check.stat.exists == False

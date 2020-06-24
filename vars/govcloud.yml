@@ -18,4 +18,27 @@ terraform_build: "enabled"
 terraform_state_provider: 'local'
 public_ssh_access_enabled: 'true'
 
+# CloudCTL Pod Docker Image Pull List
+images_cloudctl:
+
+  - uri: "k8s.gcr.io/pause:latest"
+    name: docker-pause-image
+    path: "{{ dir_artifacts }}/images"
+
+  - uri: "docker.io/library/busybox:latest"
+    name: docker-busybox-image
+    path: "{{ dir_artifacts }}/images"
+
+  - uri: "docker.io/library/nginx:latest"
+    name: docker-nginxlatest-image
+    path: "{{ dir_artifacts }}/images"
+
+  - uri: "docker.io/library/registry:2.7.1"
+    name: docker-registry2-image
+    path: "{{ dir_artifacts }}/images"
+
+  - uri: "quay.io/containercraft/one:govcloud"
+    name: docker-one-image
+    path: "{{ dir_artifacts }}/images"
+
 

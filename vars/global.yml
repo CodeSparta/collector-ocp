@@ -17,6 +17,7 @@ tf_vars: "{{ lookup('env', 'HOME') }}/PlatformOne/terraform/global.tfvars"
 
 # Directory Inventory
 dir_one: "{{ lookup('env', 'HOME') }}/PlatformOne"
+dir_images: "{{ lookup('env', 'HOME') }}/PlatformOne/images"
 dir_ansible: "{{ lookup('env', 'HOME') }}/PlatformOne/ansible"
 dir_artifacts: "{{ lookup('env', 'HOME') }}/PlatformOne/{{ cluster_domain }}"
 dir_git_bundle: "{{ lookup('env', 'HOME') }}/PlatformOne/ansible/bundle"
