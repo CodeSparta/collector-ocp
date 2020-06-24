@@ -8,7 +8,7 @@
     path: "{{ dir_one }}/images"
     state: directory
 
-- name: '{{ ansible_name_module }} | git:clone | Clone Git Dependencies' 
+- name: '{{ ansible_name_module }} | command:skopeo.copy | Pull CloudCTL Pod Images' 
   command:
     argv:
       - skopeo
