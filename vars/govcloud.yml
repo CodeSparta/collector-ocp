@@ -23,22 +23,22 @@ images_cloudctl:
 
   - uri: "k8s.gcr.io/pause:latest"
     name: docker-pause-image
-    path: "{{ dir_artifacts }}/images"
+    path: "{{ dir_one }}/images"
 
   - uri: "docker.io/library/busybox:latest"
     name: docker-busybox-image
-    path: "{{ dir_artifacts }}/images"
+    path: "{{ dir_one }}/images"
 
   - uri: "docker.io/library/nginx:latest"
     name: docker-nginxlatest-image
-    path: "{{ dir_artifacts }}/images"
+    path: "{{ dir_one }}/images"
 
   - uri: "docker.io/library/registry:2.7.1"
     name: docker-registry2-image
-    path: "{{ dir_artifacts }}/images"
+    path: "{{ dir_one }}/images"
 
   - uri: "quay.io/containercraft/one:govcloud"
     name: docker-one-image
-    path: "{{ dir_artifacts }}/images"
+    path: "{{ dir_one }}/images"
 
 
