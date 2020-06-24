@@ -26,22 +26,22 @@ images_cloudctl:
     tag: latest
     path: "{{ dir_one }}/images"
 
-  - uri: "docker.io/library/"
+  - uri: "docker.io/library"
     name: busybox
     tag: latest
     path: "{{ dir_one }}/images"
 
-  - uri: "docker.io/library/"
+  - uri: "docker.io/library"
     name: nginx
     tag: latest
     path: "{{ dir_one }}/images"
 
-  - uri: "docker.io/library/"
+  - uri: "docker.io/library"
     name: registry2
     tag: 2.7.0
     path: "{{ dir_one }}/images"
 
-  - uri: "quay.io/containercraft/"
+  - uri: "quay.io/containercraft"
     tag: govcloud
     name: one
     path: "{{ dir_one }}/images"
