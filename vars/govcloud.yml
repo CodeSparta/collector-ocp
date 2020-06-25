@@ -23,7 +23,7 @@ images_cloudctl:
 
   - uri: "k8s.gcr.io"
     name: pause
-    tag: latest
+    tag: 3.1
     path: "{{ dir_one }}/images"
 
   - uri: "docker.io/library"
