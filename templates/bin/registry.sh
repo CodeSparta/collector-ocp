@@ -1,6 +1,5 @@
 #!/bin/bash -e
 
-
 if [[ ! -d ./PlatformOne ]]; then
  #sha256sum --check PlatformOne.tar.gz.sha256
   tar xvf PlatformOne.tar.gz
@@ -16,20 +15,20 @@ sudo chmod -R 755 ${HOME}/PlatformOne/${p1ClusterDomain}/data
 mkdir  ${HOME}/PlatformOne/${p1ClusterDomain}/registry 2>/dev/null
 
 run_clean () {
-  for pod in $( podman pod ps | awk '/registry/{print $1}' 2>/dev/null); do
-    podman pod rm --force $pod
+  for container in $( sudo podman ps | awk '/one|nginx|registry|pause|busybox/{print $3}' 2>/dev/null); do
+    sudo podman rm --force $container
   done
-  for image in $( podman images | awk '/one|nginx|registry/{print $3}' 2>/dev/null); do
-    podman rmi --force $image
+  for pod in $( sudo podman pod ps | awk '/registry/{print $1}' 2>/dev/null); do
+    sudo podman pod rm --force $pod
   done
-  for container in $( podman ps | awk '/one|nginx|registry/{print $3}' 2>/dev/null); do
-    podman rm --force $container
+  for image in $( sudo podman images | awk '/one|nginx|registry/{print $3}' 2>/dev/null); do
+    sudo podman rmi --force $image
   done
 }
 
 load_images () {
   for image in $(ls ${p1DirImages}/*.tar); do
-    podman load -i ${image}
+    sudo podman load -i ${image}
   done
 }
 
@@ -40,7 +39,7 @@ sudo cp ${p1DirArtifacts}/ssl/${p1ClusterDomain}.crt \
 }
 
 write_mirror_credentials () {
-podman run \
+sudo podman run \
         --rm                                          \
         --entrypoint htpasswd                         \
       registry:2                                      \
@@ -48,7 +47,7 @@ podman run \
 }
 
 run_pod () {
-  podman play kube ./registry.yml
+  sudo podman play kube ./registry.yml
 }
 
 run_core () {
@@ -61,17 +60,17 @@ run_core () {
 
 test_core () {
   echo " >> List Pods & Containers"
-  podman pod ps
-  podman ps --all
+  sudo podman pod ps
+  sudo podman ps --all
   
   echo " >> Testing NGINX Ignition Service"
   ignTest=$(curl http://10.88.0.1:8080/bootstrap.ign 2>&1 1>/dev/null ; echo $?)
   [[ ${ignTest} == '0' ]] && echo 'NGINX Ignition Service Check Failed!'
 
   echo " >> Testing Docker Registry:2 Service"
-  curl -u ${p1NameVpc}:${p1NameVpc} -k https://10.88.0.1:5000/v2/_catalog
+  ignTest=$(curl -u ${p1NameVpc}:${p1NameVpc} -k https://10.88.0.1:5000/v2/_catalog 2>&1 1>/dev/null ; echo $?)
+  [[ ${ignTest} == '0' ]] && echo 'NGINX Ignition Service Check Failed!'
 }
 
 run_core
 test_core
-podman exec -it fences connect
