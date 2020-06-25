@@ -1,9 +1,11 @@
 ---
 ####### Download CloudCTL Pod Images
-- name: '{{ ansible_name_module }} | file:directory | mkdir images target path' 
+- name: '{{ ansible_name_module }} | file:directory | rmdir images target path' 
   file: 
     path: "{{ dir_one }}/images"
     state: absent
+
+- name: '{{ ansible_name_module }} | file:directory | mkdir images target path' 
   file: 
     path: "{{ dir_one }}/images"
     state: directory
