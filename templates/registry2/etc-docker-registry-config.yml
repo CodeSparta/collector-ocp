@@ -6,9 +6,9 @@ storage:
   cache:
     blobdescriptor: inmemory
   filesystem:
-    rootdirectory: {{ dir_artifacts }}
+    rootdirectory: {{ dir_artifacts }}/registry
 http:
-  addr: :5000
+  addr: :5500
   headers:
     X-Content-Type-Options: [nosniff]
 health:

@@ -5,4 +5,4 @@
     dest: '{{ item.dest }}'
   with_items:
     - { src: '{{ dir_git_bundle }}/templates/bin/registry.sh', dest: '/tmp/registry.sh' }
-    - { src: '{{ dir_git_bundle }}/templates/registry2/registry.yml', dest: '/tmp/registry.yml' }
+    - { src: '{{ dir_git_bundle }}/templates/pod/registry.yml', dest: '/tmp/registry.yml' }
