@@ -24,7 +24,7 @@ spec:
       value: {{ version_openshift }}
     - name: BUILDAH_ISOLATION
       value: chroot
-    image: docker.io/containercraft/one:govcloud
+    image: quay.io/containercraft/one:govcloud
     name: {{ target_environment }}
     ports:
     - containerPort: 80
