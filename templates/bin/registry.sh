@@ -42,7 +42,7 @@ write_mirror_credentials () {
 sudo podman run \
         --rm                                          \
         --entrypoint htpasswd                         \
-      registry:2                                      \
+      registry:2.7.0                                      \
         -Bbn ${p1NameVpc} ${p1NameVpc} > ${p1DirArtifacts}/auth/htpasswd
 }
 
