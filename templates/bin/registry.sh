@@ -74,3 +74,15 @@ test_core () {
 
 run_core
 test_core
+cat <<EOF
+    Pod Startup Complete!
+    Registry is ready for hydration:
+
+    Example:
+
+
+        mkdir /root/.docker 2>/dev/null ; cp $(ls /root/PlatformOne/*/.docker/mirror.json) /root/.docker/config.json
+
+        oc image mirror -a /root/.docker/mirror.json --dir=mirror file://openshift/release:4.4.9* registry.ocp4.clusterfudge.net:5000/ocp-4.4.9
+
+EOF
