@@ -83,23 +83,6 @@ cd /root/PlatformOne
 }
 
 ################################################################################
-# Write Self Signed Certificate & Key
-run_log 0 "Staging optional registry node self signed certificates"
-write_self_signed_cert () {
-openssl req \
-  -x509 \
-  -nodes \
-  -sha256 \
-  -days   3650 \
-  -newkey rsa:4096 \
-  -subj   "/CN=${p1ClusterDomain}" \
-  -out    ${p1DirArtifacts}/ssl/${p1ClusterDomain}.crt  \
-  -keyout ${p1DirArtifacts}/ssl/${p1ClusterDomain}.key  \
-  -addext "subjectAltName=DNS:registry.${p1ClusterDomain},DNS:registry,DNS:localhos,IP:127.0.0.1" 2>&1 1>/dev/null
-# -addext "subjectAltName=DNS:registry.${p1ClusterDomain},DNS:${p1NameDomain},IP:10.0.1.1" 2>&1 1>/dev/null
-}
-
-################################################################################
 # Stage docker config quay pull secret
 write_docker_config_json () {
 # Write Quay Pull Secret
@@ -356,7 +339,6 @@ run () {
   get_aws_govcloud_credentials
   get_rh_pull_secret
   write_docker_config_json 
-  write_self_signed_cert
   run_git_clone
   run_stage_deploy_variables 
   run_ansible_playbook_bundle 
