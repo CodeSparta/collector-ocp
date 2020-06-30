@@ -15,7 +15,7 @@
     path: '{{ dir_artifacts }}/data/'
     state: absent
   when:
-    - data_install_config_yaml.stat.exists == False
+    - not data_install_config_yaml.stat.exists
 
 - name: '{{ ansible_name_module }} | role | manifests | file | Create {{ dir_artifacts }}/data'
   file:
@@ -27,8 +27,8 @@
     src: '{{ dir_artifacts }}/bak/install-config.yaml'
     dest: '{{ dir_artifacts }}/data/install-config.yaml'
   when:
-    - data_install_config_yaml.stat.exists == False
-    - bak_install_config_yaml.stat.exists == True
+    - not data_install_config_yaml.stat.exists
+    - bak_install_config_yaml.stat.exists
 
 ####### Switch to AWS Commercial Credentials
 - name: '{{ ansible_name_module }} | copy | Switch to AWS Commercial Credentials'

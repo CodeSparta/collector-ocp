@@ -6,7 +6,7 @@ storage:
   cache:
     blobdescriptor: inmemory
   filesystem:
-    rootdirectory: {{ dir_artifacts }}/registry
+    rootdirectory: "{{ dir_artifacts }}/registry"
 http:
   addr: :5500
   headers:

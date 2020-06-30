@@ -55,7 +55,7 @@
     state: absent
     regexp: '^publish: Internal'
   when: external_ingress == 'true'
-  
+
 ####### Rename region across all manifests | Workaround version requires debugging and simplification
 - block:
     - name: '{{ ansible_name_module }} | replace | Replace region for cluster-infrastructure-02-config.yml'
@@ -79,7 +79,7 @@
         regexp: "us-east-1"
         replace: "{{ cloud_region }}"
       no_log: True
-      when:  presence.changed == False
+      when: not presence.changed
 
 ####### Add Machine API Operator Credentials
 - name: '{{ ansible_name_module }} | copy | Add Machine API Operator credentials'
@@ -97,4 +97,3 @@
     - "{{ dir_artifacts }}/data/openshift/99_cloud-creds-secret.yaml"
     - "{{ dir_artifacts }}/data/openshift/99_role-cloud-creds-secret-reader.yaml"
   when: cluster_network_mode == 'disconnected'
-

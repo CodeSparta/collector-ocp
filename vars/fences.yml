@@ -7,7 +7,6 @@ cloud_instance_ami: "ami-0de874c945361f2d3"
 openshift_install_publish: 'Internal'
 terraform_build: "False"
 cluster_network_mode: "disconnected"
-openshift_install_publish: 'Internal'
 external_ingress: "false"
 
 # Cloud Zones Enabled
