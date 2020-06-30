@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 if [[ ! -d ./PlatformOne ]]; then
  #sha256sum --check PlatformOne.tar.gz.sha256
