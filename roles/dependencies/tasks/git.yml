@@ -11,17 +11,18 @@
     version: "{{ git_branch }}"
     repo: "{{ item.repo }}"
     dest: "{{ item.dest }}"
+    update: true
 #   key_file: "{{ item.key_file }}"
   with_items:
     - "{{ ansiblerepos }}"
     - "{{ terraformrepos }}"
-  when:
-    - git_clone_check.stat.exists == False
+# when:
+#   - git_clone_check.stat.exists == False
 
-- name: '{{ ansible_name_module }} | Place Git Clone Lock {{ dir_ansible }}/clone.date' 
-  copy: 
-    content: "{{ lookup('pipe', 'date +%Y%m%d-%H%M') }}"
-    dest: '{{ dir_ansible }}/clone.date'
+# name: '{{ ansible_name_module }} | Place Git Clone Lock {{ dir_ansible }}/clone.date' 
+# copy: 
+#   content: "{{ lookup('pipe', 'date +%Y%m%d-%H%M') }}"
+#   dest: '{{ dir_ansible }}/clone.date'
 
 - name: '{{ ansible_name_module }} | shell:terraform.init | Initilize terraform modules'
   shell: 
@@ -30,12 +31,12 @@
   with_items:
     - "{{ terraformrepos }}"
 
-- name: '{{ ansible_name_module }} | shell:git.pull | Git Pull latest' 
-  shell:
-    chdir: "{{ item.dest }}"
-    cmd: git pull
-  with_items:
-    - "{{ ansiblerepos }}"
-    - "{{ terraformrepos }}"
-  ignore_errors: true
+# name: '{{ ansible_name_module }} | shell:git.pull | Git Pull latest' 
+# shell:
+#   chdir: "{{ item.dest }}"
+#   cmd: git pull
+# with_items:
+#   - "{{ ansiblerepos }}"
+#   - "{{ terraformrepos }}"
+# ignore_errors: true
 
