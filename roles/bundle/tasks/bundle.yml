@@ -2,7 +2,7 @@
 ####### Create Unified PlatformOne.tar.gz Tarball with all offline deploy requirements
 - name: '{{ ansible_name_module }} | stat | Check for pre-existing PlatformOne.tar.gz.sha256'
   stat:
-    path: '/tmp/PlatformOne.tar.gz.sha256'  
+    path: '/tmp/PlatformOne.tar.gz.sha256'
   register: p1tar_sha_check
 
 ###### Download OpenShift Docker Images from Quay.io to File: /root/PlatformOne/Mirror/v2
@@ -38,7 +38,7 @@
         content: "{{ p1tar_sha256 }} PlatformOne.tar.gz"
 
   ####### Block Conditionals
-  when: p1tar_sha_check.stat.exists == False
+  when: not p1tar_sha_check.stat.exists
 
 ####### Bundle PlatformOne.tar.gz with unpack + launch utilities
 # name: '{{ ansible_name_module }} | role | archive | Bundle PlatformOne.tar.gz with auxilary files'
@@ -58,4 +58,3 @@
   args:
     creates: "{{ local_home }}/PlatformOne/{{ cloud_provider }}-{{ target_environment }}-{{ name_cluster_vpc }}-p1bundle.tar"
     warn: false
-
