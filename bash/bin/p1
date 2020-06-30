@@ -183,50 +183,6 @@ EOF
 [[ $1 == "commercial" ]] && cp -f ${p1DirArtifacts}/.aws/${1}.credentials ${HOME}/.aws/credentials
 }
 
-################################################################################
-# Stage UserData
-write_user_data_b64 () {
-clear && echo
-run_log 0 "Generating RHCOS Bastion node base64 encoded user-data"
-cat <<EOF | base64 -w0 > ${p1DirArtifacts}/user-data/bastion-json.b64; echo
-{"ignition":{"config":{},"security":{"tls":{}},"timeouts":{},"version":"2.2.0"},"networkd":{},"passwd":{"users":[{"name":"core","sshAuthorizedKeys":["$(cat ${p1DirArtifacts}/.ssh/id_rsa_${p1ClusterDomain}.pub)"]}]},"storage":{},"systemd":{}}
-EOF
-
-run_log 0 "Generating RHCOS Bootstrap node base64 encoded user-data"
-cat <<EOF | base64 -w0 > ${p1DirArtifacts}/user-data/bootstrap-json.b64; echo
-{"ignition":{"config":{"append":[{"source":"http://registry.${p1ClusterDomain}:8080/bootstrap.ign","verification":{}}]},"security":{},"timeouts":{},"version":"2.2.0"},"networkd":{},"passwd":{},"storage":{},"systemd":{}}
-EOF
-
-run_log 0 "Generating RHCOS Master node(s) base64 encoded user-data"
-cat <<EOF | base64 -w0 > ${p1DirArtifacts}/user-data/master-json.b64; echo
-{"ignition":{"config":{"append":[{"source":"http://registry.${p1ClusterDomain}:8080/master.ign","verification":{}}]},"security":{},"timeouts":{},"version":"2.2.0"},"networkd":{},"passwd":{},"storage":{},"systemd":{}}
-EOF
-
-clear
-}
-
-################################################################################
-# Stage UserData
-write_user_data_json () {
-clear && echo
-
-run_log 0 "Generating RHCOS Bastion node user-data json"
-cat <<EOF > ${p1DirArtifacts}/user-data/bastion.json; echo
-{"ignition":{"config":{},"security":{"tls":{}},"timeouts":{},"version":"2.2.0"},"networkd":{},"passwd":{"users":[{"name":"core","sshAuthorizedKeys":["$(cat ${p1DirArtifacts}/.ssh/id_rsa_${p1ClusterDomain}.pub)"]}]},"storage":{},"systemd":{}}
-EOF
-
-run_log 0 "Generating RHCOS Bootstrap node user-data json"
-cat <<EOF > ${p1DirArtifacts}/user-data/bootstrap.json; echo
-{"ignition":{"config":{"append":[{"source":"http://registry.${p1ClusterDomain}:8080/bootstrap.ign","verification":{}}]},"security":{},"timeouts":{},"version":"2.2.0"},"networkd":{},"passwd":{},"storage":{},"systemd":{}}
-EOF
-
-run_log 0 "Generating RHCOS Master node(s) user-data json"
-cat <<EOF > ${p1DirArtifacts}/user-data/master.json; echo
-{"ignition":{"config":{"append":[{"source":"http://registry.${p1ClusterDomain}:8080/master.ign","verification":{}}]},"security":{},"timeouts":{},"version":"2.2.0"},"networkd":{},"passwd":{},"storage":{},"systemd":{}}
-EOF
-
-clear
-}
 
 ################################################################################
 # Collect AWS Gov Cloud Credentials
@@ -398,8 +354,6 @@ run () {
   run_ssh_keygen
   get_aws_commercial_credentials
   get_aws_govcloud_credentials
-  write_user_data_b64 
-  write_user_data_json
   get_rh_pull_secret
   write_docker_config_json 
   write_self_signed_cert
