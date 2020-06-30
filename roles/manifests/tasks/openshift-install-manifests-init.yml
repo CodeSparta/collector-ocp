@@ -2,27 +2,27 @@
 ####### Create Base Openshift Manifests
 - name: '{{ ansible_name_module }} | role | manifests | stat | find data/install-config.yaml'
   stat:
-    path: '{{ dir_artifacts }}/data/install-config.yaml'  
+    path: '{{ dir_artifacts }}/data/install-config.yaml'
   register: data_install_config_yaml
 
 - name: '{{ ansible_name_module }} | role | manifests | stat | find bak/install-config.yaml'
   stat:
-    path: '{{ dir_artifacts }}/bak/install-config.yaml'  
+    path: '{{ dir_artifacts }}/bak/install-config.yaml'
   register: bak_install_config_yaml
 
-- name: '{{ ansible_name_module }} | role | manifests | file | Clean/Purge Old Artifacts' 
+- name: '{{ ansible_name_module }} | role | manifests | file | Clean/Purge Old Artifacts'
   file:
     path: '{{ dir_artifacts }}/data/'
     state: absent
   when:
     - data_install_config_yaml.stat.exists == False
 
-- name: '{{ ansible_name_module }} | role | manifests | file | Create {{ dir_artifacts }}/data' 
+- name: '{{ ansible_name_module }} | role | manifests | file | Create {{ dir_artifacts }}/data'
   file:
     path: '{{ dir_artifacts }}/data'
     state: directory
 
-- name: '{{ ansible_name_module }} | role | manifests | file | Copy install-config.yaml from backup' 
+- name: '{{ ansible_name_module }} | role | manifests | file | Copy install-config.yaml from backup'
   copy:
     src: '{{ dir_artifacts }}/bak/install-config.yaml'
     dest: '{{ dir_artifacts }}/data/install-config.yaml'
@@ -36,7 +36,7 @@
     src: "{{ dir_artifacts }}/.aws/commercial.credentials"
     dest: "{{ local_home }}/.aws/credentials"
 
-- name: '{{ ansible_name_module }} | role | manifests | shell | openshift-install create manifests' 
+- name: '{{ ansible_name_module }} | role | manifests | shell | openshift-install create manifests'
   shell: "openshift-install create manifests --dir={{ dir_artifacts }}/data"
 
 ####### Switch to AWS GovCloud Credentials
@@ -44,3 +44,21 @@
   copy:
     src: "{{ dir_artifacts }}/.aws/govcloud.credentials"
     dest: "{{ local_home }}/.aws/credentials"
+
+- name: '{{ ansible_name_module }} role | manifests | template | Stage OpenShift Ignition User-Data JSON'
+  template:
+    src: user-data-ign.json.j2
+    dest: "{{ dir_artifacts }}/user-data/{{item.name}}.json"
+  with_items:
+    - { name: master,    IGNITION_URL: "http://registry.{{cluster_domain}}/master.ign" }
+    - { name: bootstrap, IGNITION_URL: "http://registry.{{cluster_domain}}/bootstrap.ign" }
+    - { name: bastion,   USER_AUTH_KEY: "{{lookup('file',  dir_artifacts +  '/.ssh/id_rsa_' + cluster_domain + '.pub' )}}" }
+
+- name: '{{ ansible_name_module }} role | manifests | template | Stage OpenShift Ignition User-Data B64'
+  template:
+    src: user-data-ign.b64.j2
+    dest: "{{ dir_artifacts }}/user-data/{{item.name}}-json.b64"
+  with_items:
+    - { name: master,    IGNITION_URL: "http://registry.{{cluster_domain}}/master.ign" }
+    - { name: bootstrap, IGNITION_URL: "http://registry.{{cluster_domain}}/bootstrap.ign" }
+    - { name: bastion,   USER_AUTH_KEY: "{{lookup('file',  dir_artifacts +  '/.ssh/id_rsa_' + cluster_domain + '.pub' )}}" }
