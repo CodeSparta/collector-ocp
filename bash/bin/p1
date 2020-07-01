@@ -1,5 +1,4 @@
 #!/bin/bash
-#set -ex
 ################################################################################
 # User Defined Variables
 p1GitCloneBundle="https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle.git"
