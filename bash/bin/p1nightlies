@@ -36,11 +36,11 @@ echo
 echo
 echo
 while true; do
-  read -rp "    >> Would you like to build your PlatformOne.tar.gz bundle now? (yes/no): " yn
+  read -rp "    >> Would you like to build your ArtifactBundle.tar.gz bundle now? (yes/no): " yn
     case $yn in
       [Yy]* ) echo ;
 	      run_log 0 "Executing ansible playbook ${runAnsibleCmd}" ; 
-              cd ~/PlatformOne/ansible/bundle; 
+              cd ~/deploy/ansible/bundle; 
               ${runAnsibleCmd}; 
               break
               ;;
@@ -75,13 +75,13 @@ EOF
 run_git_clone () {
 
 run_log 0 "Git Clone Dependencies"
-git clone ${p1GitCloneBundle} /root/PlatformOne/ansible/bundle 2>/dev/null
+git clone ${p1GitCloneBundle} /root/deploy/ansible/bundle 2>/dev/null
 
 run_log 0 "Git Checkout Branch: ${p1GitDeployBranch}"
-cd /root/PlatformOne/ansible/bundle
+cd /root/deploy/ansible/bundle
 git checkout ${p1GitDeployBranch} 2>/dev/null
 
-cd /root/PlatformOne
+cd /root/deploy
 }
 
 ################################################################################
@@ -271,13 +271,13 @@ mkdir -p ${p1DirArtifacts}/{log,auth,ssl,data,registry,user-data,mirror,repos,an
 
 # Stage environment variables
 cat <<EOF > ${p1DirArtifacts}/environment
-export p1DirBase="\${HOME}/PlatformOne"
+export p1DirBase="\${HOME}/deploy
 export versOCP="${versOCP}"
 export p1NameVpc="${p1NameVpc}"
 export p1NameDomain="${p1NameDomain}"
 export p1NameCluster="${p1NameCluster}"
 export p1ClusterDomain="${p1ClusterDomain}"
-export p1DirArtifacts="\${HOME}/PlatformOne/\${p1ClusterDomain}"
+export p1DirArtifacts="\${HOME}/deploy/\${p1ClusterDomain}"
 EOF
 
 }
