@@ -25,17 +25,13 @@
 
   ######### Mirror Images to directory
     - name: '{{ ansible_name_module }} | command:skopeo.copy | Sync content from quay.io'
-      command:
-        argv:
-          - skopeo
-          - copy
-          - docker://quay.io/{{ item }}
-          - docker://localhost:5500/{{ item }}
-          - --additional-tag
-          - 'quay.io/{{ item }}'
-        creates: "{{ dir_one }}/mirror/docker/registry/v2/repositories/openshift-release-dev/ocp-release"
-      with_items:
-        - "{{ lookup('file', '/var/lib/trno/release.list') }}"
+      shell: |
+          for i in $(cat /var/lib/trno/release.list); do \
+            skopeo copy docker://quay.io/$i \
+            docker://localhost:5500/$i \
+            --additional-tag "quay.io/$i" ; \
+          done
+#     creates: '{{ dir_one }}/mirror/docker/registry/v2/repositories/openshift-release-dev/ocp-release'
 
   ####### Lock File Conditional
   when: not mirror_sha_check.stat.exists
