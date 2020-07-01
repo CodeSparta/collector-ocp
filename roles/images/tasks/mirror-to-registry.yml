@@ -26,6 +26,7 @@
   ######### Mirror Images to directory
     - name: '{{ ansible_name_module }} | command:skopeo.copy | Sync content from quay.io'
       shell: |
+          registry serve /etc/docker/registry/config.yml & \
           for i in $(cat /var/lib/trno/release.list); do \
             skopeo copy docker://quay.io/$i \
             docker://localhost:5500/$i \
