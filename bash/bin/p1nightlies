@@ -235,8 +235,11 @@ clear
 # Collect AWS Gov Cloud Credentials
 get_aws_govcloud_credentials () {
 clear && echo
-run_log 0 "Open the Gov Cloud AWS IAM Security Credentials Portal:" ; 
+run_log 0 "On the Gov Cloud AWS IAM Security Credentials Portal:" ; 
 run_log 0 "      https://console.amazonaws-us-gov.com/iam/home#/security_credentials" ; 
+echo
+run_log 0 "On the Commercial AWS IAM Security Credentials Portal:" ; 
+run_log 0 "      https://console.aws.amazon.com/iam/home#/security_credentials" ; 
 
 usr_prompt_aws_keys govcloud
 }
