@@ -93,18 +93,18 @@
 ####### Docker Config: pull secrets for external registries (redhat.io / quay.io)
 - name: '{{ ansible_name_module }} role | manifests | openssl_certificate | docker config.json'
   copy:
-    dest: "{{ dir_artifacts }}/root/.docker/config.json"
+    dest: "/root/.docker/config.json"
     content: "{{ pull_secrets }}"
 ####### Authentication secrets for private mirror registry
-- name: '{{ ansible_name_module }} role | manifests | openssl_certificate | docker mirror.json'
-  copy:
-    dest: "{{ dir_artifacts }}/.docker/mirror.json"
-    content: "{{ registry_secrets }}"
+# name: '{{ ansible_name_module }} role | manifests | openssl_certificate | docker mirror.json'
+# copy:
+#   dest: "{{ dir_artifacts }}/.docker/mirror.json"
+#   content: "{{ registry_secrets }}"
 ####### Merged Authentication: external and internal registries
-- name: '{{ ansible_name_module }} role | manifests | openssl_certificate | docker master.json'
-  copy:
-    dest: "{{ dir_artifacts }}/.docker/master.json"
-    content: "{{ registry_secrets | combine(pull_secrets, recursive=True) }}"
+# name: '{{ ansible_name_module }} role | manifests | openssl_certificate | docker master.json'
+# copy:
+#   dest: "{{ dir_artifacts }}/.docker/master.json"
+#   content: "{{ registry_secrets | combine(pull_secrets, recursive=True) }}"
 
 ####### ssh keys for cluster deploy
 - name: '{{ ansible_name_module }} role | manifests | file | root .ssh directory'
