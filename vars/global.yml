@@ -1,6 +1,7 @@
 ---
 # openshift-install binary to run
 openshift_install_binary: /usr/bin/openshift-install-mod
+
 # Instance Types
 cloud_instance_type_master: "m5.xlarge"
 cloud_instance_type_worker: "m5.xlarge"
