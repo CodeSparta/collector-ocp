@@ -20,7 +20,7 @@ url_git_tfbootstrap: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/terraf
 ansiblerepos:
   - repo: "{{ url_git_bundle }}"
     dest: "{{ dir_git_bundle }}"
-    branch: feature-v3-4.5-c1upstream
+    branch: nightlies
 #   branch: "{{ git_branch }}"
 #   key_file: "{{ keyfile }}"
   - repo: "{{ url_git_build }}"

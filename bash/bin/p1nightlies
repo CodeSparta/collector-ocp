@@ -5,7 +5,7 @@
 ################################################################################
 # User Defined Variables
 p1GitCloneBundle="https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle.git"
-p1GitBranchBundle='feature-v3-4.5-c1upstream'
+p1GitBranchBundle='nightlies'
 p1GitCloneDeploy="https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/deploy.git"
 p1GitDeployBranch='v2-govcloud-automation'
 
