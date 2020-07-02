@@ -16,9 +16,9 @@ compute:
     {{ cloud_provider }}:
       type: {{ cloud_instance_type_worker }}
       zones:
-      - us-east-1a
-      - us-east-1b
-      - us-east-1c
+      - us-gov-west-1a
+      - us-gov-west-1b
+      - us-gov-west-1c
 controlPlane:
   name: master
   replicas: 3
@@ -26,15 +26,15 @@ controlPlane:
     {{ cloud_provider }}:
       type: {{ cloud_instance_type_worker }}
       zones:
-      - us-east-1a
-      - us-east-1b
-      - us-east-1c
+      - us-gov-west-1a
+      - us-gov-west-1b
+      - us-gov-west-1c
 metadata:
   name: {{ cluster_name }}
 platform:
   {{ cloud_provider }}:
     amiID: {{ cloud_instance_ami }}
-    region: us-east-1
+    region: us-gov-west-1
 pullSecret: '{{ lookup('file', '{{ dir_artifacts }}/.docker/mirror.json') | regex_replace("\'", "\"") }}'
 sshKey: '{{ sshkeys_pub_string }}'
 publish: {{ openshift_install_publish }}
