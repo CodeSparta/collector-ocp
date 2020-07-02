@@ -8,7 +8,7 @@
   vars:
     module: "template"
     state_provider: "{{ terraform_state_provider }}"
-    ansible_name_module: "{{ ansible_name }} | bundle | {{ module }}"
+    ansible_name_module: "{{ ansible_name_bundle }} | {{ module }}"
     dir_bundle_templates: "{{ dir_git_bundle }}/templates"
     tmpl_installconfig_j2: "{{ dir_bundle_templates }}/openshift-install/{{ cloud_provider }}-{{ target_environment }}-install-config.yaml.j2"
     cloud_key_id_special: "{{ lookup('ini', 'aws_access_key_id section=default file={{ dir_artifacts }}/.aws/govcloud.credentials') }}"
