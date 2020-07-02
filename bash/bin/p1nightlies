@@ -4,9 +4,10 @@
 # ContainerOne TRNO IaC Prep & Init                        # User Helper Script
 ################################################################################
 # User Defined Variables
-p1GitDeployBranch='v2-govcloud-automation'
 p1GitCloneBundle="https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle.git"
+p1GitBranchBundle='feature-v3-4.5-c1upstream'
 p1GitCloneDeploy="https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/deploy.git"
+p1GitDeployBranch='v2-govcloud-automation'
 
 # Working Variables
 p1NameVpc=""
@@ -77,9 +78,9 @@ run_git_clone () {
 run_log 0 "Git Clone Dependencies"
 git clone ${p1GitCloneBundle} /root/deploy/ansible/bundle 2>/dev/null
 
-run_log 0 "Git Checkout Branch: ${p1GitDeployBranch}"
+run_log 0 "Git Checkout Branch: ${p1GitBranchBundle}"
 cd /root/deploy/ansible/bundle
-git checkout ${p1GitDeployBranch} 2>/dev/null
+git checkout ${p1GitBranchBundle} 2>/dev/null
 
 cd /root/deploy
 }
