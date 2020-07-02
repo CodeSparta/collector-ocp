@@ -13,10 +13,10 @@ p1ClusterDomain=""
 p1DirBase="${HOME}/PlatformOne"
 runAnsibleCmd="./site.yml"
 ################################################################################
-# Base Logging 
+# Base Logging
 run_log () {
   if   [[ $1 == 0 ]]; then
-    echo "   $2" 
+    echo "   $2"
   elif [[ $1 == 1 ]]; then
     echo "   $2"
     exit 1
@@ -36,9 +36,9 @@ while true; do
   read -rp "    >> Would you like to build your PlatformOne.tar.gz bundle now? (yes/no): " yn
     case $yn in
       [Yy]* ) echo ;
-	      run_log 0 "Executing ansible playbook ${runAnsibleCmd}" ; 
-              cd /root/PlatformOne/ansible/bundle/ && ./site.yml; 
-              ${runAnsibleCmd}; 
+	      run_log 0 "Executing ansible playbook ${runAnsibleCmd}" ;
+              cd /root/PlatformOne/ansible/bundle/ && ./site.yml;
+              ${runAnsibleCmd};
               break
               ;;
       [Nn]* ) run_log 0 " >> Exiting now, thank you!" ;
@@ -64,6 +64,9 @@ cluster_domain: "${p1ClusterDomain}"
 name_cluster_vpc: "${p1NameVpc}"
 cluster_network_mode: "disconnected"
 target_environment: 'govcloud'
+# TODO: protect secrets with: "ansible-vault"
+pull_secrets: ${quaySecret}
+registry_secrets: '{"auths": {"registry.{{ cluster_domain }}:5000": {"auth": "{{ name_cluster_vpc + ":" + name_cluster_vpc | b64encode }}","email": "admin@{{ name_domain }}" } } }'
 EOF
 }
 
@@ -79,25 +82,6 @@ cd /root/PlatformOne/ansible/bundle
 git checkout ${p1GitDeployBranch} 2>/dev/null
 
 cd /root/PlatformOne
-}
-
-################################################################################
-# Stage docker config quay pull secret
-write_docker_config_json () {
-# Write Quay Pull Secret
-cat <<EOF > ${p1DirArtifacts}/bak/.docker/config.json
-${quaySecret}
-EOF
-
-cp -f ${p1DirArtifacts}/bak/.docker/config.json /root/.docker/config.json
-
-# Write private registry credentials
-cat <<EOF > ${p1DirArtifacts}/.docker/mirror.json
-{"auths": {"registry.${p1ClusterDomain}:5000": {"auth": "`echo -n ${p1NameVpc}:${p1NameVpc} | base64 -w0`","email": "admin@${p1NameDomain}"}}}
-EOF
-
-#export emailAdmin="admin@${p1NameDomain}"
-jq -e ".auths += {\"registry.${p1ClusterDomain}:5000\": {\"auth\": \"$(echo -n ${p1NameVpc}:${p1NameVpc} | base64 -w0)\", \"email\": "env.emailAdmin"}}" ${p1DirArtifacts}/bak/.docker/config.json | jq -c > ${p1DirArtifacts}/.docker/master.json
 }
 
 ################################################################################
@@ -118,13 +102,13 @@ while true; do
   read -rp "    >> Do you have a login for access.redhat.com? (yes/no): " yn
     case $yn in
       [Yy]* ) echo ;
-	      run_log 0 "Go ahead and open the RH Cluster Manager Portal:" ; 
-              run_log 0 "      https://cloud.redhat.com/openshift/install/metal/user-provisioned" ; 
+	      run_log 0 "Go ahead and open the RH Cluster Manager Portal:" ;
+              run_log 0 "      https://cloud.redhat.com/openshift/install/metal/user-provisioned" ;
               prompt_usr_quay_secret
               break
               ;;
       [Nn]* ) run_log 0 "Please register for a commercial or developer account and try again:" ;
-              run_log 0 "      https://access.redhat.com" ; 
+              run_log 0 "      https://access.redhat.com" ;
               run_log 0 "      https://developers.redhat.com" ;
               ;;
           * ) echo "$SEP_2 Please answer yes or no." ;;
@@ -170,8 +154,8 @@ EOF
 # Collect AWS Gov Cloud Credentials
 get_aws_govcloud_credentials () {
 clear && echo
-run_log 0 "Open the Gov Cloud AWS IAM Security Credentials Portal:" ; 
-run_log 0 "      https://console.amazonaws-us-gov.com/iam/home#/security_credentials" ; 
+run_log 0 "Open the Gov Cloud AWS IAM Security Credentials Portal:" ;
+run_log 0 "      https://console.amazonaws-us-gov.com/iam/home#/security_credentials" ;
 
 usr_prompt_aws_keys govcloud
 }
@@ -180,23 +164,10 @@ usr_prompt_aws_keys govcloud
 # Collect AWS Commercial Credentials
 get_aws_commercial_credentials () {
 clear && echo
-run_log 0 "Open the Commercial AWS IAM Security Credentials Portal:" ; 
-run_log 0 "      https://console.aws.amazon.com/iam/home#/security_credentials" ; 
+run_log 0 "Open the Commercial AWS IAM Security Credentials Portal:" ;
+run_log 0 "      https://console.aws.amazon.com/iam/home#/security_credentials" ;
 
 usr_prompt_aws_keys commercial
-}
-
-################################################################################
-# Generate cloud deploy ssh keys
-run_ssh_keygen () {
-clear && echo
-  run_log 2 "Creating new ssh keys for cluster deploy..."
-
-  # Generate ssh keys
-  ssh-keygen -b 4086 -t rsa -C "core@${p1ClusterDomain}" \
-             -f ${p1DirArtifacts}/.ssh/id_rsa_${p1ClusterDomain}
-
-  cp -f ${p1DirArtifacts}/.ssh/id_rsa_${p1ClusterDomain}* /root/.ssh/
 }
 
 ################################################################################
@@ -240,7 +211,7 @@ EOF
 run_init_usr_prompt () {
   # Verify Information
   prompt_verify () {
-    echo " 
+    echo "
     Artifact Environment Variables:
       VPC Name:       ${p1NameVpc}
       Cluster Name:   ${p1NameCluster}
@@ -251,7 +222,7 @@ run_init_usr_prompt () {
   while true; do
     read -p "    Please confirm these details are correct (Yes/No): " verify
     case ${verify} in
-      [Yy]* ) run_log 0 "User Confirmed. Continuing ..." ; 
+      [Yy]* ) run_log 0 "User Confirmed. Continuing ..." ;
 	      break
 	      ;;
       [Nn]* ) run_log 1 "User Rejected.  Terminating ..." ;;
@@ -262,19 +233,19 @@ run_init_usr_prompt () {
 
   # Prompt user for AWS VPC Name
   prompt_p1NameVpc () {
-    read -p '    
+    read -p '
     Please enter your AWS VPC name: ' p1NameVpc
   }
 
   # Prompt user for AWS VPC Name
   prompt_p1NameCluster () {
-  echo "    
+  echo "
     Please enter a cluster name which will be prepended to the Base Domain
     This is a unique and arbitrary name which will be appended as a subdomain.
-      Example entry:             
+      Example entry:
         cluster
       Which would prepend to become:
-        cluster.cloud.com 
+        cluster.cloud.com
         cluster.anchovy.dev"
   read -p '    Cluster Name: ' p1NameCluster
   p1ClusterDomain="${p1NameCluster}.${p1NameDomain}"
@@ -283,10 +254,10 @@ run_init_usr_prompt () {
 
   # Prompt user for Base Domain Name
   prompt_p1NameDomain () {
-  echo "    
+  echo "
     Please enter a base domain name for this environment
     This may be an arbitrary local only domain, or a domain you own the rights to.
-      Example:             
+      Example:
         cloud.com
         anchovy.dev"
   read -p '    Base Domain : ' p1NameDomain ;
@@ -310,7 +281,7 @@ run_info () {
 run_log 0 '
     This will walk you through preparing your AWS Gov OCP asset management
     environment required to generate your RHCOS Ignition configuration data.
-    
+
     This walk through requires all of the following:
       1. AWS Commercial Credentials:
            @ https://console.aws.amazon.com/iam/home#/security_credentials
@@ -319,7 +290,7 @@ run_log 0 '
            @ https://console.amazonaws-us-gov.com/iam/home#/security_credentials
 
       3. A Red Hat Developer or Subscription account:
-           Developer Sign up          @ https://developers.redhat.com/register/ 
+           Developer Sign up          @ https://developers.redhat.com/register/
            Commercial Register/Login  @ https://access.redhat.com
 
       4. The UPI OpenShift Cluster Manager Portal:
@@ -332,15 +303,13 @@ run () {
   #run_log 0 ' Welcome to the ContainerOne OpenShift Artifact Prep Utility'
   #run_info
   run_init_usr_prompt
-  run_init_stage 
-  run_ssh_keygen
+  run_init_stage
   get_aws_commercial_credentials
   get_aws_govcloud_credentials
   get_rh_pull_secret
-  write_docker_config_json 
   run_git_clone
-  run_stage_deploy_variables 
-  run_ansible_playbook_bundle 
+  run_stage_deploy_variables
+  run_ansible_playbook_bundle
 }
 
 run
