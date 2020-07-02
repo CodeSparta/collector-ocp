@@ -124,7 +124,6 @@ jq -e ".auths += {\"registry.${p1ClusterDomain}:5000\": {\"auth\": \"$(echo -n $
 # Gather Red Hat Quay Image Repository Pull Secret
 prompt_usr_quay_secret () {
   echo ;
-  run_log 0 "On the Cluster Manager UPI portal, find and click: 'Copy Pull Secret'"
 
   # Prompt user to paste secret
   quaySecret=$(read -srp "    >> Please paste your pull secret and hit 'Enter'.. (Secret is masked): " quaySecret; echo ${quaySecret})
@@ -135,11 +134,13 @@ prompt_usr_quay_secret () {
 get_rh_pull_secret () {
 echo
 while true; do
-  read -rp "    >> Do you have a login for access.redhat.com? (yes/no): " yn
+  run_log 0 "Collect your quay images pull secret from the RedHat Cluster Manager Portal:" ; 
+  run_log 0 "      https://cloud.redhat.com/openshift/install/metal/user-provisioned" ; 
+  echo
+  run_log 0 "On the Cluster Manager UPI portal, find and click: 'Copy Pull Secret'"
+  read -rp "    >> Do you have your pull secret? (yes/no): " yn
     case $yn in
       [Yy]* ) echo ;
-	      run_log 0 "Go ahead and open the RH Cluster Manager Portal:" ; 
-              run_log 0 "      https://cloud.redhat.com/openshift/install/metal/user-provisioned" ; 
               prompt_usr_quay_secret
               break
               ;;
@@ -381,7 +382,7 @@ run () {
   run_init_usr_prompt
   run_init_stage 
   run_ssh_keygen
-  get_aws_commercial_credentials
+  #get_aws_commercial_credentials
   get_aws_govcloud_credentials
   write_user_data_b64 
   write_user_data_json
