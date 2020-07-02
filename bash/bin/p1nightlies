@@ -41,6 +41,7 @@ while true; do
     case $yn in
       [Yy]* ) echo ;
 	      run_log 0 "Executing ansible playbook ${runAnsibleCmd}" ; 
+              clear;
               cd ~/deploy/ansible/bundle; 
               ${runAnsibleCmd}; 
               break
