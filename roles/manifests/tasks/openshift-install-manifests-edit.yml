@@ -33,13 +33,13 @@
   loop: "{{ manifests.files }}"
 
 ####### Rename region across all manifests
-- name: '{{ ansible_name_module }} | replace | Replace region for all files'
-  replace:
-    path: "{{ item.path }}"
-    regexp: "us-east-1"
-    replace: "{{ cloud_region }}"
-  no_log: True
-  loop: "{{ manifests.files }}"
+# name: '{{ ansible_name_module }} | replace | Replace region for all files'
+# replace:
+#   path: "{{ item.path }}"
+#   regexp: "us-east-1"
+#   replace: "{{ cloud_region }}"
+# no_log: True
+# loop: "{{ manifests.files }}"
 
 ####### Remove Ingress Controller
 - name: '{{ ansible_name_module }} | Remove | Remove Ingress Controller'
@@ -57,29 +57,30 @@
   when: external_ingress == 'true'
 
 ####### Rename region across all manifests | Workaround version requires debugging and simplification
-- block:
-    - name: '{{ ansible_name_module }} | replace | Replace region for cluster-infrastructure-02-config.yml'
-      replace:
-        path: "{{ dir_artifacts }}/data/manifests/cluster-infrastructure-02-config.yml"
-        regexp: "us-east-1"
-        replace: "{{ cloud_region }}"
-      no_log: True
-  ignore_errors: True
-  always:
-    - name: '{{ ansible_name_module }} | replace | Check to see if the content still exists'
-      lineinfile:
-        path: "{{ dir_artifacts }}/data/manifests/cluster-infrastructure-02-config.yml"
-        line: us-east-1
-        state: present
-      check_mode: true
-      register: presence
-    - name: '{{ ansible_name_module }} | replace | Replace region for cluster-infrastructure-02-config.yml'
-      replace:
-        path: "{{ dir_artifacts }}/data/manifests/cluster-infrastructure-02-config.yml"
-        regexp: "us-east-1"
-        replace: "{{ cloud_region }}"
-      no_log: True
-      when: not presence.changed
+# NOT RELEVANT ON OCP 4.5+
+# block:
+#   - name: '{{ ansible_name_module }} | replace | Replace region for cluster-infrastructure-02-config.yml'
+#     replace:
+#       path: "{{ dir_artifacts }}/data/manifests/cluster-infrastructure-02-config.yml"
+#       regexp: "us-east-1"
+#       replace: "{{ cloud_region }}"
+#     no_log: True
+# ignore_errors: True
+# always:
+#   - name: '{{ ansible_name_module }} | replace | Check to see if the content still exists'
+#     lineinfile:
+#       path: "{{ dir_artifacts }}/data/manifests/cluster-infrastructure-02-config.yml"
+#       line: us-east-1
+#       state: present
+#     check_mode: true
+#     register: presence
+#   - name: '{{ ansible_name_module }} | replace | Replace region for cluster-infrastructure-02-config.yml'
+#     replace:
+#       path: "{{ dir_artifacts }}/data/manifests/cluster-infrastructure-02-config.yml"
+#       regexp: "us-east-1"
+#       replace: "{{ cloud_region }}"
+#     no_log: True
+#     when: not presence.changed
 
 ####### Add Machine API Operator Credentials
 - name: '{{ ansible_name_module }} | copy | Add Machine API Operator credentials'
