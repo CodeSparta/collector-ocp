@@ -43,9 +43,9 @@ spec:
       privileged: false
       readOnlyRootFilesystem: false
     volumeMounts:
-    - mountPath: /root/PlatformOne:z
-      name: var-home-core-PlatformOne
-    workingDir: /root/PlatformOne
+    - mountPath: /root/deploy:z
+      name: var-home-core-deploy
+    workingDir: /root/deploy
   - command:
     - /etc/docker/registry/config.yml
     env:
@@ -77,11 +77,11 @@ spec:
       readOnlyRootFilesystem: false
     volumeMounts:
     - mountPath: /var/lib/registry:z
-      name: var-home-core-PlatformOne-{{ name_cluster_vpc }}.{{ cluster_domain }}-registry
+      name: var-home-core-deploy-{{ name_cluster_vpc }}.{{ cluster_domain }}-registry
     - mountPath: /root/ssl:z
-      name: var-home-core-PlatformOne-{{ name_cluster_vpc }}.{{ cluster_domain }}-ssl
+      name: var-home-core-deploy-{{ name_cluster_vpc }}.{{ cluster_domain }}-ssl
     - mountPath: /root/auth/htpasswd:z
-      name: var-home-core-PlatformOne-{{ name_cluster_vpc }}.{{ cluster_domain }}-auth-htpasswd
+      name: var-home-core-deploy-{{ name_cluster_vpc }}.{{ cluster_domain }}-auth-htpasswd
     workingDir: /
   - command:
     - nginx
@@ -112,27 +112,27 @@ spec:
       readOnlyRootFilesystem: false
     volumeMounts:
     - mountPath: /usr/share/nginx/html:z
-      name: var-home-core-PlatformOne-{{ name_cluster_vpc }}.{{ cluster_domain }}-data
+      name: var-home-core-deploy-{{ name_cluster_vpc }}.{{ cluster_domain }}-data
     workingDir: /
   volumes:
   - hostPath:
-      path: /root/PlatformOne
+      path: /root/deploy
       type: Directory
-    name: var-home-core-PlatformOne
+    name: var-home-core-deploy
   - hostPath:
-      path: /root/PlatformOne/{{ cluster_domain }}/registry
+      path: /root/deploy/{{ cluster_domain }}/mirror
       type: Directory
-    name: var-home-core-PlatformOne-{{ name_cluster_vpc }}.{{ cluster_domain }}-registry
+    name: var-home-core-deploy-{{ name_cluster_vpc }}.{{ cluster_domain }}-registry
   - hostPath:
-      path: /root/PlatformOne/{{ cluster_domain }}/ssl
+      path: /root/deploy/{{ cluster_domain }}/ssl
       type: Directory
-    name: var-home-core-PlatformOne-{{ name_cluster_vpc }}.{{ cluster_domain }}-ssl
+    name: var-home-core-deploy-{{ name_cluster_vpc }}.{{ cluster_domain }}-ssl
   - hostPath:
-      path: /root/PlatformOne/{{ cluster_domain }}/auth/htpasswd
+      path: /root/deploy/{{ cluster_domain }}/auth/htpasswd
       type: File
-    name: var-home-core-PlatformOne-{{ name_cluster_vpc }}.{{ cluster_domain }}-auth-htpasswd
+    name: var-home-core-deploy-{{ name_cluster_vpc }}.{{ cluster_domain }}-auth-htpasswd
   - hostPath:
-      path: /root/PlatformOne/{{ cluster_domain }}/data
+      path: /root/deploy/{{ cluster_domain }}/data
       type: Directory
-    name: var-home-core-PlatformOne-{{ name_cluster_vpc }}.{{ cluster_domain }}-data
+    name: var-home-core-deploy-{{ name_cluster_vpc }}.{{ cluster_domain }}-data
 status: {}

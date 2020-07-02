@@ -1,5 +1,5 @@
 ---
-- name: '{{ ansible_name_module }} | copy | Backup ignition config directory'
+- name: '{{ ansible_name_module }} | copy | Backup data/{manifests,openshift} config map directory'
   copy:
     src: "{{ dir_artifacts }}/data/"
     dest: "{{ dir_artifacts }}/bak/data"

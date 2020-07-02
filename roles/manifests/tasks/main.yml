@@ -2,5 +2,5 @@
 # main.yml tasks file for role/manifests
 - name: '{{ ansible_name_module }} | Init Manifests' 
   include_tasks: openshift-install-manifests-init.yml
-- name: '{{ ansible_name_module }} | Edit Manifests' 
-  include_tasks: openshift-install-manifests-edit.yml
+# name: '{{ ansible_name_module }} | Edit Manifests' 
+# include_tasks: openshift-install-manifests-edit.yml

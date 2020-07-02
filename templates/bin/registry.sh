@@ -1,18 +1,18 @@
 #!/bin/bash
 
-if [[ ! -d ./PlatformOne ]]; then
- #sha256sum --check PlatformOne.tar.gz.sha256
-  tar xvf PlatformOne.tar.gz
+if [[ ! -d ./deploy ]]; then
+ #sha256sum --check ArtifactsBundle.tar.gz.sha256
+  tar xvf ArtifactsBundle.tar.gz
   runUser="$USER"
 fi
 
-p1DirImages=${HOME}/PlatformOne/images
-envFile=$(ls ${HOME}/PlatformOne/*/environment)
+p1DirImages=${HOME}/deploy/images
+envFile=$(ls ${HOME}/deploy/*/environment)
 source ${envFile}
 
-sudo chown -R ${runUser}:${runUser} ${HOME}/PlatformOne
-sudo chmod -R 755 ${HOME}/PlatformOne/${p1ClusterDomain}/data
-mkdir  ${HOME}/PlatformOne/${p1ClusterDomain}/registry 2>/dev/null
+sudo chown -R ${runUser}:${runUser} ${HOME}/deploy
+sudo chmod -R 755 ${HOME}/deploy/${p1ClusterDomain}/data
+mkdir  ${HOME}/deploy/${p1ClusterDomain}/registry 2>/dev/null
 
 run_clean () {
   for container in $( sudo podman ps | awk '/one|nginx|registry|pause|busybox/{print $3}' 2>/dev/null); do
@@ -81,7 +81,7 @@ cat <<EOF
     Example:
 
 
-        mkdir /root/.docker 2>/dev/null ; cp $(ls /root/PlatformOne/*/.docker/mirror.json) /root/.docker/config.json
+        mkdir /root/.docker 2>/dev/null ; cp $(ls /root/deploy/*/.docker/mirror.json) /root/.docker/config.json
 
         oc image mirror -a /root/.docker/mirror.json --dir=mirror file://openshift/release:4.4.9* registry.ocp4.clusterfudge.net:5000/ocp-4.4.9
 

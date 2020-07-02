@@ -42,7 +42,7 @@ images_cloudctl:
     path: "{{ dir_one }}/images"
 
   - uri: "quay.io/containercraft"
-    tag: govcloud
+    tag: nightlies
     name: one
     path: "{{ dir_one }}/images"
 

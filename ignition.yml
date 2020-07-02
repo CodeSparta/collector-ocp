@@ -1,5 +1,5 @@
 #!/usr/local/bin/ansible-playbook --inventory=inventory
-- name: 'RedHat | PlatformOne | bundle | ignition' 
+- name: 'RedHat | TRNO | bundle | ignition' 
   hosts: containerone
   vars_files:
     - '../p1.yml'
