@@ -82,9 +82,6 @@ run_git_clone () {
 run_log 0 "Git Clone Dependencies"
 git clone ${p1GitCloneBundle} /root/deploy/ansible/bundle 2>/dev/null
 
-run_log 0 "Git Checkout Branch: ${p1GitDeployBranch}"
-cd /root/deploy/ansible/bundle
-git checkout ${p1GitDeployBranch} 2>/dev/null
 run_log 0 "Git Checkout Branch: ${p1GitBranchBundle}"
 cd /root/deploy/ansible/bundle
 git checkout ${p1GitBranchBundle} 2>/dev/null

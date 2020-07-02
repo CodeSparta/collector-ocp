@@ -37,7 +37,7 @@
 #   dest: "{{ local_home }}/.aws/credentials"
 
 ####### Set AWS GovCloud Credentials
-- name: '{{ ansible_name_module }} | copy | Switch to AWS Commercial Credentials'
+- name: '{{ ansible_name_module }} | copy | Set AWS Credentials'
   copy:
     src: "{{ dir_artifacts }}/.aws/govcloud.credentials"
     dest: "{{ local_home }}/.aws/credentials"
