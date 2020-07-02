@@ -1,9 +1,9 @@
 ---
 ####### Clone Git Dependencies
-- name: '{{ ansible_name_module }} | stat | Check for Git Clone Lockfile'
-  stat:
-    path: '{{ dir_ansible }}/clone.date'  
-  register: git_clone_check
+# name: '{{ ansible_name_module }} | stat | Check for Git Clone Lockfile'
+# stat:
+#   path: '{{ dir_ansible }}/clone.date'  
+# register: git_clone_check
 
 - name: '{{ ansible_name_module }} | git:clone | Clone Git Dependencies' 
   git:
