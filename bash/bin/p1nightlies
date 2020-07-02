@@ -263,7 +263,7 @@ clear && echo
 
   # Generate ssh keys
   ssh-keygen -b 4086 -t rsa -C "core@${p1ClusterDomain}" \
-             -f ${p1DirArtifacts}/.ssh/id_rsa_${p1ClusterDomain}
+             -f ${p1DirArtifacts}/.ssh/id_rsa_${p1ClusterDomain} 2>&1 1>/dev/null
 
   cp -f ${p1DirArtifacts}/.ssh/id_rsa_${p1ClusterDomain}* /root/.ssh/
 }
