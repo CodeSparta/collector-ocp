@@ -5,7 +5,7 @@ mkdir -p ${HOME}/TRNO
 ```
 ## 2. Launch ContainerOne Point of Origin Container
 ```
-sudo podman run -d -h one --name one --privileged --volume ${HOME}/TRNO:/root/deploy:z docker.io/containercraft/one:nightlies
+sudo podman run -dq -h one --name one --privileged --volume ${HOME}/TRNO:/root/deploy:z docker.io/containercraft/one:nightlies
 ```
 ## 3. Exec into ContainerOne
 ```
