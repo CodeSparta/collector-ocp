@@ -8,7 +8,7 @@
 - name: '{{ ansible_name_module }} | git:clone | Clone Git Dependencies' 
   git:
     clone: yes
-    version: "{{ git_branch }}"
+    version: "{{ item.branch }}"
     repo: "{{ item.repo }}"
     dest: "{{ item.dest }}"
     update: true
