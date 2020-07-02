@@ -173,8 +173,8 @@ usr_prompt_aws_keys () {
   run_log 0 "Click on 'Create access key'"
   # Prompt user to paste secret
   echo
-  read  -rp "    >> Please copy/paste the ${1} 'Access Key ID': " access_KEYID;
-  read -srp "    >> Please copy/paste the ${1} 'Secret Access Key' (Secret is masked): " access_KEYSECRET;
+  read  -rp "    >> Please copy/paste the AWS 'Access Key ID': " access_KEYID;
+  read -srp "    >> Please copy/paste the AWS 'Secret Access Key' (Secret is masked): " access_KEYSECRET;
 
 cat <<EOF > ${p1DirArtifacts}/.aws/${1}.credentials
 ; https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
