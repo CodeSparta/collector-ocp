@@ -17,5 +17,5 @@
 #    - podman save -o docker-nginxlatest-image.tar nginx:latest
 #    - podman save -o docker-containerone-image.tar containercraft/one:4.3.8
 #  args:
-#    chdir: "{{ home_directory }}/PlatformOne/images/"
+#    chdir: "{{ home_directory }}/deploy/images/"
 

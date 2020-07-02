@@ -1,5 +1,5 @@
 #!/usr/local/bin/ansible-playbook --inventory=inventory
-- name: 'RedHat | PlatformOne | bundle' 
+- name: 'RedHat | TRNO | bundle' 
   hosts: containerone
 
 # Build Artifact Bundle
