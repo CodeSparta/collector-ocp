@@ -1,13 +1,10 @@
 #!/usr/local/bin/ansible-playbook --inventory=inventory
-- name: 'RedHat | TRNO | bundle' 
-  hosts: containerone
-
-# Build Artifact Bundle
-- import_playbook: dependencies.yml              # Download git repos and any other prerequisite dependencies
-- import_playbook: templates.yml                 # Template install-config.yaml and auxilary manifest files
-- import_playbook: manifests.yml                 # Create & customize OpenShift manifest files
-- import_playbook: ignition.yml                  # Build RH CoreOS ignition files from manifests
-- import_playbook: images.yml                    # Download openshift images to directory
-- import_playbook: bundle.yml                    # Bundle all artifacts required for airgap environments
-# import_playbook: upload.yml                    # Push bundle to s3
-# when: 'cloudctl or terraform  == "enabled"'    # - Execute if all terraform modules or if cloudctl module enabled
+- name: ' Koffer | Artifact Rake Utility' 
+  hosts: local
+  vars_files:
+    - 'vars/global.yml'
+- import_playbook: tree.yml         # Create base deploy directory tree
+- import_playbook: secrets.yml      # Collect Secrets
+- import_playbook: git.yml          # Pull git repos
+- import_playbook: images.yml       # Pull cloudctl images & Download container images to directory
+- import_playbook: bundle.yml       # Bundle artifacts for airgap pivot

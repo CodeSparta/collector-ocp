@@ -1,3 +1,0 @@
----
-- name: '{{ ansible_name_module }} | shell:openshift-install | Generate ignition config files'
-  shell: "{{ openshift_install_binary }} create ignition-configs --dir={{ dir_artifacts }}/data"
