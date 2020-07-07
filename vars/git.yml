@@ -18,7 +18,7 @@ url_git_tfmasters: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/terrafor
 url_git_tfcloudctl: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/terraform/cloudctl.git'
 url_git_tfbootstrap: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/terraform/bootstrap.git'
 
-url_git_tfences: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/terraform/fences.git'
+url_git_tffences: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/terraform/fences.git'
 dir_git_tffences: "{{ dir_ansible }}/deploy/terraform/fences"
 
 dir_git_build: "{{ dir_ansible }}/deploy/ansible/build"
