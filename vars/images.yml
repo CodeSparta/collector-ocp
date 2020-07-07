@@ -1,6 +1,6 @@
 # CloudCTL Pod Docker Image Pull List
 images_cloudctl:
-  - uri: "quay.io/containercraft"
+  - uri: "docker.io/containercraft"
     name: one
     tag: nightlies
     path: "{{ dir_deploy }}/images"
