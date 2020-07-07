@@ -21,7 +21,7 @@ Features:
 ## Run
 ### 1. Clone into koffer directory
 ```
-git clone https://github.com/containercraft/koffer-openshift.git /tmp/koffer
+git clone https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle.git /tmp/koffer
 ```
 ### 2. Run Koffer
 ```
