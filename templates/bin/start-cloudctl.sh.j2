@@ -59,9 +59,11 @@ test_core () {
       && echo "  >> Registry Service Failed!" \
       || echo "  >> Registry Service Online. Catalog: $(curl -s -u cloudctl:cloudctl -k https://localhost:5000/v2/_catalog)"
 
+  echo
   echo "  >> List Pods & Containers"
   podman pod ps
   podman ps --all
+  echo
 }
 
 run_core
