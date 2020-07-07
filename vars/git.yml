@@ -30,9 +30,9 @@ dir_git_tfbootstrap: "{{ dir_ansible }}/deploy/terraform/bootstrap"
 
 # Git Clone Items
 ansiblerepos:
-  - repo: "{{ url_git_bundle }}"
-    dest: "{{ dir_git_bundle }}"
-    branch: nightlies
+# - repo: "{{ url_git_bundle }}"
+#   dest: "{{ dir_git_bundle }}"
+#   branch: nightlies
 #   branch: "{{ git_branch }}"
 #   key_file: "{{ keyfile }}"
   - repo: "{{ url_git_deploy }}"
