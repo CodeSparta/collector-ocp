@@ -21,7 +21,8 @@ Features:
 ## Run
 ### 1. Clone into koffer directory
 ```
-git clone https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle.git /tmp/koffer
+ git clone https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle.git /tmp/koffer;
+ git checkout nightlies;
 ```
 ### 2. Run Koffer
 ```
