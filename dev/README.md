@@ -3,7 +3,7 @@
 #### 0. (OPTIONAL) Build Locally
 ```
   sudo -i
-  curl -L https://git.io/JJtZt | bash -x
+  curl -L https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle/-/raw/nightlies/dev/bin/build-local.sh | bash -x
 ```
 #### 1. Clone codebase under development
 ```
