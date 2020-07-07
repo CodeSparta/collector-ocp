@@ -1,8 +1,13 @@
 ## Developer Guide
 ------------
+#### 0. (OPTIONAL) Build Locally
+```
+  sudo -i
+  curl -L https://git.io/JJtZt | bash -x
+```
 #### 1. Clone codebase under development
 ```
- git clone https://github.com/containercraft/koffer-openshift.git /tmp/koffe
+ git clone https://github.com/containercraft/koffer-openshift.git /tmp/koffer
 ```
 #### 2. Prepare Developer Environment
   a. Create persistence directories
