@@ -7,7 +7,8 @@
 ```
 #### 1. Clone codebase under development
 ```
- git clone https://github.com/containercraft/koffer-openshift.git /tmp/koffer
+ git clone https://github.com/containercraft/koffer-openshift.git /tmp/koffer;
+ cd /tmp/koffer && git checkout nightlies;
 ```
 #### 2. Prepare Developer Environment
   a. Create persistence directories
