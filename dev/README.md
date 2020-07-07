@@ -74,7 +74,7 @@ tar -xv -C /root -f /tmp/koffer-bundle.*.tar
 ```
 #### 5. Run CloudCtl stand up script
 ```  6
- ./start-cloudctl.sh
+ . ~/start-cloudctl.sh
 ```
 #### 7. Exec into CloudCtl
 ```
