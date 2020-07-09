@@ -22,14 +22,14 @@ Features:
 ## Instructions:
 ### 1. Clone into koffer directory
 ```
- git clone https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle.git /tmp/koffer && cd /tmp/koffer && git checkout nightlies;
+ git clone https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle.git /tmp/bundle && cd /tmp/bundle && git checkout nightlies;
 ```
 ### 2. Run Koffer Engine
 ```
  sudo podman run \
      --rm -it -h koffer --name koffer      \
      --pull=always --entrypoint entrypoint \
-     --volume /tmp/koffer:/root/koffer:z   \
+     --volume /tmp/bundle:/root/koffer:z   \
    docker.io/containercraft/koffer:nightlies
 ```
 ### 3. Move Koffer Bundle to target host /tmp directory
