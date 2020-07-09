@@ -2,6 +2,7 @@
 p1DirImages=${HOME}/deploy/images
 
 if [[ ! -d ./deploy ]]; then
+  echo "  >> Verifying SHA256SUM: ArtifactsBundle.tar.xz"
   sha256sum --check ArtifactsBundle.tar.xz.sha256 \
       && tar -xv -C /root -f ArtifactsBundle.tar.xz \
       && rm -rf ArtifactsBundle.tar.xz ArtifactsBundle.tar.xz.sha256
@@ -24,17 +25,21 @@ run_clean () {
 
 load_images () {
   for image in $(ls ${p1DirImages}/*.tar); do
+    echo "  >> Loading Image: ${image}"
     sudo podman load -i ${image}
   done
+  echo "  >> Cloudctl Images Loaded Successfully."
 }
 
 load_mirror_certificate () {
+# echo "  >> Loading registry certificate to host."
 cp /root/deploy/secrets/registry/ssl/registry.crt \
     /etc/pki/ca-trust/source/anchors/registry.crt \
   && sudo update-ca-trust
 }
 
 run_pod () {
+  echo "  >> Starting CloudCtl Pod."
   podman play kube ./cloudctl.yml
 }
 
@@ -54,11 +59,11 @@ test_core () {
       || echo "  >> NGINX Ignition Delivery Service Online."
 
   echo "  >> Testing Docker Registry:2 Service"
-  ignTest=$(curl -s -u cloudctl:cloudctl -k https://localhost:5000/v2/_catalog 2>&1 1>/dev/null ; echo $?)
+  sleep 3
+  ignTest=$(curl -u cloudctl:cloudctl -k https://localhost:5000/v2/_catalog 2>&1 1>/dev/null ; echo $?)
   [[ ${ignTest} == '0' ]] \
       && echo "  >> Registry Service Failed!" \
       || echo "  >> Registry Service Online. Catalog: $(curl -s -u cloudctl:cloudctl -k https://localhost:5000/v2/_catalog)"
-
   echo
   echo "  >> List Pods & Containers"
   podman pod ps
