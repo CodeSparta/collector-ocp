@@ -27,14 +27,11 @@ Features:
 ### 2. Run Koffer
 ```
 sudo podman run \
-    --rm -qit -h koffer --name koffer     \
+    --rm -it -h koffer --name koffer      \
     --pull=always --entrypoint entrypoint \
-    --volume ~/.docker:/root/.docker:z    \
     --volume /tmp/koffer:/root/koffer:z   \
   docker.io/containercraft/koffer:nightlies
 ```
-  - optional: volume mount quay pull secret from host    
-    `--volume ~/.docker:/root/.docker/`
 ### 3. Move Koffer Bundle to target host /tmp directory
 ### 4. Aquire root & unpack tarball
 ```

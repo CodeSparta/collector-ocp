@@ -30,7 +30,6 @@ vim /tmp/docker/config.json
 sudo podman run \
     --entrypoint entrypoint                        \
     --rm -it -h koffer --name koffer               \
-    --volume /tmp/docker:/root/.docker:z           \
     --volume /tmp/koffer:/root/koffer:z            \
     --volume /tmp/mirror:/root/deploy/mirror:z     \
     --volume /tmp/images:/root/deploy/images:z     \
@@ -42,7 +41,6 @@ sudo podman run \
 sudo podman run \
     --entrypoint bash                              \
     --rm -it -h koffer --name koffer               \
-    --volume /tmp/docker:/root/.docker:z           \
     --volume /tmp/koffer:/root/koffer:z            \
     --volume /tmp/mirror:/root/deploy/mirror:z     \
     --volume /tmp/images:/root/deploy/images:z     \
