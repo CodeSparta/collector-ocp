@@ -2,7 +2,7 @@
 - name: '{{ ansible_name_module }} | stat | check for mirror v2.sha256'
   stat:
     path: '{{ dir_deploy }}/mirror/ocp-release.{{ version_openshift.lock }}'
-  register: mirror_sha_check
+  register: mirror_lock_check
 
 ###### Download OpenShift Docker Images from Quay.io to File: /root/deploy/mirror/v2
 - name: '{{ ansible_name_module }} | block | Download OpenShift images'
@@ -34,7 +34,7 @@
       when: image_mirror_utility == "skopeo"
 
   ####### Block Conditionals
-  when: not mirror_sha_check.stat.exists
+  when: not mirror_lock_check.stat.exists
 
 - name: '{{ ansible_name_module }} | command:touch | Place mirror lock file'
   command:
