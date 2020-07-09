@@ -3,6 +3,12 @@
   hosts: local
   vars_files:
     - 'vars/global.yml'
+  vars_prompt:
+    - name: quay_image_pull_secret
+      prompt: |
+        Copy your OpenShift Image Pull Secret from the Cluster Manager Portal
+        https://cloud.redhat.com/openshift/install/metal/user-provisioned
+      private: no
 - import_playbook: tree.yml         # Create base deploy directory tree
 - import_playbook: secrets.yml      # Collect Secrets
 - import_playbook: git.yml          # Pull git repos
