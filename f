@@ -22,7 +22,7 @@ Features:
 ## Instructions:
 ### 1. Clone into koffer directory
 ```
- mkdir -p /tmp/platform
+ mkdir /tmp/platform
  git clone https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle.git /tmp/bundle && cd /tmp/bundle && git checkout nightlies;
 ```
 ### 2. Run Koffer Engine
