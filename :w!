@@ -9,6 +9,13 @@
     - /tmp/ArtifactsBundle.tar.xz.sha256
     - "{{ local_home }}/deploy/bundle/koffer-bundle.openshift-{{ version_openshift }}.tar"
 
+- name: '{{ ansible_name_module }} | file:directory | Create Staging Directory'
+  file:
+    path: '{{ item }}'
+    state: directory
+  loop:
+    - "{{ local_home }}/deploy/bundle"
+
 ####### Build Unified Bundle
 - name: '{{ ansible_name_module }} | command:tar | build tarball bundle of all artifacts'
   command:
@@ -31,13 +38,6 @@
     dest: /tmp/ArtifactsBundle.tar.xz.sha256
 
 ####### Build Unified Bundle
-- name: '{{ ansible_name_module }} | file:directory | Create Staging Directory'
-  file:
-    path: '{{ item }}'
-    state: directory
-  loop:
-    - "{{ local_home }}/deploy/bundle"
-
 - name: '{{ ansible_name_module }} | command:tar.cvf | Build unified bundle with auxilary unpack+launch utilities'
   command:
     "tar -cvf {{ local_home }}/deploy/bundle/koffer-bundle.openshift-{{ version_openshift  }}.tar -C /tmp ArtifactsBundle.tar.xz.sha256 ArtifactsBundle.tar.xz cloudctl.yml start-cloudctl.sh"
