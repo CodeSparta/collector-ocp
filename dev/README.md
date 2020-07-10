@@ -82,7 +82,8 @@ tar -xv -C /root -f /tmp/koffer-bundle.*.tar
 #### Cleanup Koffer Artifacts
 ```
 sudo podman rmi --force koffer:nightlies
-sudo rm -rf /tmp/koffer/bundle/koffer-bundle.*.tar
+sudo rm -rf /tmp/platform/bundle/koffer-bundle.*.tar
+sudo rm -rf /tmp/{platform,bundle,deploy,koffer,mirror,docker,images}
 sudo rm -rf /root/{deploy,cloudctl.yml,start-cloudctl.sh,ArtifactsBundle.tar.xz.sha256,ArtifactsBundle.tar.xz}
 sudo rm -rf /tmp/{koffer,mirror,images}
 ```
