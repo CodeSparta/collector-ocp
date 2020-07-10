@@ -7,7 +7,7 @@
   loop:
     - /tmp/ArtifactsBundle.tar.xz
     - /tmp/ArtifactsBundle.tar.xz.sha256
-    - "{{ local_home }}/deploy/bundle/koffer-bundle.openshift-{{ version_openshift }}.tar"
+    - "/root/deploy/bundle/koffer-bundle.openshift-{{ version_openshift }}.tar"
 
 ####### Build Unified Bundle
 - name: '{{ ansible_name_module }} | command:tar | build tarball bundle of all artifacts'
@@ -36,7 +36,7 @@
     path: '{{ item }}'
     state: directory
   loop:
-    - "{{ local_home }}/deploy/bundle"
+    - "/root/deploy/bundle"
 
 - name: '{{ ansible_name_module }} | command:tar.cvf | Build unified bundle with auxilary unpack+launch utilities'
   command:
