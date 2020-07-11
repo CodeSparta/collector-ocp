@@ -4,6 +4,7 @@
     path: '{{ item }}'
     state: directory
     mode: '0775'
+    recurse: yes
   with_items:
     - '{{ dir_deploy }}/secrets/registry/ssl'
     - '{{ dir_deploy }}/secrets/registry/auth'
