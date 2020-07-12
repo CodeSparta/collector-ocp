@@ -30,7 +30,7 @@ fi
 ################################################################################
 # Working Variables
 k9DirDeploy="${HOME}/deploy"
-varVerOpenshift="$(cat /deploy/nginx/release.txt)"
+varVerOpenshift="$(cat /root/deploy/nginx/release.txt)"
 
 ################################################################################
 # Stage ansible variables
@@ -238,6 +238,7 @@ runUser="$USER"
 p1DirImages=${HOME}/deploy/images
 
 sudo chown -R ${runUser}:${runUser} ${HOME}/deploy
+sudo mkdir -p /root/deploy/nginx
 sudo chmod -R 0777 ${HOME}/deploy/nginx
 ################################################################################
 # Option Run Ansible Playbook

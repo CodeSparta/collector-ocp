@@ -1,8 +1,14 @@
 ---
 - name: '{{ ansible_name_module }} | copy:content.bcrypt_htpasswd | Generate Default Registry Basic Auth'
   copy:
+    path: '/root/deploy/nginx'
+    state: directory
+    mode: 0777
+
+- name: '{{ ansible_name_module }} | copy:content.bcrypt_htpasswd | Generate Default Registry Basic Auth'
+  copy:
     content: '{{ version_openshift }}'
-    dest: '{{ local_home }}/deploy/nginx/release.txt'
+    dest: '/root/deploy/nginx/release.txt'
 
 ####### Purge preexisting bundles
 - name: '{{ ansible_name_module }} | file | Purge pre-existing bundles'
