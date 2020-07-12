@@ -19,10 +19,11 @@ run_log () {
 # Verify Bundle Integrity & Launch
 if [[ ! -d ./deploy ]]; then
   run_log 0 "Verifying SHA256SUM: ArtifactsBundle.tar.xz"
+
   sha256sum --check ArtifactsBundle.tar.xz.sha256 \
-      && tar -xv -C /root -f ArtifactsBundle.tar.xz \
-      && rm -rf ArtifactsBundle.tar.xz ArtifactsBundle.tar.xz.sha256 \
-      || run_log 1 "SHA Verify Failed!"
+    || run_log 1 "SHA Verify Failed!"
+
+  tar -xv -C /root -f /root/ArtifactsBundle.tar.xz && rm -rf ArtifactsBundle.tar.xz ArtifactsBundle.tar.xz.sha256
 fi
 
 ################################################################################
