@@ -1,11 +1,11 @@
 ---
-- name: '{{ ansible_name_module }} | copy:content.bcrypt_htpasswd | Generate Default Registry Basic Auth'
-  copy:
+- name: '{{ ansible_name_module }} | file:directory'
+  file:
     path: '/root/deploy/nginx'
     state: directory
     mode: 0777
 
-- name: '{{ ansible_name_module }} | copy:content.bcrypt_htpasswd | Generate Default Registry Basic Auth'
+- name: '{{ ansible_name_module }} | copy:content.version_openshift | Place nginx OCP release file'
   copy:
     content: '{{ version_openshift }}'
     dest: '/root/deploy/nginx/release.txt'
