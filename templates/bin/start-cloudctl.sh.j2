@@ -306,7 +306,7 @@ run_core () {
 test_core () {
   
   echo "  >> Testing NGINX Ignition Service"
-  ignTest=$(curl -s http://localhost:8080/bootstrap.ign 2>&1 1>/dev/null ; echo $?)
+  ignTest=$(curl -s http://localhost:8080/release.txt 2>&1 1>/dev/null ; echo $?)
   [[ ${ignTest} == '0' ]] \
       && echo "  >> NGINX Ignition Delivery Service Failed!" \
       || echo "  >> NGINX Ignition Delivery Service Online."
