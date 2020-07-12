@@ -9,6 +9,7 @@
   copy:
     content: '{{ version_openshift }}'
     dest: '/root/deploy/nginx/release.txt'
+    mode: 0777
 
 ####### Purge preexisting bundles
 - name: '{{ ansible_name_module }} | file | Purge pre-existing bundles'
