@@ -286,7 +286,7 @@ load_images () {
 
 load_mirror_certificate () {
 # echo "  >> Loading registry certificate to host."
-midir -p /root/deploy/secrets/registry/ssl \
+mkdir -p /root/deploy/secrets/registry/ssl \
 cp /root/deploy/secrets/registry/ssl/registry.crt \
     /etc/pki/ca-trust/source/anchors/registry.crt \
   && sudo update-ca-trust
