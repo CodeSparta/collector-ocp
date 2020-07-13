@@ -17,7 +17,7 @@ run_log () {
 
 ################################################################################
 # Verify Bundle Integrity & Launch
-if [[ ! -d ./deploy ]]; then
+if [[ ! -d ./deploy/nginx/release.txt ]]; then
   run_log 0 "Verifying SHA256SUM: ArtifactsBundle.tar.xz"
 
   sha256sum --check ArtifactsBundle.tar.xz.sha256 \
