@@ -6,6 +6,7 @@
     repo: "{{ item.repo }}"
     dest: "{{ item.dest }}"
     update: true
+    force: yes
 #   key_file: "{{ item.key_file }}"
   with_items:
     - "{{ ansiblerepos }}"
