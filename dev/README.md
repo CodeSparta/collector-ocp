@@ -3,7 +3,7 @@
 #### 0. (OPTIONAL) Build Locally
 ```
   sudo -i
-  curl -L https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle/-/raw/nightlies/dev/bin/build-local.sh | bash -x
+  curl -L https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle/-/raw/latest/dev/bin/build-local.sh | bash -x
 ```
 #### 1. Prepare Developer Environment
   a. Clone codebase under development
@@ -51,7 +51,7 @@ sudo podman run \
   - Then manually exec the `/usr/bin/entrypoint` actions
 ```
  git pull;
- git checkout nightlies;
+ git checkout latest;
  ./usr/bin/run_registry.sh
  ./tree.yml
  ./secrets.yml
@@ -83,7 +83,7 @@ tar -xv -C /root -f /tmp/koffer-bundle.*.tar
 ## Remove / Purge
 #### Cleanup Koffer Artifacts
 ```
-sudo podman rmi --force koffer:nightlies
+sudo podman rmi --force koffer:latest
 sudo rm -rf /tmp/platform/bundle/koffer-bundle.*.tar
 sudo rm -rf /tmp/{koffer-bundle.*,platform,bundle,deploy,koffer,mirror,docker,images}
 sudo rm -rf /root/{deploy,cloudctl.yml,start-cloudctl.sh,ArtifactsBundle.tar.xz.sha256,ArtifactsBundle.tar.xz}
@@ -95,4 +95,4 @@ sudo podman pod rm --force cloudctl
 for container in $(sudo podman ps -a | grep -v CONTAINER | awk '/busybox|one|registry|nginx/{print $1}'); do sudo podman rm --force ${container}; done
 for container in $(sudo podman images | grep -v CONTAINER | awk '/koffer|pause|busybox|one|registry|nginx/{print $3}'); do sudo podman rmi --force ${container}; done
 ```
-[this script]:https://github.com/containercraft/Koffer/blob/nightlies/dev/bin/build-local.sh
+[this script]:https://github.com/containercraft/Koffer/blob/latest/dev/bin/build-local.sh
