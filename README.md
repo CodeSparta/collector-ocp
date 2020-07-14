@@ -22,6 +22,13 @@ Features:
 ## Instructions:
 ### 1. Run Infrastructure Collector with Koffer Engine
 ```
+ mkdir -p /tmp/platform ; sudo podman run \
+     --volume /tmp/platform:/root/deploy:z     \
+     --rm -it --entrypoint=/usr/bin/entrypoint \
+   docker.io/containercraft/koffer:latest      \
+   https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle.git latest
+```
+```
  mkdir -p /tmp/platform ; \
  sudo podman run --rm -it \
      --pull=always --entrypoint entrypoint   \
