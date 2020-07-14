@@ -20,21 +20,17 @@ Features:
   - Low side injestion direct to "pre-hydrated" registry stateful path
 
 ## Instructions:
-### 1. Clone into koffer directory
+### 1. Run Infrastructure Collector with Koffer Engine
 ```
- mkdir -p /tmp/platform
- git clone https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle.git /tmp/bundle && cd /tmp/bundle && git checkout nightlies;
+ mkdir -p /tmp/platform ; \
+ sudo podman run --rm -it \
+     --pull=always --entrypoint entrypoint   \
+     --volume /tmp/platform:/root/deploy:z   \
+   docker.io/containercraft/koffer:latest    \
+   https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle.git latest
+
 ```
-### 2. Run Koffer Engine
-```
- sudo podman run \
-     --rm -it -h koffer --name koffer      \
-     --pull=always --entrypoint entrypoint \
-     --volume /tmp/bundle:/root/koffer:z   \
-     --volume /tmp/platform:/root/deploy:z \
-   docker.io/containercraft/koffer:nightlies
-```
-### 3. Move Koffer Bundle to target host /tmp directory
+### 2. Move Koffer Bundle to target host /tmp directory
 # [Developer Docs & Utils](./dev)
 # Demo
 ![bundle](./web/bundle.svg)

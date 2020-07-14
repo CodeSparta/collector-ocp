@@ -5,17 +5,17 @@
   sudo -i
   curl -L https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle/-/raw/nightlies/dev/bin/build-local.sh | bash -x
 ```
-#### 1. Clone codebase under development
+#### 1. Prepare Developer Environment
+  a. Clone codebase under development
 ```
  git clone https://github.com/containercraft/koffer-openshift.git /tmp/koffer;
- cd /tmp/koffer && git checkout nightlies;
+ cd /tmp/koffer && git checkout latest;
 ```
-#### 2. Prepare Developer Environment
-  a. Create persistence directories
+  b. Create persistence directories
 ```
 mkdir -p /tmp/{mirror,images,docker}
 ```
-  b. Stash pull secret
+  c. Stash pull secret
 >  - Copy Quay.io Pull Secret
 >  - https://cloud.redhat.com/openshift/install/metal/user-provisioned
 >  - Save in config.json
@@ -31,9 +31,10 @@ sudo podman run \
     --entrypoint entrypoint                        \
     --rm -it -h koffer --name koffer               \
     --volume /tmp/koffer:/root/koffer:z            \
+    --volume /tmp/docker:/root/.docker:z           \
     --volume /tmp/mirror:/root/deploy/mirror:z     \
     --volume /tmp/images:/root/deploy/images:z     \
-  docker.io/containercraft/koffer:nightlies
+  docker.io/containercraft/koffer:latest
 ```
 
   - Option B. Exec into container for manual development
@@ -42,9 +43,10 @@ sudo podman run \
     --entrypoint bash                              \
     --rm -it -h koffer --name koffer               \
     --volume /tmp/koffer:/root/koffer:z            \
+    --volume /tmp/docker:/root/.docker:z           \
     --volume /tmp/mirror:/root/deploy/mirror:z     \
     --volume /tmp/images:/root/deploy/images:z     \
-  docker.io/containercraft/koffer:nightlies
+  docker.io/containercraft/koffer:latest
 ```
   - Then manually exec the `/usr/bin/entrypoint` actions
 ```
