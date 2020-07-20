@@ -9,7 +9,7 @@ git_branch: v2-govcloud-automation
 url_git_bundle: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/bundle.git'
 url_git_build: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/build.git'
 url_git_cloudctl: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/cloudctl.git'
-url_git_deploy: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/deploy.git'
+url_git_deploy: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/tack-deploy.git'
 url_git_configure: 'https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/configure.git'
 
 # Terraform Git Repos
