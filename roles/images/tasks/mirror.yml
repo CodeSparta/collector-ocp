@@ -22,7 +22,7 @@
           --registry-config=/root/.docker/config.json \
           --from=quay.io/openshift-release-dev/ocp-release:{{ version_openshift }}-x86_64 \
           --to-release-image=localhost:5000/openshift-release-dev:{{ version_openshift }}-x86_64
-      when: image_mirror_utility == "oc"
+#     when: image_mirror_utility == "oc"
  
   ######### Skopeo Copy Images to Registry
     - name: '{{ ansible_name_module }} | shell:skopeo.copy | Sync content from quay.io'
@@ -31,7 +31,7 @@
             skopeo copy docker://quay.io/$i \
             docker://localhost:5000/$i ; \
           done
-      when: image_mirror_utility == "skopeo"
+#     when: image_mirror_utility == "skopeo"
 
   ####### Block Conditionals
   when: not mirror_lock_check.stat.exists
