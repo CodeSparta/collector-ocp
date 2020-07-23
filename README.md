@@ -1,4 +1,4 @@
-## [Koffer](https://github.com/containercraft/Koffer) Collector | OpenShift Infrastructure Deployment Artifacts
+# [Koffer](https://github.com/containercraft/Koffer) Collector | OpenShift Infrastructure Artifacts
 ## Provides
 This automation provides a unified and standardized tarball of artifacts for
 airgap infrastructure deployment tasks. Included is the restricted environment
