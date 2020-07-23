@@ -1,35 +1,31 @@
-# PlatformOne | AWS Red Hat OpenShift 4 | Deployment Prep Tools
-## 1. Create base PlatformOne & images asset directories
+## [Koffer] Collector | OpenShift Infrastructure Deployment Artifacts
+## Provides
+This automation provides a unified and standardized tarball of artifacts for
+airgap infrastructure deployment tasks. Included is the restricted environment
+delivery services `CloudCtl` pod & `start-cloudctl.sh` script.
+
+Features:
+  - High side sha256 verification of artifacts bundle before standup
+  - High side artifact delivery via script to run `cloudctl` podman pod running:
+    - Nginx for serving CoreOS Ignition files
+    - Generic Docker Registry:2 for serving pre-hydrated image content
+    - ContainerOne user automation deployment and development workspace
+  - Bastion host support for CoreOS or any Podman capable distribution
+  - Low side injestion direct to "pre-hydrated" registry stateful path
+
+## Instructions:
+### 1. Run Infrastructure Collector with Koffer Engine
 ```
-mkdir -p ${HOME}/PlatformOne/images
+ mkdir -p /tmp/platform ; \
+ sudo podman run \
+     --volume /tmp/platform:/root/deploy:z     \
+     --rm -it --entrypoint=/usr/bin/entrypoint \
+   docker.io/containercraft/koffer:latest      \
+   https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/collector-infra.git latest
+
 ```
-## 2.\* Pull required deployment images    
-```
-podman pull k8s.gcr.io/pause:3.1
-podman pull docker.io/library/registry:2 
-podman pull docker.io/library/nginx:latest 
-podman pull docker.io/containercraft/one:fences
-```
-## 3.\* Export images for airgapped services
-```
-podman save -o ${HOME}/PlatformOne/images/docker-pause-image.tar         k8s.gcr.io/pause:3.1
-podman save -o ${HOME}/PlatformOne/images/docker-registry2-image.tar     docker.io/library/registry:2 
-podman save -o ${HOME}/PlatformOne/images/docker-nginxlatest-image.tar   docker.io/library/nginx:latest
-podman save -o ${HOME}/PlatformOne/images/docker-one-image.tar           docker.io/containercraft/one:fences
-```
-## 4. Launch ContainerOne Point of Origin Container
-```
-podman run -d -h fences --name fences --privileged --volume ${HOME}/PlatformOne:/root/PlatformOne:z docker.io/containercraft/one:fences
-```
-## 5. Exec into ContainerOne
-```
-podman exec -it fences connect
-```
-## 6.\* Setup environment
-Run the `p1` initial artifact setup walkthrough:
-```
-p1
-```
-# Demo:
-  - Building the bundle
+### 2. Move Koffer Bundle to target host `${USER}` directory
+# [Developer Docs & Utils](./dev)
+# Demo
 ![bundle](./web/bundle.svg)
+[Koffer]:https://github.com/containercraft/Koffer
