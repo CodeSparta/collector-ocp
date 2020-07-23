@@ -1,14 +1,8 @@
-# Koffer Collector | OpenShift Infrastructure Deploy
+## [Koffer] Collector | OpenShift Infrastructure Deployment Artifacts
 ## Provides
 This automation provides a unified and standardized tarball of artifacts for
-airgap infrastructure deployment tasks.
-
-## About
-Koffer Collector OpenShift uses the Koffer Engine runtime container to enable
-streamlined low side capture of all required artifacts for deploying OpenShift 
-infrastructure. Primarily built to enable airgaped environments in a standard 
-"registry < to > mirror" workflow model conventional to more typical connected 
-local mirror techniques.
+airgap infrastructure deployment tasks. Included is the restricted environment
+delivery services `CloudCtl` pod & `start-cloudctl.sh` script.
 
 Features:
   - High side sha256 verification of artifacts bundle before standup
@@ -30,7 +24,8 @@ Features:
    https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/collector-infra.git latest
 
 ```
-### 2. Move Koffer Bundle to target host /tmp directory
+### 2. Move Koffer Bundle to target host `${USER}` directory
 # [Developer Docs & Utils](./dev)
 # Demo
 ![bundle](./web/bundle.svg)
+[Koffer]:https://github.com/containercraft/Koffer
