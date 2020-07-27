@@ -265,13 +265,13 @@ echo
 
 
 run_clean () {
-  for container in $(podman ps | awk '/one|nginx|registry|pause|busybox/{print $3}' 2>/dev/null); do
+  for container in $(podman ps | awk '/konductor|one|nginx|registry|pause|busybox/{print $3}' 2>/dev/null); do
     podman rm --force $container
   done
   for pod in $(podman pod ps | awk '/cloudctl/{print $1}' 2>/dev/null); do
     podman pod rm --force $pod
   done
-  for image in $(podman images | awk '/one|nginx|registry|pause|busybox/{print $3}' 2>/dev/null); do
+  for image in $(podman images | awk '/konductor|one|nginx|registry|pause|busybox/{print $3}' 2>/dev/null); do
     podman rmi --force $image
   done
 }
