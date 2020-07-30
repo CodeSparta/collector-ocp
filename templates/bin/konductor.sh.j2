@@ -17,12 +17,13 @@ run_log () {
 
 ################################################################################
 # Verify Bundle Integrity & Launch
-if [[ ! -d ./deploy ]]; then
+if [[ ! -f /root/deploy/nginx/release.txt ]]; then
   run_log 0 "Verifying SHA256SUM: ArtifactsBundle.tar.xz"
+
   sha256sum --check ArtifactsBundle.tar.xz.sha256 \
-      && tar -xv -C /root -f ArtifactsBundle.tar.xz \
-      && rm -rf ArtifactsBundle.tar.xz ArtifactsBundle.tar.xz.sha256 \
-      || run_log 1 "SHA Verify Failed!"
+    || run_log 1 "SHA Verify Failed!"
+
+  tar -xv -C /root -f /root/ArtifactsBundle.tar.xz && rm -rf ArtifactsBundle.tar.xz ArtifactsBundle.tar.xz.sha256
 fi
 
 ################################################################################
@@ -30,7 +31,7 @@ fi
 ################################################################################
 # Working Variables
 k9DirDeploy="${HOME}/deploy"
-varVerOpenshift="$(cat /deploy/nginx/release.txt)"
+varVerOpenshift="$(cat /root/deploy/nginx/release.txt)"
 
 ################################################################################
 # Stage ansible variables
@@ -77,10 +78,10 @@ openssl req \
   -sha256 \
   -days   3650 \
   -newkey rsa:4096 \
-  -subj   "/CN=${p1ClusterDomain}" \
+  -subj   "/CN=${k9ClusterDomain}" \
   -out    /root/deploy/secrets/registry/ssl/registry.crt  \
   -keyout /root/deploy/secrets/registry/ssl/registry.key  \
-  -addext "subjectAltName=DNS:registry.${p1ClusterDomain},DNS:cloudctl,DNS:registry,DNS:localhos,IP:10.88.0.1,IP:127.0.0.1" 2>&1 1>/dev/null
+  -addext "subjectAltName=DNS:registry.${k9ClusterDomain},DNS:cloudctl,DNS:registry,DNS:localhost,IP:10.88.0.1,IP:127.0.0.1" 2>&1 1>/dev/null
 }
 
 ################################################################################
@@ -238,6 +239,7 @@ runUser="$USER"
 p1DirImages=${HOME}/deploy/images
 
 sudo chown -R ${runUser}:${runUser} ${HOME}/deploy
+sudo mkdir -p /root/deploy/nginx
 sudo chmod -R 0777 ${HOME}/deploy/nginx
 ################################################################################
 # Option Run Ansible Playbook
@@ -263,13 +265,13 @@ echo
 
 
 run_clean () {
-  for container in $(podman ps | awk '/one|nginx|registry|pause|busybox/{print $3}' 2>/dev/null); do
+  for container in $(podman ps | awk '/konductor|one|nginx|registry|pause|busybox/{print $3}' 2>/dev/null); do
     podman rm --force $container
   done
   for pod in $(podman pod ps | awk '/cloudctl/{print $1}' 2>/dev/null); do
     podman pod rm --force $pod
   done
-  for image in $(podman images | awk '/one|nginx|registry|pause|busybox/{print $3}' 2>/dev/null); do
+  for image in $(podman images | awk '/konductor|one|nginx|registry|pause|busybox/{print $3}' 2>/dev/null); do
     podman rmi --force $image
   done
 }
@@ -284,6 +286,7 @@ load_images () {
 
 load_mirror_certificate () {
 # echo "  >> Loading registry certificate to host."
+mkdir -p /root/deploy/secrets/registry/ssl \
 cp /root/deploy/secrets/registry/ssl/registry.crt \
     /etc/pki/ca-trust/source/anchors/registry.crt \
   && sudo update-ca-trust
@@ -304,8 +307,8 @@ run_core () {
 test_core () {
   
   echo "  >> Testing NGINX Ignition Service"
-  ignTest=$(curl -s http://localhost:8080/bootstrap.ign 2>&1 1>/dev/null ; echo $?)
-  [[ ${ignTest} == '0' ]] \
+  ignTest=$(curl -s http://localhost:8080/release.txt 2>&1 1>/dev/null ; echo $?)
+  [[ ! ${ignTest} == '0' ]] \
       && echo "  >> NGINX Ignition Delivery Service Failed!" \
       || echo "  >> NGINX Ignition Delivery Service Online."
 
@@ -326,5 +329,7 @@ run () {
 run_core
 test_core
 run_ansible_playbook_bundle
+sleep 2
+podman restart nginx
 }
 run
