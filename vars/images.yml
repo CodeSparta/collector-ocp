@@ -1,6 +1,6 @@
 # CloudCTL Pod Docker Image Pull List
 images_cloudctl:
-  - uri: "docker.io/ocpredshift"
+  - uri: "docker.io/codesparta"
     name: konductor
     tag: latest
     path: "{{ dir_deploy }}/images"

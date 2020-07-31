@@ -3,13 +3,13 @@ keyfile: '/root/.ssh/id_rsa'
 git_branch: latest
 
 # Ansible Git Repos
-url_git_deploy: 'https://github.com/RedShiftOfficial/maestro-infra.git'
+url_git_deploy: 'https://github.com/CodeSparta/maestro-infra.git'
 dir_git_deploy: "{{ dir_ansible }}/deploy"
 
 # Terraform Git Repos
-url_git_shaman: 'https://github.com/RedShiftOfficial/shaman'
+url_git_shaman: 'https://github.com/CodeSparta/shaman'
 dir_git_shaman: "{{ dir_terraform }}/shaman"
-url_git_shaman_vpc: 'https://github.com/RedShiftOfficial/shaman-vpc'
+url_git_shaman_vpc: 'https://github.com/CodeSparta/shaman-vpc'
 dir_git_shaman_vpc: "{{ dir_terraform }}/shaman-vpc"
 
 # Git Clone Items
