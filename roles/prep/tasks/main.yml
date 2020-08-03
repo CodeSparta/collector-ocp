@@ -1,4 +1,0 @@
----
-# tasks file for prep
-- name: '{{ ansible_name_module }} | role | Clone Git Dependencies' 
-  include_tasks: git.yml

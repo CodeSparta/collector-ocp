@@ -1,5 +1,0 @@
----
-# defaults file for task01-init
-gitrepos:
-  - repo: "{{ url_git_mirror }}"
-    dest: "{{ dir_git_mirror }}"

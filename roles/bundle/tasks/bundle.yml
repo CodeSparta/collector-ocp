@@ -1,39 +1,68 @@
 ---
-####### Create Unified PlatformOne.tar.gz Tarball with all offline deploy requirements
-- name: '{{ ansible_name_module }} | role | file | Purge pre-existing bundles'
+- name: '{{ ansible_name_module }} | file:directory'
   file:
-    path: "{{ local_home }}/PlatformOne.tar.gz"
-    state: absent
+    path: '/root/deploy/nginx'
+    state: directory
+    mode: 0777
 
-- name: '{{ ansible_name_module }} | role | command tar | build tarball bundle of all artifacts'
-  command:
-    "tar -cvzf {{ local_home }}/PlatformOne.tar.gz -C {{ local_home }} PlatformOne"
-  args:
-    creates: "{{ local_home }}/PlatformOne.tar.gz"
-
-- name: '{{ ansible_name_module }} | role | stat | Get PlatformOne.tar.gz SHA256'
-  stat:
-    path: "{{ local_home }}/PlatformOne.tar.gz"
-    checksum_algorithm: sha256
-    get_checksum: yes
-  register: p1tar_sha256
-
-- name: '{{ ansible_name_module }} | role | copy | Stage PlatformOne.tar.gz.sha256'
+- name: '{{ ansible_name_module }} | copy:content.version_openshift | Place nginx OCP release file'
   copy:
-    dest: "{{ local_home }}/PlatformOne.tar.gz.sha256"
-    content: '{{ p1tar_sha256.stdout }} PlatformOne.tar.gz'
+    content: '{{ version_openshift }}'
+    dest: '/root/deploy/nginx/release.txt'
+    mode: 0777
 
-- name: '{{ ansible_name_module }} | role | copy | Bundle PlatformOne.tar.gz with auxilary files'
-  archive:
-    path:
-    - '{{ local_home }}/PlatformOne.tar.gz.sha256'
-    - '{{ local_home }}/PlatformOne.tar.gz'
-    - '{{ local_home }}/registry.yml'
-    - '{{ local_home }}/registry.sh'
-    dest: '{{ dir_one }}/{{ target_environment }}-bundle.tar'
-    format: tar
+####### Purge preexisting bundles
+- name: '{{ ansible_name_module }} | file | Purge pre-existing bundles'
+  file:
+    path: '{{ item }}'
+    state: absent
+  loop:
+    - /tmp/ArtifactsBundle.tar.xz
+    - /tmp/ArtifactsBundle.tar.xz.sha256
+    - "/root/deploy/bundle/koffer-bundle.openshift-{{ version_openshift }}.tar"
 
-# name: '{{ ansible_name_module }} | role | copy | Remove temporary staging bundle'
-# file:
-#   path: "{{ local_home }}/PlatformOne.tar.gz"
-#   state: absent
+####### Build Unified Bundle
+- name: '{{ ansible_name_module }} | command:tar | build tarball bundle of all artifacts'
+  command:
+    "tar -c --use-compress-program='pigz -9 ' -v -f /tmp/ArtifactsBundle.tar.xz -C {{ local_home }} deploy"
+  args:
+    creates: /tmp/ArtifactsBundle.tar.xz
+    warn: false
+
+####### SHA256sum ArtifactsBundle.tar.xz
+- name: '{{ ansible_name_module }} | stat:sha256 | SHA ArtifactsBundle.tar.xz'
+  command: 'sha256sum ArtifactsBundle.tar.xz'
+  args:
+    warn: false
+    chdir: '/tmp/'
+  register: bundle_sha
+
+- name: '{{ ansible_name_module }} | copy:content.bcrypt_htpasswd | Generate Default Registry Basic Auth'
+  copy:
+    content: '{{ bundle_sha.stdout }}'
+    dest: /tmp/ArtifactsBundle.tar.xz.sha256
+
+####### Build Unified Bundle
+- name: '{{ ansible_name_module }} | file:directory | Create Staging Directory'
+  file:
+    path: '{{ item }}'
+    state: directory
+  loop:
+    - "/root/deploy/bundle"
+
+- name: '{{ ansible_name_module }} | command:tar.cvf | Build unified bundle with auxilary unpack+launch utilities'
+  command:
+    "tar -cvf {{ local_home }}/deploy/bundle/koffer-bundle.openshift-{{ version_openshift  }}.tar -C /tmp ArtifactsBundle.tar.xz.sha256 ArtifactsBundle.tar.xz cloudctl.yml start-cloudctl.sh"
+  args:
+    creates: "{{ local_home }}/deploy/bundle/koffer-bundle.openshift-{{ version_openshift }}.tar"
+    warn: false
+
+# name: '{{ ansible_name_module }} | role | archive | Bundle ArtifactsBundle.tar.xz with auxilary files'
+# archive:
+#   path:
+#   - '/tmp/ArtifactsBundle.tar.xz.sha256'
+#   - '/tmp/ArtifactsBundle.tar.xz'
+#   - '/tmp/registry.yml'
+#   - '/tmp/registry.sh'
+#   dest: '{{ local_home }}/deploy/{{ cloud_provider }}-{{ target_environment }}-{{ name_cluster_vpc }}-p1bundle.tar'
+#   format: tar

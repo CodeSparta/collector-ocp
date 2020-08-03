@@ -1,0 +1,27 @@
+---
+keyfile: '/root/.ssh/id_rsa'
+git_branch: latest
+
+# Ansible Git Repos
+url_git_deploy: 'https://github.com/CodeSparta/maestro-infra.git'
+dir_git_deploy: "{{ dir_ansible }}/deploy"
+
+# Terraform Git Repos
+url_git_shaman: 'https://github.com/CodeSparta/shaman'
+dir_git_shaman: "{{ dir_terraform }}/shaman"
+url_git_shaman_vpc: 'https://github.com/CodeSparta/shaman-vpc'
+dir_git_shaman_vpc: "{{ dir_terraform }}/shaman-vpc"
+
+# Git Clone Items
+ansiblerepos:
+  - repo: "{{ url_git_deploy }}"
+    dest: "{{ dir_git_deploy }}"
+    branch: latest
+
+terraformrepos:
+  - repo: "{{ url_git_shaman }}"
+    dest: "{{ dir_git_shaman }}"
+    branch: master
+  - repo: "{{ url_git_shaman_vpc }}"
+    dest: "{{ dir_git_shaman_vpc }}"
+    branch: master
