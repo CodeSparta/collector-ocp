@@ -1,6 +1,6 @@
 ---
 keyfile: '/root/.ssh/id_rsa'
-git_branch: latest
+git_branch: mvp1
 
 # Ansible Git Repos
 url_git_deploy: 'https://github.com/CodeSparta/maestro-infra.git'
@@ -16,7 +16,7 @@ dir_git_shaman_vpc: "{{ dir_terraform }}/shaman-vpc"
 ansiblerepos:
   - repo: "{{ url_git_deploy }}"
     dest: "{{ dir_git_deploy }}"
-    branch: latest
+    branch: "{{ git_branch }}"
 
 terraformrepos:
   - repo: "{{ url_git_shaman }}"
