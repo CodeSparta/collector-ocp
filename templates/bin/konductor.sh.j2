@@ -41,12 +41,22 @@ echo && run_log 0 "Staging Ansible ${k9DirDeploy}/ansible/cluster-vars.yml varia
 source /root/answer.sh
 cat <<EOF | tee ${k9DirDeploy}/ansible/cluster-vars.yml
 ---
-version_openshift: "${varVerOpenshift}"
-target_environment: "${k9TargetEnvironment}"
-name_cluster_vpc: "${k9NameVpc}"
-cluster_domain: "${k9ClusterDomain}"
-cluster_name: "${k9NameCluster}"
+vpc_id="${k9VpcId}"
+vpc_name="${k9NameVpc}"
+rhcos_ami="${k9RhcosAmi}"
+aws_region="${aws_REGION}"
 name_domain: "${k9NameDomain}"
+cluster_name="${k9NameCluster}"
+private_vpc_cidr="${k9VpcCidr}"
+cluster_name: "${k9NameCluster}"
+name_cluster_vpc: "${k9NameVpc}"
+cluster_domain="${k9ClusterDomain}"
+aws_access_key_id="${access_KEYID}"
+cluster_domain: "${k9ClusterDomain}"
+version_openshift: "${varVerOpenshift}"
+aws_secret_access_key="${access_KEYSECRET}"
+target_environment: "${k9TargetEnvironment}"
+subnet_list=[${k9SubnetList}]
 EOF
 }
 
