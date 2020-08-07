@@ -340,7 +340,7 @@ aws_secret_access_key="${access_KEYSECRET}"
 vpc_id="${k9VpcId}"
 private_vpc_cidr="${k9VpcCidr}"
 rhcos_ami="${k9RhcosAmi}"
-subnet_list=[${k9SubnetList}]
+subnet_list=${k9SubnetList}
 EOF
 }
 ################################################################################
@@ -349,15 +349,18 @@ EOF
 
 write_global_tf_vars_post () {
 cat <<EOF > ${k9DirDeploy}/terraform/global.tfvars
-cluster_name="${cluster_name}"
-cluster_domain="${cluster_domain}"
 aws_region="${aws_region}"
 aws_access_key_id="${aws_access_key_id}"
 aws_secret_access_key="${aws_secret_access_key}"
 vpc_id="${vpc_id}"
-private_vpc_cidr="${private_vpc_cidr}"
 rhcos_ami="${rhcos_ami}"
-subnet_list=[${subnet_list}]
+target_environment="${k9TargetEnvironment}"
+cluster_name="${cluster_name}"
+name_domain="${k9NameDomain}"
+vpc_name="${k9NameVpc}"
+cluster_domain="${cluster_domain}"
+private_vpc_cidr="${k9VpcCidr}"
+subnet_list=${subnet_list}
 EOF
 }
 ################################################################################
