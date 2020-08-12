@@ -12,9 +12,9 @@
     - "{{ ansiblerepos }}"
     - "{{ terraformrepos }}"
 
-- name: '{{ ansible_name_module }} | shell:terraform.init | Initilize terraform modules'
-  shell: 
-    cmd: terraform init
-    chdir: "{{ item.dest }}"
-  with_items:
-    - "{{ terraformrepos }}"
+# name: '{{ ansible_name_module }} | shell:terraform.init | Initilize terraform modules'
+# shell: 
+#   cmd: terraform init
+#   chdir: "{{ item.dest }}"
+# with_items:
+#   - "{{ terraformrepos }}"
