@@ -1,6 +1,6 @@
 ---
 keyfile: '/root/.ssh/id_rsa'
-git_branch: mvp1
+git_branch: master
 
 # Ansible Git Repos
 url_git_deploy: 'https://github.com/CodeSparta/maestro-infra.git'
