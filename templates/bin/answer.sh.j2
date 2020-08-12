@@ -1,33 +1,32 @@
-export rhcos_ami="ami-e06e5081"
-export k9RhcosAmi="ami-e06e5081"
-
-export vpc_id="vpc-0aef6256b40f30778"
-export k9VpcId="vpc-0aef6256b40f30778"
-
-export aws_region="us-gov-west-1"
-export aws_REGION="us-gov-west-1"
-
+# AWS Region & Target Env:
+#  Target Options:
+#   - fences
+#   - govcloud
+export k9AwsRegion="us-gov-west-1"
 export k9TargetEnvironment="govcloud"
 
-export aws_access_key_id="AKIA3L76BYEU3N2VAWH2"
-export aws_secret_access_key="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"
-export access_KEYID="AKIA3L76BYEU3N2VAWH2"
-export access_KEYSECRET="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"
+# AWS Access Key ID & Secret
+export k9AwsKeyId="AKIA3L76BYEU3N2VAWH2"
+export k9AwsKeySecret="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"
 
-export cluster_name="i"
-export k9NameCluster="i"
-export vpc_name="iamgroot"
+# Cluster Name & Domain
 export k9NameVpc="iamgroot"
-export k9NameDomain="am.groot"
-export cluster_domain="i.am.groot"
-export k9ClusterDomain="i.am.groot"
+export k9NameDomain="i.am.groot"
+export k9NameCluster="cluster"
+export k9ClusterDomain="cluster.i.am.groot"
 
-export versOCP="4.5.4"
-export varVerOpenshift="4.5.4"
-export k9DirCluster="/root/deploy/cluster"
+# AWS Red Hat CoreOS AMI ID
+export k9RhcosAmi="ami-e06e5081"
 
-export private_vpc_cidr="10.0.0.0/16"
-export k9VpcCidr="10.0.0.0/16"
+# AWS VPC ID
+export k9VpcId="vpc-0aef6256b40f30778"
 
+# Private VPC Subnet IDs
 export subnet_list='["subnet-02bf7c8c69067b993", "subnet-0d75d5033bfc98414", "subnet-058e00cfdb41ca5ce"]'
 export k9SubnetList='["subnet-02bf7c8c69067b993", "subnet-0d75d5033bfc98414", "subnet-058e00cfdb41ca5ce"]'
+export k9VpcCidr="10.0.0.0/16"
+
+# General Settings
+export versOCP="4.5.5"
+export varVerOpenshift="4.5.5"
+export k9DirCluster="/root/deploy/cluster"

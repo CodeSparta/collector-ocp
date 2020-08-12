@@ -43,7 +43,7 @@ cat <<EOF | tee ${k9DirDeploy}/ansible/cluster-vars.yml
 ---
 vpc_id: "${k9VpcId}"
 vpc_name: "${k9NameVpc}"
-aws_region: "${aws_REGION}"
+aws_region: "${k9AwsRegion}"
 name_domain: "${k9NameDomain}"
 cluster_name: "${k9NameCluster}"
 private_vpc_cidr: "${k9VpcCidr}"
@@ -51,10 +51,10 @@ cluster_name: "${k9NameCluster}"
 name_cluster_vpc: "${k9NameVpc}"
 cloud_instance_ami: "${k9RhcosAmi}"
 cluster_domain: "${k9ClusterDomain}"
-aws_access_key_id: "${access_KEYID}"
+aws_access_key_id: "${k9AwsKeyId}"
 cluster_domain: "${k9ClusterDomain}"
 version_openshift: "${varVerOpenshift}"
-aws_secret_access_key: "${access_KEYSECRET}"
+aws_secret_access_key: "${k9AwsKeySecret}"
 target_environment: "${k9TargetEnvironment}"
 subnet_list: ${k9SubnetList}
 EOF
@@ -95,13 +95,13 @@ export k9DirDeploy="\${HOME}/deploy"
 export versOCP="${varVerOpenshift}"
 export k9NameVpc="${k9NameVpc}"
 export k9NameDomain="${k9NameDomain}"
-export k9NameCluster="${cluster_name}"
-export k9ClusterDomain="${cluster_domain}"
+export k9NameCluster="${k9NameCluster}"
+export k9ClusterDomain="${k9ClusterDomain}"
 export k9DirCluster="${k9DirCluster}"
-export k9VpcId="${vpc_id}"
+export k9VpcId="${k9VpcId}"
 export k9VpcCidr="${private_vpc_cird}"
-export k9RhcosAmi="${rhcos_ami}"
-export k9SubnetList=[${subnet_list}]
+export k9RhcosAmi="${k9RhcosAmi}"
+export k9SubnetList=[${k9SubnetList}]
 EOF
 }
 
@@ -132,16 +132,16 @@ usr_prompt_aws_keys () {
   # Prompt user to paste secret
   echo
   read  -rp "    >> Please copy/paste your AWS 'Access Key ID': " access_KEYID;
-  read  -rp "    >> Please enter your AWS 'Region': " aws_REGION;
-  read -srp "    >> Please copy/paste your AWS 'Secret Access Key' (Secret is masked): " access_KEYSECRET;
+  read  -rp "    >> Please enter your AWS 'Region': " k9AwsRegion;
+  read -srp "    >> Please copy/paste your AWS 'Secret Access Key' (Secret is masked): " k9AwsKeySecret;
 
 mkdir -p ${k9DirDeploy}/secrets/aws
 cat <<EOF > ${k9DirDeploy}/secrets/aws/credentials
 ; https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
 [default]
-region = ${aws_REGION}
-aws_access_key_id = ${access_KEYID}
-aws_secret_access_key = ${access_KEYSECRET}
+region = ${k9AwsRegion}
+aws_access_key_id = ${k9AwsKeyId}
+aws_secret_access_key = ${k9AwsKeySecret}
 EOF
 }
 
@@ -290,26 +290,22 @@ run_log 0 "
 
 run_init_answer () {
 cat <<EOF > /root/answer.sh
-export varVerOpenshift="${varVerOpenshift}"
-export k9NameVpc="${k9NameVpc}"
-export k9NameCluster="${k9NameCluster}"
-export k9ClusterDomain="${k9ClusterDomain}"
-export k9NameVpc="${k9NameVpc}"
-export k9TargetEnvironment="${k9TargetEnvironment}"
-export k9DirDeploy="\${HOME}/deploy"
 export versOCP="${varVerOpenshift}"
-export vpc_name="${k9NameVpc}"
+export varVerOpenshift="${varVerOpenshift}"
+export k9VpcId="${k9VpcId}"
+export k9NameVpc="${k9NameVpc}"
+export k9VpcCidr="${k9VpcCidr}"
+export k9RhcosAmi="${k9RhcosAmi}"
+export k9AwsKeyId="${k9AwsKeyId}"
+export k9DirDeploy="\${HOME}/deploy"
+export k9AwsRegion="${k9AwsRegion}"
 export k9NameDomain="${k9NameDomain}"
-export cluster_name="${k9NameCluster}"
-export cluster_domain="${k9ClusterDomain}"
+export k9SubnetList=[${k9SubnetList}]
 export k9DirCluster="${k9DirCluster}"
-export aws_region="${aws_REGION}"
-export aws_access_key_id="${access_KEYID}"
-export aws_secret_access_key="${access_KEYSECRET}"
-export vpc_id="${k9VpcId}"
-export private_vpc_cidr="${k9VpcCidr}"
-export rhcos_ami="${k9RhcosAmi}"
-export subnet_list=[${k9SubnetList}]
+export k9NameCluster="${k9NameCluster}"
+export k9AwsKeySecret="${k9AwsKeySecret}"
+export k9ClusterDomain="${k9ClusterDomain}"
+export k9TargetEnvironment="${k9TargetEnvironment}"
 EOF
 }
 
@@ -320,9 +316,9 @@ mkdir -p ${k9DirDeploy}/secrets/aws
 cat <<EOF > ${k9DirDeploy}/secrets/aws/credentials
 ; https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
 [default]
-aws_region = ${aws_region}
-aws_access_key_id = ${aws_access_key_id}
-aws_secret_access_key = ${aws_secret_access_key}
+aws_region = ${k9AwsRegion}
+aws_access_key_id = ${k9AwsKeyId}
+aws_secret_access_key = ${k9AwsKeySecret}
 EOF
 }
 
@@ -332,15 +328,18 @@ EOF
 
 write_global_tf_vars () {
 cat <<EOF > ${k9DirDeploy}/terraform/global.tfvars
+vpc_id="${k9VpcId}"
+vpc_name="${k9NameVpc}"
+rhcos_ami="${k9RhcosAmi}"
+aws_region="${k9AwsRegion}"
+subnet_list=${k9SubnetList}
+name_domain="${k9NameDomain}"
 cluster_name="${k9NameCluster}"
 cluster_domain="${k9ClusterDomain}"
-aws_region="${aws_REGION}"
-aws_access_key_id="${access_KEYID}"
-aws_secret_access_key="${access_KEYSECRET}"
-vpc_id="${k9VpcId}"
 private_vpc_cidr="${k9VpcCidr}"
-rhcos_ami="${k9RhcosAmi}"
-subnet_list=${k9SubnetList}
+aws_access_key_id="${k9AwsKeyId}"
+target_environment="${k9TargetEnvironment}"
+aws_secret_access_key="${k9AwsKeySecret}"
 EOF
 }
 ################################################################################
@@ -349,18 +348,18 @@ EOF
 
 write_global_tf_vars_post () {
 cat <<EOF > ${k9DirDeploy}/terraform/global.tfvars
-aws_region="${aws_region}"
-aws_access_key_id="${aws_access_key_id}"
-aws_secret_access_key="${aws_secret_access_key}"
-vpc_id="${vpc_id}"
-rhcos_ami="${rhcos_ami}"
-target_environment="${k9TargetEnvironment}"
-cluster_name="${cluster_name}"
-name_domain="${k9NameDomain}"
+vpc_id="${k9VpcId}"
 vpc_name="${k9NameVpc}"
-cluster_domain="${cluster_domain}"
+rhcos_ami="${k9RhcosAmi}"
+aws_region="${k9AwsRegion}"
+subnet_list=${k9SubnetList}
+name_domain="${k9NameDomain}"
+cluster_name="${k9NameCluster}"
+cluster_domain="${k9ClusterDomain}"
 private_vpc_cidr="${k9VpcCidr}"
-subnet_list=${subnet_list}
+aws_access_key_id="${k9AwsKeyId}"
+target_environment="${k9TargetEnvironment}"
+aws_secret_access_key="${k9AwsKeySecret}"
 EOF
 }
 ################################################################################
