@@ -1,3 +1,4 @@
+################################################################################
 # AWS Region & Target Env:
 #  Target Options:
 #   - fences
@@ -5,14 +6,22 @@
 export k9AwsRegion="us-gov-west-1"
 export k9TargetEnvironment="govcloud"
 
+################################################################################
 # AWS Access Key ID & Secret
 export k9AwsKeyId="XXXXXX"
 export k9AwsKeySecret="XXXXXXXXX"
 
-# Cluster Name & Domain
+################################################################################
+# VPC Name
 export k9NameVpc="iamgroot"
+
+# Cluster TLD
 export k9NameDomain="i.am.groot"
+
+# Cluster Subdomain
 export k9NameCluster="cluster"
+
+# Cluster Base FQDN
 export k9ClusterDomain="cluster.i.am.groot"
 
 # AWS Red Hat CoreOS AMI ID
@@ -21,6 +30,7 @@ export k9RhcosAmi="ami-XXXXXXXXX"
 # AWS VPC ID
 export k9VpcId="vpc-XXXXXXXXX"
 
+################################################################################
 # Private VPC Subnet IDs
 export subnet_list='["subnet-XXXXXXXXX", "subnet-XXXXXXXXX", "subnet-XXXXXXXXX"]'
 export k9SubnetList='["subnet-XXXXXXXXX", "subnet-XXXXXXXXX", "subnet-XXXXXXXXX"]'
