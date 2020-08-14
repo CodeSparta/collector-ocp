@@ -120,7 +120,7 @@ openssl req \
   -subj   "/CN=${k9ClusterDomain}" \
   -out    /root/deploy/secrets/registry/ssl/registry.crt  \
   -keyout /root/deploy/secrets/registry/ssl/registry.key  \
-  -addext "subjectAltName=DNS:registry.${k9ClusterDomain},DNS:cloudctl,DNS:registry,DNS:localhost,IP:10.88.0.1,IP:127.0.0.1" 2>&1 1>/dev/null
+  -addext "subjectAltName=DNS:registry.${k9NameCluster}.${k9NameDomain},DNS:cloudctl,DNS:registry,DNS:localhost,IP:10.88.0.1,IP:127.0.0.1" 2>&1 1>/dev/null
 }
 
 ################################################################################
