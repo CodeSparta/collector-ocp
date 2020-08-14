@@ -438,11 +438,11 @@ load_images () {
 }
 
 load_mirror_certificate () {
-# echo "  >> Loading registry certificate to host."
-mkdir -p /root/deploy/secrets/registry/ssl \
+ echo "  >> Loading registry certificate on host."
+mkdir -p /root/deploy/secrets/registry/ssl 2>/dev/null \
 cp /root/deploy/secrets/registry/ssl/registry.crt \
-    /etc/pki/ca-trust/source/anchors/registry.crt \
-  && sudo update-ca-trust
+    /etc/pki/ca-trust/source/anchors/registry.crt 2>/dev/null \
+  && sudo update-ca-trust 1>&2 2>/dev/null
 }
 
 run_pod () {
