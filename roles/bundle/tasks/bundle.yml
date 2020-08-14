@@ -17,8 +17,8 @@
     path: '{{ item }}'
     state: absent
   loop:
-    - /tmp/ArtifactsBundle.tar.xz
-    - /tmp/ArtifactsBundle.tar.xz.sha256
+    - "/tmp/ArtifactsBundle.tar.xz"
+    - "/tmp/ArtifactsBundle.tar.xz.sha256"
     - "/root/deploy/bundle/koffer-bundle.openshift-{{ version_openshift }}.tar"
 
 ####### Build Unified Bundle
@@ -41,6 +41,7 @@
   copy:
     content: '{{ bundle_sha.stdout }}'
     dest: /tmp/ArtifactsBundle.tar.xz.sha256
+    mode: 0600
 
 ####### Build Unified Bundle
 - name: '{{ ansible_name_module }} | file:directory | Create Staging Directory'
