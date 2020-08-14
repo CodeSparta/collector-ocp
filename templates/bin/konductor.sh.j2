@@ -419,13 +419,13 @@ run_ansible_playbook_bundle () {
 
 run_clean () {
   for container in $(podman ps | awk '/konductor|one|nginx|registry|pause|busybox/{print $3}' 2>/dev/null); do
-    podman rm --force $container
+    podman rm --force $container 2>/dev/null
   done
   for pod in $(podman pod ps | awk '/cloudctl/{print $1}' 2>/dev/null); do
-    podman pod rm --force $pod
+    podman pod rm --force $pod 2>/dev/null
   done
   for image in $(podman images | awk '/konductor|one|nginx|registry|pause|busybox/{print $3}' 2>/dev/null); do
-    podman rmi --force $image
+    podman rmi --force $image 2>/dev/null
   done
 }
 
