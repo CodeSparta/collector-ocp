@@ -18,4 +18,3 @@
         - "{{ dir_terraform }}/shaman"
         - "{{ dir_terraform }}/shaman/elb"
         - "{{ dir_terraform }}/shaman/control-plane"
-        - "{{ dir_terraform }}/shaman/resource-import"
