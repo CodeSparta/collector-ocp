@@ -21,7 +21,7 @@ ansiblerepos:
 terraformrepos:
   - repo: "{{ url_git_shaman }}"
     dest: "{{ dir_git_shaman }}"
-    branch: "shaman-dns-test"
+    branch: "jrickard-shaman-route53"
 #   branch: "{{ git_branch }}"
   - repo: "{{ url_git_shaman_vpc }}"
     dest: "{{ dir_git_shaman_vpc }}"
