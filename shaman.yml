@@ -15,7 +15,8 @@
         cmd: terraform init
         chdir: "{{ item }}"
       loop:
+        - "{{ dir_terraform }}/shaman/resource-import"
         - "{{ dir_terraform }}/shaman"
         - "{{ dir_terraform }}/shaman/elb"
         - "{{ dir_terraform }}/shaman/control-plane"
-        - "{{ dir_terraform }}/shaman/resource-import"
+        - "{{ dir_terraform }}/shaman/route53"
