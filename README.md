@@ -26,6 +26,3 @@ Features:
 ```
 ### 2. Move Koffer Bundle to target host `${USER}` directory
 # [Developer Docs & Utils](./dev)
-# Demo
-![bundle](./web/bundle.svg)
-
