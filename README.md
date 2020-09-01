@@ -17,11 +17,10 @@ Features:
 ### 1. Run Infrastructure Collector with Koffer Engine
 ```
  mkdir -p /tmp/platform ; \
- sudo podman run \
-     --volume /tmp/platform:/root/deploy:z     \
-     --rm -it --entrypoint=/usr/bin/entrypoint \
-   docker.io/containercraft/koffer:latest      \
-   https://repo1.dsop.io/dsop/redhat/platformone/ocp4x/ansible/collector-infra.git latest
+sudo podman run -it --rm \
+    --volume /tmp/bundle:/root/deploy/bundle:z \
+  docker.io/codesparta/koffer:4.5.6 bundle \
+    --repo collector-infra@v4.5.6
 
 ```
 ### 2. Move Koffer Bundle to target host `${USER}` directory
