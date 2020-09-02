@@ -19,8 +19,8 @@ Features:
  mkdir -p /tmp/platform ; \
 sudo podman run -it --rm \
     --volume /tmp/bundle:/root/deploy/bundle:z \
-  docker.io/codesparta/koffer:4.5.7 bundle \
-    --repo collector-infra@v4.5.7
+  docker.io/codesparta/koffer bundle \
+    --repo collector-infra@master
 
 ```
 ### 2. Move Koffer Bundle to target host `${USER}` directory
