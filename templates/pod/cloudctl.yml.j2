@@ -97,10 +97,10 @@ spec:
     - name: BUILDAH_ISOLATION
       value: chroot
     - name: varVerOpenshift
-      value: 4.5.0-rc.5
+      value: {{ lookup('env', 'varVerOpenshift') }}
     - name: versOCP
-      value: 4.5.0-rc.5
-    image: docker.io/codesparta/konductor:4.5.6
+      value: {{ lookup('env', 'varVerOpenshift') }}
+    image: docker.io/codesparta/konductor:{{ lookup('env', 'varVerOpenshift') }}
     name: one
     resources: {}
     securityContext:

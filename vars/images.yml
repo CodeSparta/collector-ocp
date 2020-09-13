@@ -2,7 +2,7 @@
 images_cloudctl:
   - uri: "docker.io/codesparta"
     name: konductor
-    tag: 4.5.6
+    tag: "{{ lookup('env', 'varVerOpenshift') }}"
     path: "{{ dir_deploy }}/images"
   - uri: "k8s.gcr.io"
     name: pause
