@@ -14,7 +14,8 @@ mkdir -p ~/bundle
 sudo podman run -it --rm --pull always \
     --volume $(pwd)/bundle:/root/deploy/bundle:z \
     --volume ${HOME}/.docker/config.json:/root/.docker/config.json:z \
-  docker.io/codesparta/koffer bundle --silent
+  docker.io/codesparta/koffer bundle --silent \
+    --config https://codectl.io/docs/config/stable/sparta.yml
 EOF
 ```
 
