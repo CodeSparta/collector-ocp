@@ -4,6 +4,7 @@
 #####################################################################################################
 # OpenShift Version
 version_openshift: "{{ lookup('env', 'varVerOpenshift') }}"
+tpdk_version: "{{ lookup('env', 'varVerOpenshift') }}"
 
 # Ansible Playbook Run Variables
 name_vendor: " CodeSparta"
