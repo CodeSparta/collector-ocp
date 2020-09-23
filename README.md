@@ -24,4 +24,3 @@ sudo podman run -it --rm \
 ```
 ### 2. Move Koffer Bundle to target host `${USER}` directory
 # [Developer Docs & Utils](./dev)
-blabla
