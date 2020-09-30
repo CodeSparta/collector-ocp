@@ -55,7 +55,7 @@
   command:
     "tar -cvf {{ local_home }}/deploy/bundle/koffer-bundle.openshift-{{ version_openshift  }}.tar -C /tmp ArtifactsBundle.tar.xz.sha256 ArtifactsBundle.tar.xz cloudctl.yml konductor.sh answer.sh"
   args:
-    creates: "{{ local_home }}/deploy/bundle/koffer-bundle.openshift-{{ version_openshift }}.tar"
+    creates: "{{ local_home }}/deploy/bundle/koffer-bundle.openshift-{{ tpdk_version }}.tar"
     warn: false
 
 # name: '{{ ansible_name_module }} | role | archive | Bundle ArtifactsBundle.tar.xz with auxilary files'
