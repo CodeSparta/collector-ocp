@@ -100,7 +100,7 @@ spec:
       value: {{ lookup('env', 'varVerOpenshift') }}
     - name: versOCP
       value: {{ lookup('env', 'varVerOpenshift') }}
-    image: docker.io/codesparta/konductor:{{ lookup('env', 'varVerOpenshift') }}
+    image: docker.io/codesparta/konductor:{{ lookup('env', 'varVerKonductor') }}
     name: one
     resources: {}
     securityContext:
