@@ -30,7 +30,7 @@ spec:
       value: 0.4.1
     - name: PKG_RELEASE
       value: 1~buster
-    image: docker.io/library/nginx:latest
+    image: docker.io/library/nginx:cloudctl
     name: nginx
     ports:
     - containerPort: 80
@@ -64,7 +64,7 @@ spec:
       value: registry
     - name: container
       value: podman
-    image: docker.io/library/registry:latest
+    image: docker.io/library/registry:cloudctl
     name: registry
     resources: {}
     securityContext:
@@ -100,7 +100,7 @@ spec:
       value: {{ lookup('env', 'varVerOpenshift') }}
     - name: versOCP
       value: {{ lookup('env', 'varVerOpenshift') }}
-    image: docker.io/codesparta/konductor:{{ lookup('env', 'varVerKonductor') }}
+    image: docker.io/codesparta/konductor:cloudctl
     name: one
     resources: {}
     securityContext:
