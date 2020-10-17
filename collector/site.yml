@@ -1,0 +1,11 @@
+#!/usr/local/bin/ansible-playbook --inventory=inventory.yaml
+- name: ' Koffer | Artifact Rake Utility' 
+  hosts: koffer
+  vars_files:
+    - 'vars/global.yml'
+
+- import_playbook: tree.yml         # Create base directory tree
+- import_playbook: secrets.yml      # Collect Secrets
+- import_playbook: images.yml       # Pull cloudctl images & Download container images to directory
+- import_playbook: bundle.yml       # Bundle artifacts for airgap pivot
+# import_playbook: upload.yml       # Push artifacts to desired location
