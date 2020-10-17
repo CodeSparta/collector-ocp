@@ -14,12 +14,12 @@
       loop:
         - '{{ dir_platform }}'
         - '{{ dir_platform }}/nginx/openshift/latest/release.txt'
-        - '{{ dir_bundle }}/koffer-bundle.ocp-{{ openshift_version }}.tar.xz'
-        - '{{ dir_bundle }}/koffer-bundle.ocp-{{ openshift_version }}.tar.xz.sha256'
+        - '{{ dir_bundle }}/koffer-bundle.ocp-{{ version_openshift }}.tar.xz'
+        - '{{ dir_bundle }}/koffer-bundle.ocp-{{ version_openshift }}.tar.xz.sha256'
       when: clean_purge_artifacts == True
 
     ####### Place OpenShift Version Manifest
-    - name: '{{ ansible_name_module }} | get_url:url | Place OpenShift release.txt | {{ openshift_version }}'
+    - name: '{{ ansible_name_module }} | get_url:url | Place OpenShift release.txt | {{ version_openshift }}'
       get_url:
         url: 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version_openshift }}/release.txt'
         dest: '{{ dir_platform }}/nginx/openshift/latest/release.txt'
