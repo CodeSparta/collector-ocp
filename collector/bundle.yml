@@ -16,7 +16,7 @@
       command:
         "tar -cv --use-compress-program='pigz -9 ' -f {{ dir_bundle }}/koffer-bundle.ocp-{{ openshift_version }}.tar.xz -C {{ local_home }} platform"
       args:
-        creates: {{ dir_bundle }}/koffer-bundle.ocp-{{ openshift_version }}.tar.xz -C {{ local_home }} platform"
+        creates: "{{ dir_bundle }}/koffer-bundle.ocp-{{ openshift_version }}.tar.xz -C {{ local_home }} platform"
         warn: false
     
     ####### SHA256sum Artifact Bundle File
