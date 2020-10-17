@@ -12,7 +12,7 @@ Features:
 ```
 mkdir -p ${HOME}/bundle && \
 sudo podman run -it --rm --pull always \
-    --volume /tmp/platform:/root/bundle:z \
+    --volume ${HOME}/bundle:/root/bundle:z \
   docker.io/containercraft/koffer:latest bundle \
     --plugin collector-infra
 ```
