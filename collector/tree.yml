@@ -3,19 +3,28 @@
   hosts: koffer
   vars_files:
     - 'vars/global.yml'
-    - 'vars/images.yml'
   vars:
     module: "tree"
     ansible_name_module: "{{ ansible_name }} | {{ module }}"
   tasks:
-    - name: '{{ ansible_name_module }} | file | Create Directory Structure' 
+
+    - name: '{{ ansible_name_module }} | file:directory | Create Artifact Directory Tree' 
       file:
         path: '{{ item }}'
         state: directory
-        mode: '0775'
+        mode: '0744'
         recurse: yes
       with_items:
-        - '{{ local_home }}/bundle'
+        - '{{ dir_platform }}'
         - '{{ dir_platform }}/mirror'
-        - '{{ dir_platform }}/nginx'
         - '{{ dir_platform }}/secrets'
+        - '{{ dir_platform }}/nginx/openshift/latest'
+
+    - name: '{{ ansible_name_module }} | file:directory | Create Bundle Directory' 
+      file:
+        path: '{{ item }}'
+        state: directory
+        mode: '0777'
+        recurse: yes
+      with_items:
+        - "{{ dir_bundle }}"

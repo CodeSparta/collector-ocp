@@ -4,6 +4,27 @@
   vars_files:
     - 'vars/global.yml'
 
+  tasks:
+
+    ####### Purge Preexisting Artifacts 
+    - name: '{{ ansible_name_module }} | file | Purge pre-existing bundles'
+      file:
+        path: '{{ item }}'
+        state: absent
+      loop:
+        - '{{ dir_platform }}'
+        - '{{ dir_platform }}/nginx/openshift/latest/release.txt'
+        - '{{ dir_bundle }}/koffer-bundle.ocp-{{ openshift_version }}.tar.xz'
+        - '{{ dir_bundle }}/koffer-bundle.ocp-{{ openshift_version }}.tar.xz.sha256'
+      when: clean_purge_artifacts == True
+
+    ####### Place OpenShift Version Manifest
+    - name: '{{ ansible_name_module }} | get_url:url | Place OpenShift release.txt | {{ openshift_version }}'
+      get_url:
+        url: 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version_openshift }}/release.txt'
+        dest: '{{ dir_platform }}/nginx/openshift/latest/release.txt'
+        mode: 0775
+    
 - import_playbook: tree.yml         # Create base directory tree
 - import_playbook: secrets.yml      # Collect Secrets
 - import_playbook: images.yml       # Pull cloudctl images & Download container images to directory
