@@ -3,7 +3,6 @@
   hosts: koffer
   vars_files:
     - 'vars/global.yml'
-    - 'vars/images.yml'
 
   vars:
     module: "images"
@@ -11,12 +10,12 @@
 
   tasks:
 
-    ######### Purge & Prepare
-    - name: '{{ ansible_name_module }} | file:directory | Create mirror artifact directories'
-      file:
-        path: "{{ dir_platform }}/mirror"
-        state: absent
-      when: clean_purge_artifacts == True
+    ####### Place OpenShift Version Manifest
+    - name: '{{ ansible_name_module }} | get_url:url | Place OpenShift release.txt | {{ version_openshift }}'
+      get_url:
+        url: 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ version_openshift }}/release.txt'
+        dest: '{{ dir_platform }}/nginx/openshift/latest/release.txt'
+        mode: 0775
     
     ###### Evaluate lock file presence
     - name: '{{ ansible_name_module }} | stat | check for mirror v2.sha256 Lock file'

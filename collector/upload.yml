@@ -3,8 +3,6 @@
   hosts: koffer
   vars_files:
     - 'vars/global.yml'
-    - 'vars/images.yml'
-    - 'vars/git.yml'
   vars:
     module: "upload"
     ansible_name_module: "{{ ansible_name }} | {{ module }}"
