@@ -19,7 +19,7 @@ mkdir -p /tmp/bundle && \
 sudo podman run -it --rm --pull always \
     --volume /tmp/platform:/root/bundle:z \
   docker.io/containercraft/koffer:latest bundle \
-    --plugin openshift
+    --plugin collector-infra
 ```
 ### 2. Move Koffer Bundle to target host `${USER}` directory
 # [Developer Docs & Utils](./dev)
