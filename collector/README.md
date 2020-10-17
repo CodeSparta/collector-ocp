@@ -10,9 +10,9 @@ Features:
 
 ## Usage: Execute Collector Plugin with Koffer Engine
 ```
-mkdir -p ${HOME}/bundle && \
-sudo podman run -it --rm --pull always \
-    --volume ${HOME}/bundle:/root/bundle:z \
-  docker.io/containercraft/koffer:latest bundle \
-    --plugin collector-infra
+ mkdir -p ${HOME}/bundle && \
+ podman run -it --rm --pull always \
+     --volume ${HOME}/bundle:/root/bundle:z \
+   docker.io/containercraft/koffer:latest bundle \
+     --plugin collector-infra
 ```
