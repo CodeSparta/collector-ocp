@@ -21,7 +21,7 @@
     
     ####### SHA256sum Artifact Bundle File
     - name: '{{ ansible_name_module }} | stat:sha256 | SHA ArtifactsBundle.tar.xz'
-      command: 'sha256sum ocp-{{ version_openshift }}.tar.xz'
+      command: 'sha256sum koffer-bundle.ocp-{{ version_openshift }}.tar.xz'
       args:
         chdir: '/tmp/'
         warn: false
