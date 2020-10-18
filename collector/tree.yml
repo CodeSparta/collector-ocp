@@ -15,6 +15,7 @@
         mode: '0744'
         recurse: yes
       with_items:
+        - '{{ dir_bin }}'
         - '{{ local_tmp }}'
         - '{{ dir_platform }}'
         - '{{ dir_platform }}/mirror'
