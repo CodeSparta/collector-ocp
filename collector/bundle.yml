@@ -23,7 +23,7 @@
     - name: '{{ ansible_name_module }} | stat:sha256 | SHA ArtifactsBundle.tar.xz'
       command: 'sha256sum koffer-bundle.ocp-{{ version_openshift }}.tar.xz'
       args:
-        chdir: '/tmp/'
+        chdir: '{{ dir_bundle }}'
         warn: false
       register: bundle_sha
     
@@ -31,5 +31,5 @@
     - name: '{{ ansible_name_module }} | copy:content.bundle_sha | Place SHA256 SUM File | {{ bundle_sha.stdout }}'
       copy:
         content: '{{ bundle_sha.stdout }}'
-        dest: /tmp/koffer-bundle.ocp-{{ version_openshift }}.tar.xz.sha256
-        mode: 0600
+        dest: "{{ dir_bundle }}/koffer-bundle.ocp-{{ version_openshift }}.tar.xz.sha256"
+        mode: 0775
