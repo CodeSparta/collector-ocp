@@ -33,6 +33,14 @@
             path: "{{ dir_platform }}/mirror"
             state: directory
     
+      ####### Place OpenShift RHCOS AWS VMDK
+        - name: '{{ ansible_name_module }} | get_url:url | Place OpenShift RHCOS Image | rhcos-aws.x86_64.vmdk.gz'
+          unarchive:
+            src: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.6/latest/rhcos-aws.x86_64.vmdk.gz'
+            dest: '{{ dir_platform }}/nginx/rhcos'
+            remote_src: yes
+            mode: 0775
+    
       ######### Mirror Images to directory
         - name: '{{ ansible_name_module }} | shell:oc.adm.release.mirror | Sync content from quay.io'
           shell: |
