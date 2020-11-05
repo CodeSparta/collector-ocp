@@ -5,7 +5,7 @@ restricted or airgap infrastructure deployment.
 Features:
   - CloudCtl compatible
   - Low side SHA256 artifact bundle metadata (for high side bit integrity validation)
-  - Low side injestion direct to "pre-hydrated" registry stateful path [mirror-to-mirror]
+  - Low side ingestion direct to "pre-hydrated" registry stateful path [mirror-to-mirror]
   - Idempotent, can be used to additively upload artifacts to pre-existing collection
 
 Artifacts:
