@@ -22,6 +22,10 @@ Artifacts:
    docker.io/containercraft/koffer:latest bundle \
      --plugin collector-ocp
 ```
+  - unpack bundle
+```
+tar -xvf /root/bundle/koffer-bundle.openshift-4.6.1.tar.xz -C /root
+```
 [Release Images]:https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/release.txt
 [Red Hat CoreOS]:https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest
 [Binary]:https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest
