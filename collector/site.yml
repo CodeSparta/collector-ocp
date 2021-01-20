@@ -17,6 +17,8 @@
         openshift_version: '{{ openshift_version_override | default(openshift_version_latest.stdout, true) }}'
         cacheable: yes
 
+    - debug:
+        msg: 'Collecting OpenShift {{ openshift_version }}'
 
 
 - import_playbook: tree.yml         # Create base directory tree
