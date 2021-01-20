@@ -20,7 +20,7 @@
 
 
 
-- include_playbook: tree.yml         # Create base directory tree
+- import_playbook: tree.yml         # Create base directory tree
 # import_playbook: secrets.yml      # Collect Secrets
 - import_playbook: dependencies.yml # Pull OpenShift oc, openshift-install, and kubectl binaries 
 - import_playbook: images.yml       # Download OCP Infra Container Images
