@@ -14,7 +14,7 @@
       when: openshift_version_override is not defined
 
     - set_fact:
-        openshift_version: {{ openshift_version_override | default(openshift_version_latest.stdout, true }}
+        openshift_version: '{{ openshift_version_override | default(openshift_version_latest.stdout, true) }}'
         cacheable: yes
 
 
