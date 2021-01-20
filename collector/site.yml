@@ -4,7 +4,7 @@
   vars_files:
     - 'vars/global.yml'
   vars:
-    - openshift_version_override: "{{ lookup('env', 'OPENSHIFT_VERSION') | default('') }}"
+    - openshift_version_override: "{{ lookup('env', 'OPENSHIFT_VERSION') }}"
 
   tasks:
 
