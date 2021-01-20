@@ -1,4 +1,4 @@
-# [Koffer](https://github.com/containercraft/Koffer) Collector Plugin | OpenShift Infrastructure Artifacts
+# [Koffer](https://github.com/cloudctl/Koffer) Collector Plugin | OpenShift Infrastructure Artifacts
 This automation provides a unified and standardized tarball of OpenShift artifacts for
 restricted or airgap infrastructure deployment.
 
@@ -19,7 +19,7 @@ Artifacts:
  mkdir -p ${HOME}/bundle && \
  podman run -it --rm --pull always \
      --volume ${HOME}/bundle:/root/bundle:z \
-   docker.io/containercraft/koffer:latest bundle \
+   docker.io/cloudctl/koffer:latest bundle \
      --plugin collector-ocp
 ```
   - unpack bundle
