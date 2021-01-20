@@ -5,7 +5,7 @@
     - 'vars/global.yml'
 
   vars:
-    module: "images"
+    module: "dependencies"
     ansible_name_module: "{{ ansible_name }} | {{ module }}"
 
   tasks:
