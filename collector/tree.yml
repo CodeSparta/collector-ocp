@@ -8,6 +8,18 @@
     ansible_name_module: "{{ ansible_name }} | {{ module }}"
   tasks:
 
+    ####### Purge Preexisting Artifacts 
+    - name: '{{ ansible_name_module }} | file | Purge pre-existing bundles'
+      file:
+        path: '{{ item }}'
+        state: absent
+      loop:
+        - '{{ dir_platform }}'
+        - '{{ dir_platform }}/nginx/openshift/latest/release.txt'
+        - '{{ dir_bundle }}/koffer-bundle.ocp-{{ ansible_facts.version_openshift }}.tar.xz'
+        - '{{ dir_bundle }}/koffer-bundle.ocp-{{ ansible_facts.version_openshift }}.tar.xz.sha256'
+      when: clean_purge_artifacts == True
+
     - name: '{{ ansible_name_module }} | file:directory | Create Artifact Directory Tree' 
       file:
         path: '{{ item }}'
