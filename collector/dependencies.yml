@@ -17,8 +17,16 @@
         dest: '{{ dir_bin }}'
         mode: 0775
 
+    - name: "{{ ansible_name_module }} | unarchive:openshift-install-linux.tar.gz | Downloading openshift-install binary {{ openshift_version }}"
+      unarchive:
+        remote_src: yes
+        src: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ openshift_version }}/openshift-install-linux.tar.gz"
+        dest: '{{ dir_bin }}'
+        mode: 0775
+
     - name: '{{ ansible_name_module }} | command:cmd | Test Binaries'
       command:
         cmd: '{{ item.bin }} {{ item.exec }}'
       with_items:
         - { bin: '{{ dir_bin }}/oc',  exec: 'version --client' }
+        - { bin: '{{ dir_bin }}/openshift-install',  exec: 'version' }
