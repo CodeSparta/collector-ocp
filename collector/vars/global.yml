@@ -8,7 +8,7 @@ openshift_version: "{{ lookup('env', 'VERSION') }}"
 konductor_version: latest
 tpdk_version: master
 # Artifacts Purge
-clean_purge_artifacts: True
+clean_purge_artifacts: False
 
 # Ansible Playbook Run Variables
 name_vendor: " CodeSparta"
