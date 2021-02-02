@@ -7,7 +7,11 @@
   vars:
     module: "dependencies"
     ansible_name_module: "{{ ansible_name }} | {{ module }}"
-
+  
+  environment:
+    REGISTRY_AUTH_FILE: '/root/.docker/config.json' 
+    PATH: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    
   tasks:
 
     - name: "{{ ansible_name_module }} | unarchive:openshift-client-linux.tar.gz | Downloading OC Client {{ openshift_version }}"
