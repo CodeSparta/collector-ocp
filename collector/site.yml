@@ -10,11 +10,11 @@
 
     - name: "{{ ansible_name_module }} | shell:curl_release.txt | Lookup Latest OCP Release"
       shell: curl --silent https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ openshift_version_override | default('latest') }}/release.txt | awk '/  Version/{print $2}'
-      register: openshift_version_latest
+      register: openshift_version_number
 
-    - name: 'Collecting Artifacts for OpenShift {{ openshift_version }}'
+    - name: 'Collecting Artifacts for OpenShift {{ openshift_version_override | default(openshift_version_number.stdout, true)  }}'
       set_fact:
-        openshift_version: '{{ openshift_version_override | default(openshift_version_latest.stdout, true) }}'
+        openshift_version: '{{ openshift_version_number.stdout }}'
         cacheable: yes
 
 - import_playbook: tree.yml         # Create base directory tree
