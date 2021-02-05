@@ -13,7 +13,7 @@
     ####### Place OpenShift Version Manifest
     - name: '{{ ansible_name_module }} | get_url:url | Place OpenShift release.txt | {{ openshift_version }}'
       get_url:
-        url: 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ openshift_version }}/release.txt'
+        src: "{{ lookup('env','DEP_OCP_RELEASE_TXT') }}"
         dest: '{{ dir_platform }}/nginx/openshift/latest/release.txt'
         mode: 0775
     
