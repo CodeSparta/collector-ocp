@@ -9,7 +9,7 @@
   tasks:
 
     - name: "{{ ansible_name_module }} | shell:curl_release.txt | Lookup Latest OCP Release"
-      shell: curl --silent https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ openshift_version_override | default('latest') }}/release.txt | awk '/  Version/{print $2}'
+      shell: curl --silent {{ lookup('env','DEP_OCP_RELEASE_TXT') }} | awk '/  Version/{print $2}'
       register: openshift_release_number
 
     - name: 'Collecting Artifacts for OpenShift {{ openshift_release_number.stdout }}'
