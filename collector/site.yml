@@ -1,8 +1,11 @@
-#!/usr/local/bin/ansible-playbook --inventory=inventory.yaml
-- name: ' Koffer | Artifact Rake Utility' 
+#!/usr/local/bin/ansible-playbook --inventory=inventory/all.yml
+- name: 'Red Hat Consulting | CodeSparta | Koffer | Collector OpenShift' 
   hosts: koffer
-
-- import_playbook: tree.yml         # Create base directory tree
-- import_playbook: dependencies.yml # Pull OpenShift oc, openshift-install, and kubectl binaries 
-- import_playbook: images.yml       # Download OCP Infra Container Images
-- import_playbook: bundle.yml       # Bundle artifacts for airgap pivot
+# collections:
+# - usrbinkat.collector
+# - containers.podman
+  environment:
+    PATH: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+  tasks:
+    - import_role:
+        name: openshift

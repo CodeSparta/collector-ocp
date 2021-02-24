@@ -1,2 +1,8 @@
----
-# tasks file for openshift
+#!/usr/local/bin/ansible-playbook --inventory=inventory.yaml
+- name: ' Koffer | Artifact Rake Utility' 
+  hosts: koffer
+
+- import_playbook: tree.yml         # Create base directory tree
+- import_playbook: dependencies.yml # Pull OpenShift oc, openshift-install, and kubectl binaries 
+- import_playbook: images.yml       # Download OCP Infra Container Images
+- import_playbook: bundle.yml       # Bundle artifacts for airgap pivot
