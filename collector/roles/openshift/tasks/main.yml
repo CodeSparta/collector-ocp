@@ -1,5 +1,5 @@
 ---
-- import_playbook: tree.yml         # Create base directory tree
-- import_playbook: dependencies.yml # Pull OpenShift oc, openshift-install, and kubectl binaries 
-- import_playbook: images.yml       # Download OCP Infra Container Images
-- import_playbook: bundle.yml       # Bundle artifacts for airgap pivot
+- include_tasks: tree.yml         # Create base directory tree
+- include_tasks: dependencies.yml # Pull OpenShift oc, openshift-install, and kubectl binaries 
+- include_tasks: images.yml       # Download OCP Infra Container Images
+- include_tasks: bundle.yml       # Bundle artifacts for airgap pivot
