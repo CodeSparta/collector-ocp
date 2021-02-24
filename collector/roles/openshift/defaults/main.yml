@@ -10,7 +10,7 @@ koffer:
   date: "{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}{{ ansible_date_time.hour }}"
   docker_config: '/root/.docker/config.json'
 openshift:
-  provider: "{{ lookup('env', 'PROVIDER')    | default('aws',    true) | bool }}"
+  provider: "{{ lookup('env', 'PROVIDER')    | default('aws',    true) }}"
   release: "{{  lookup('env', 'VERSION')     | default('latest', true) }}"
   release_url: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp"
   rhcos_url: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest"
