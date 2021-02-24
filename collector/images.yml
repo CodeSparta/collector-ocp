@@ -1,69 +1,32 @@
-#!/usr/local/bin/ansible-playbook --inventory=inventory.yaml
-- name: '{{ name_vendor }} | Koffer | images.yml' 
-  hosts: koffer
-  vars_files:
-    - 'vars/global.yml'
+---
+- name: '{{ plugin.name }} | role:{{ plugin.role }} | get_url:url.dest | Save OpenShift openshift-{{ openshift_version }}-release.txt '
+  get_url:
+    url: '{{ openshift.release_url }}/{{ openshift_version }}/release.txt'
+    dest: '{{ dir.meta }}/openshift-{{ openshift_version }}-release.txt'
+    mode: 0666
 
-  vars:
-    module: "images"
-    ansible_name_module: "{{ ansible_name }} | {{ module }}"
+- name: '{{ ansible_name_module }} | get_url:url | Download Red Hat CoreOS Image'
+  get_url:
+    url: '{{ rhcos.url }}/{{ item.value.image }}'
+    dest: '{{ dir.nginx }}/'
+    mode: 0666
+  with_dict:
+    - "{{ rhcos }}"
+  when:
+    - item.value.download is defined and item.value.download != "false" and item.value.download != ""
 
-  tasks:
+- name: '{{ ansible_name_module }} | shell:oc.adm.release.mirror | Sync content from quay.io'
+  shell: |
+    {{ dir.bin }}/oc adm release mirror --insecure=true \
+      --registry-config={{ koffer.docker_config }} \
+      --to={{ koffer.dest }}/openshift-release-dev \
+      --from=quay.io/openshift-release-dev/ocp-release:{{ openshift_version }}-x86_64 \
+      --to-release-image={{ koffer.dest }}/openshift-release-dev:{{ openshift_version }}-x86_64
 
-    ####### Place OpenShift Version Manifest
-    - name: '{{ ansible_name_module }} | get_url:url | Place OpenShift release.txt | {{ openshift_version }}'
-      get_url:
-        url: 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ openshift_version }}/release.txt'
-        dest: '{{ dir_platform }}/nginx/openshift/latest/release.txt'
-        mode: 0775
-    
-    ###### Evaluate lock file presence
-    - name: '{{ ansible_name_module }} | stat | check for mirror v2.sha256 Lock file'
-      stat:
-        path: '{{ dir_platform }}/mirror/ocp-release.{{ openshift_version }}.lock'
-      register: mirror_lock_check
-    
-    ###### Download OpenShift Docker Images from Quay.io to File: /root/platform/mirror/v2
-    - name: '{{ ansible_name_module }} | block | Download OpenShift images'
-      block:
-    
-      ######### Purge & Prepare
-        - name: '{{ ansible_name_module }} | file:directory | Create mirror artifact directories'
-          file:
-            path: "{{ dir_platform }}/mirror"
-            state: directory
-    
-      ####### Place OpenShift RHCOS AWS VMDK
-        - name: '{{ ansible_name_module }} | get_url:url | Place OpenShift RHCOS Image | rhcos-aws.x86_64.vmdk.gz'
-          get_url:
-            url: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.6/latest/rhcos-aws.x86_64.vmdk.gz'
-            dest: '{{ dir_platform }}/nginx/rhcos'
-            mode: 0775
-    
-      ######### Mirror Images to directory
-        - name: '{{ ansible_name_module }} | shell:oc.adm.release.mirror | Sync content from quay.io'
-          shell: |
-            {{ dir_bin }}/oc adm release mirror --insecure=true \
-              --to=localhost:5000/openshift-release-dev \
-              --registry-config=/root/.docker/config.json \
-              --from=quay.io/openshift-release-dev/ocp-release:{{ openshift_version }}-x86_64 \
-              --to-release-image=localhost:5000/openshift-release-dev:{{ openshift_version }}-x86_64
-          when: image_mirror_utility == "oc"
-     
-      ######### Skopeo Copy Images to Registry
-        - name: '{{ ansible_name_module }} | shell:skopeo.copy | Sync content from quay.io'
-          shell: |
-              for i in $(cat /var/lib/koffer/release.list); do \
-                skopeo copy docker://quay.io/$i \
-                docker://localhost:5000/openshift-release-dev/$i ; \
-              done
-          when: image_mirror_utility == "skopeo"
-    
-      ####### Block Conditionals
-      when: not mirror_lock_check.stat.exists
-    
-    - name: '{{ ansible_name_module }} | command:touch | Place mirror lock file'
-      command:
-        cmd: 'touch {{ dir_platform }}/mirror/ocp-release.{{ openshift_version }}.lock'
-      args:
-        warn: false
+# name: '{{ ansible_name_module }} | shell:skopeo.copy | Sync content from quay.io'
+# shell: |
+#     for i in $(cat /var/lib/koffer/release.list); do \
+#       skopeo copy docker://quay.io/$i \
+#       docker://localhost:5000/openshift-release-dev/$i ; \
+#     done
+# when: image_mirror_utility == "skopeo"

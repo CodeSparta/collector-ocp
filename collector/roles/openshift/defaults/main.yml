@@ -1,0 +1,45 @@
+---
+plugin:
+  role: 'openshift'
+  name: 'Koffer Artifact Collector | Red Hat Consulting | CodeSparta/collector'
+koffer:
+  dest: "{{ lookup('env', 'MIRROR_DEST')    | default('localhost:5000', true) }}"
+  mirror: "{{   lookup('env', 'MIRROR')     | default('true',  true) | bool }}"
+  bundle: "{{   lookup('env', 'BUNDLE')     | default('true',  true) | bool }}"
+  omnibus: "{{  lookup('env', 'OMNIBUS')    | default('true',  true) | bool }}"
+  manifest: "{{ lookup('env', 'MANIFEST')   | default('true',  true) | bool }}"
+  date: "{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}{{ ansible_date_time.hour }}"
+  docker_config: '/root/.docker/config.json'
+openshift:
+  provider: "{{ lookup('env', 'PROVIDER')    | default('aws',    true) | bool }}"
+  release: "{{  lookup('env', 'VERSION')     | default('latest', true) | bool }}"
+  release_url: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp"
+  rhcos_url: "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest"
+rhcos:
+  aws:
+    image: 'rhcos-aws.x86_64.vmdk.gz'
+    download: "{{ lookup('env', 'RHCOS_AWS')   | default('false', true) | bool }}"
+  azure:
+    image: 'rhcos-azure.x86_64.vhd.gz'
+    download: "{{ lookup('env', 'RHCOS_AZURE') | default('false', true) | bool }}"
+  gcp:
+    image: 'rhcos-gcp.x86_64.tar.gz'
+    download: "{{ lookup('env', 'RHCOS_GPC')   | default('false', true) | bool }}"
+  vmware:
+    image: 'rhcos-vmware.x86_64.ova'
+    download: "{{ lookup('env', 'RHCOS_VMW')   | default('false', true) | bool }}"
+  openstack:
+    image: 'rhcos-openstack.x86_64.qcow2.gz'
+    download: "{{ lookup('env', 'RHCOS_OSP')   | default('false', true) | bool }}"
+dir:
+  tmp: '/tmp/koffer'
+  iac: '/root/platform/iac'
+  bin: '/bin/root/platform/bin'
+  meta: '/bin/root/platform/meta'
+  nginx: '/bin/root/platform/nginx'
+  koffer: '/root/koffer'
+  bundle: '/root/bundle'
+  mirror: '/root/platform/mirror'
+  secrets: '/root/platform/secrets'
+  registry: '/root/platform/mirror/docker'
+  platform: '/root/platform'

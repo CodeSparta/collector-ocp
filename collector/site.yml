@@ -1,24 +1,8 @@
 #!/usr/local/bin/ansible-playbook --inventory=inventory.yaml
 - name: ' Koffer | Artifact Rake Utility' 
   hosts: koffer
-  vars_files:
-    - 'vars/global.yml'
-  vars:
-    - openshift_version_override: "{{ lookup('env', 'VERSION') }}"
-
-  tasks:
-
-    - name: "{{ ansible_name_module }} | shell:curl_release.txt | Lookup Latest OCP Release"
-      shell: curl --silent https://mirror.openshift.com/pub/openshift-v4/clients/ocp/{{ openshift_version_override | default('latest') }}/release.txt | awk '/  Version/{print $2}'
-      register: openshift_release_number
-
-    - name: 'Collecting Artifacts for OpenShift {{ openshift_release_number.stdout }}'
-      set_fact:
-        openshift_version: '{{ openshift_release_number.stdout }}'
-        cacheable: yes
 
 - import_playbook: tree.yml         # Create base directory tree
 - import_playbook: dependencies.yml # Pull OpenShift oc, openshift-install, and kubectl binaries 
 - import_playbook: images.yml       # Download OCP Infra Container Images
 - import_playbook: bundle.yml       # Bundle artifacts for airgap pivot
-- import_playbook: finalize.yml     # Finalize

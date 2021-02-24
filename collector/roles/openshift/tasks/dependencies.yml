@@ -1,0 +1,20 @@
+---
+- name: "{{ plugin.name }} | role:{{ plugin.role }} | unarchive:openshift-client-linux.tar.gz | Download OCP Client & Install Binaries: {{ catalog.release }}"
+  unarchive:
+    src: "{{ openshift.release_url }}/{{ openshift.release }}/{{ item }}-linux.tar.gz"
+    dest: '{{ dir.bin }}'
+    remote_src: yes
+    mode: 0775
+  with_items:
+    - openshift-client
+    - openshift-install
+
+- name: "{{ plugin.name }} | role:{{ plugin.role }} | set_fact:openshift_version | Register OpenShift Client Version"
+  set_fact:
+    openshift_version: "{{ oc_client_output_json['releaseClientVersion'] }}"
+  vars:
+    oc_client_output_json: "{{ lookup('pipe', '{{ dir.bin }}/oc version --client -o json') | from_json }}"
+
+- name: "{{ plugin.name }} | debug:msg.openshift_version | Register OC Version {{ openshift_version }}"
+  debug:
+    msg: "{{ openshift_version }}"

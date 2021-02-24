@@ -2,15 +2,15 @@ all:
   hosts:
     deploy:
   children:
-    cloudctl:
+    local:
       hosts:
-        pod:
+        host:
           ansible_host: 10.88.0.1
       vars:
         ansible_port: 22
         ansible_user: root
         ansible_connection: ssh
-    localhost:
+    self:
       hosts:
         koffer:
           ansible_user: root
