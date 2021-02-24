@@ -7,7 +7,7 @@
 
 - name: '{{ plugin.name }} | role:{{ plugin.role }} | get_url:url | Download Red Hat CoreOS Image'
   get_url:
-    url: '{{ rhcos.url }}/{{ item.value.image }}'
+    url: '{{ openshift.rhcos_url }}/{{ item.value.image }}'
     dest: '{{ dir.nginx }}/'
     mode: 0666
   with_dict:
