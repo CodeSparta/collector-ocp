@@ -5,7 +5,7 @@
     state: absent
   loop:
     - '{{ dir.mirror }}/docker'
-  when: not omnibus
+  when: not koffer.omnibus
 
 - name: '{{ plugin.name }} | role:{{ plugin.role }} | file:directory | Create Artifact Directory Tree' 
   file:
