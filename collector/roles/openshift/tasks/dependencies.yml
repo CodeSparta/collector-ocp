@@ -1,5 +1,5 @@
 ---
-- name: "{{ plugin.name }} | role:{{ plugin.role }} | unarchive:openshift-client-linux.tar.gz | Download OCP Client & Install Binaries: {{ catalog.release }}"
+- name: "{{ plugin.name }} | role:{{ plugin.role }} | unarchive:openshift-client-linux.tar.gz | Download OCP Client & Install Binaries: {{ openshift.release }}"
   unarchive:
     src: "{{ openshift.release_url }}/{{ openshift.release }}/{{ item }}-linux.tar.gz"
     dest: '{{ dir.bin }}'

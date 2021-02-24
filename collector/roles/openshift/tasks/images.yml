@@ -5,7 +5,7 @@
     dest: '{{ dir.meta }}/openshift-{{ openshift_version }}-release.txt'
     mode: 0666
 
-- name: '{{ ansible_name_module }} | get_url:url | Download Red Hat CoreOS Image'
+- name: '{{ plugin.name }} | role:{{ plugin.role }} | get_url:url | Download Red Hat CoreOS Image'
   get_url:
     url: '{{ rhcos.url }}/{{ item.value.image }}'
     dest: '{{ dir.nginx }}/'
@@ -15,7 +15,7 @@
   when:
     - item.value.download is defined and item.value.download != "false" and item.value.download != ""
 
-- name: '{{ ansible_name_module }} | shell:oc.adm.release.mirror | Sync content from quay.io'
+- name: '{{ plugin.name }} | role:{{ plugin.role }} | shell:oc.adm.release.mirror | Download OpenShift Release images from quay.io'
   shell: |
     {{ dir.bin }}/oc adm release mirror --insecure=true \
       --registry-config={{ koffer.docker_config }} \
