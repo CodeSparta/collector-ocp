@@ -2,7 +2,7 @@ galaxy_info:
   author: CodeSparta
   description: Download all OpenShift 4.x platform dependencies.
   company: Red Hat Consulting
-    issue_tracker_url: https://github.com/CodeSparta/collector/issues
+  issue_tracker_url: https://github.com/CodeSparta/collector/issues
   license:
     - GPL-3.0-only
   min_ansible_version: 2.1

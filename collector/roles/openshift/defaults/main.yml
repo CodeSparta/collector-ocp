@@ -7,7 +7,6 @@ koffer:
   mirror: "{{   lookup('env', 'MIRROR')     | default('true',  true) | bool }}"
   bundle: "{{   lookup('env', 'BUNDLE')     | default('true',  true) | bool }}"
   omnibus: "{{  lookup('env', 'OMNIBUS')    | default('true',  true) | bool }}"
-  manifest: "{{ lookup('env', 'MANIFEST')   | default('true',  true) | bool }}"
   date: "{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}{{ ansible_date_time.hour }}"
   docker_config: '/root/.docker/config.json'
 openshift:
