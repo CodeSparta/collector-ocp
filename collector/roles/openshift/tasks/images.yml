@@ -13,7 +13,7 @@
   with_dict:
     - "{{ rhcos }}"
   when:
-    - item.value.download is defined and item.value.download != "false" and item.value.download != ""
+    - item.value.download
 
 - name: '{{ plugin.name }} | role:{{ plugin.role }} | shell:oc.adm.release.mirror | Download OpenShift Release images from quay.io'
   shell: |
@@ -22,6 +22,8 @@
       --to={{ koffer.dest }}/openshift-release-dev \
       --from=quay.io/openshift-release-dev/ocp-release:{{ openshift_version }}-x86_64 \
       --to-release-image={{ koffer.dest }}/openshift-release-dev:{{ openshift_version }}-x86_64
+  when:
+    - koffer.mirror
 
 # name: '{{ ansible_name_module }} | shell:skopeo.copy | Sync content from quay.io'
 # shell: |
