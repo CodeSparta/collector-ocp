@@ -10,7 +10,7 @@
 - name: '{{ plugin.name }} | role:{{ plugin.role }} | command:tar.cvf | Build Artifact Bundle'
   shell:
     cmd: |
-      tar -vSfc {{ dir.bundle }}/koffer-bundle.{{ plugin.role }}-{{ openshift.provider }}-{{ openshift_version }}.tar -C /root platform
+      tar -vSc -f {{ dir.bundle }}/koffer-bundle.{{ plugin.role }}-{{ openshift.provider }}-{{ openshift_version }}.tar -C /root platform
   args:
     creates: '{{ dir.bundle }}/koffer-bundle.{{ plugin.role }}-{{ openshift.provider }}-{{ openshift_version }}.tar'
     
