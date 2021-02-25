@@ -1,11 +1,10 @@
 #!/usr/local/bin/ansible-playbook --inventory=inventory/all.yml
 - name: 'Red Hat Consulting | CodeSparta | Koffer | Collector OpenShift' 
   hosts: koffer
-# collections:
-# - usrbinkat.collector
-# - containers.podman
+  collections:
+  - sparta.collector
   environment:
     PATH: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
   tasks:
     - import_role:
-        name: openshift
+        name: sparta.collector.openshift
