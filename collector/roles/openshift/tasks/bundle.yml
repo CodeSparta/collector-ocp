@@ -26,11 +26,11 @@
 #   content: '{{ bundle_sha256.stdout }}'
 #   mode: 0666
 
-- name: '{{ plugin.name }} | role:{{ plugin.role }} | file:directory.mode.0777 | Opem Permissions on Bundle Files'
-  file:
-    state: file
-    path: '{{ item }}'
-    mode: 0666
-  loop:
-    - "{{ dir.bundle }}/koffer-bundle.{{ plugin.role }}-{{ koffer.date }}.tar"
+# name: '{{ plugin.name }} | role:{{ plugin.role }} | file:directory.mode.0777 | Opem Permissions on Bundle Files'
+# file:
+#   state: file
+#   path: '{{ item }}'
+#   mode: 0666
+# loop:
+#   - "{{ dir.bundle }}/koffer-bundle.{{ plugin.role }}-{{ koffer.date }}.tar"
 #   - "{{ dir.bundle }}/koffer-bundle.{{ plugin.role }}-{{ koffer.date }}.tar.sha256"
